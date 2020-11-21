@@ -9,7 +9,7 @@ namespace Game.Engine
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class MainGame : Game
+    public class MainGame : Microsoft.Xna.Framework.Game
     {
         private BaseGameState _currentGameState;
 
