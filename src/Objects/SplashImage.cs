@@ -1,4 +1,4 @@
-﻿using Game.Engine.Objects;
+﻿using Engine2D.Objects;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Game.Objects

@@ -1,5 +1,5 @@
-﻿using Game.Engine.Input;
-using Game.Engine.States;
+﻿using Engine2D.Input;
+using Engine2D.States;
 using Game.Input;
 using Game.Objects;
 using Microsoft.Xna.Framework;

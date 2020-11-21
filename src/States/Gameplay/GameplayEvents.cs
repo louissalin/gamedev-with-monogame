@@ -1,5 +1,5 @@
-﻿using Game.Engine.Objects;
-using Game.Engine.States;
+﻿using Engine2D.Objects;
+using Engine2D.States;
 using Microsoft.Xna.Framework;
 
 namespace Game.States.Gameplay

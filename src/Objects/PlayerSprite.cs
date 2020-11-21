@@ -1,5 +1,5 @@
-﻿using Game.Engine.Objects;
-using Game.Engine.Objects.Animations;
+﻿using Engine2D.Objects;
+using Engine2D.Objects.Animations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -49,8 +49,8 @@ namespace Game.Objects
         public PlayerSprite(Texture2D texture)
         {
             _texture = texture;
-            AddBoundingBox(new Engine.Objects.BoundingBox(new Vector2(BB1PosX, BB1PosY), BB1Width, BB1Height));
-            AddBoundingBox(new Engine.Objects.BoundingBox(new Vector2(BB2PosX, BB2PosY), BB2Width, BB2Height));
+            AddBoundingBox(new Engine2D.Objects.BoundingBox(new Vector2(BB1PosX, BB1PosY), BB1Width, BB1Height));
+            AddBoundingBox(new Engine2D.Objects.BoundingBox(new Vector2(BB2PosX, BB2PosY), BB2Width, BB2Height));
 
             _idleRectangle            = new Rectangle(348, 0, AnimationCellWidth, AnimationCellHeight);
             _turnLeftAnimation.AddFrame(new Rectangle(348, 0, AnimationCellWidth, AnimationCellHeight), AnimationSpeed);

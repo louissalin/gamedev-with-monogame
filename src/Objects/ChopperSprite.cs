@@ -1,5 +1,5 @@
-﻿using Game.Engine.Objects;
-using Game.Engine.States;
+﻿using Engine2D.Objects;
+using Engine2D.States;
 using Game.States.Gameplay;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -56,7 +56,7 @@ namespace Game.Objects
         {
             _texture = texture;
             _path = path;
-            AddBoundingBox(new Engine.Objects.BoundingBox(new Vector2(BBPosX, BBPosY), BBWidth, BBHeight));
+            AddBoundingBox(new Engine2D.Objects.BoundingBox(new Vector2(BBPosX, BBPosY), BBWidth, BBHeight));
         }
 
         public void Update()

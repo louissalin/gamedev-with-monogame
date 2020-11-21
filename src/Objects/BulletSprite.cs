@@ -1,4 +1,4 @@
-﻿using Game.Engine.Objects;
+﻿using Engine2D.Objects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -18,7 +18,7 @@ namespace Game.Objects
         public BulletSprite(Texture2D texture)
         {
             _texture = texture;
-            AddBoundingBox(new Engine.Objects.BoundingBox(new Vector2(BBPosX, BBPosY), BBWidth, BBHeight));
+            AddBoundingBox(new Engine2D.Objects.BoundingBox(new Vector2(BBPosX, BBPosY), BBWidth, BBHeight));
         }
 
         public void MoveUp()

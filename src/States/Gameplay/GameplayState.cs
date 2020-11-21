@@ -1,7 +1,7 @@
-﻿using Game.Engine.Input;
-using Game.Engine.Objects;
-using Game.Engine.Objects.Collisions;
-using Game.Engine.States;
+﻿using Engine2D.Input;
+using Engine2D.Objects;
+using Engine2D.Objects.Collisions;
+using Engine2D.States;
 using Game.Input;
 using Game.Levels;
 using Game.Objects;

@@ -1,4 +1,4 @@
-﻿using Game.Engine.Input;
+﻿using Engine2D.Input;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 

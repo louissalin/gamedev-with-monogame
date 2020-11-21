@@ -1,5 +1,5 @@
-﻿using Game.Engine.Objects;
-using Game.Engine.States;
+﻿using Engine2D.Objects;
+using Engine2D.States;
 using Game.States.Gameplay;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -57,7 +57,7 @@ namespace Game.Objects
             _baseCenterPosition = new Vector2(_baseTextureWidth / 2f, _baseTextureHeight / 2f);
             _cannonCenterPosition = new Vector2(_cannonTexture.Width / 2f, CannonCenterPosY);
 
-            AddBoundingBox(new Engine.Objects.BoundingBox(new Vector2(0, 0), _baseTexture.Width * Scale, _baseTexture.Height * Scale));
+            AddBoundingBox(new Engine2D.Objects.BoundingBox(new Vector2(0, 0), _baseTexture.Width * Scale, _baseTexture.Height * Scale));
         }
         
         public void Update(GameTime gameTime, Vector2 currentPlayerCenter)

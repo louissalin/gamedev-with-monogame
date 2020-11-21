@@ -1,4 +1,4 @@
-﻿using Game.Engine.Objects;
+﻿using Engine2D.Objects;
 using Game.States.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -58,7 +58,7 @@ namespace Game.Objects
             var bbWidth = bbOriginalWidth * bbRatio;
             var bbHeight = bbOriginalHeight * bbRatio; 
 
-            AddBoundingBox(new Engine.Objects.BoundingBox(new Vector2(bbPositionX, bbPositionY), bbWidth, bbHeight));
+            AddBoundingBox(new Engine2D.Objects.BoundingBox(new Vector2(bbPositionX, bbPositionY), bbWidth, bbHeight));
         }
 
         public void Update(GameTime gameTime)

@@ -1,5 +1,5 @@
-﻿using Game.Engine.Particles;
-using Game.Engine.Particles.EmitterTypes;
+﻿using Engine2D.Particles;
+using Engine2D.Particles.EmitterTypes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;

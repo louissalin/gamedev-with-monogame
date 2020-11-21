@@ -1,4 +1,4 @@
-﻿using Game.Engine.Input;
+﻿using Engine2D.Input;
 
 namespace Game.Input
 {
