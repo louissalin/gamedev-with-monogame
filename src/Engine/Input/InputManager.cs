@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using System;
 
-namespace Choppers.Engine.Input
+namespace Game.Engine.Input
 {
     public class InputManager
     {

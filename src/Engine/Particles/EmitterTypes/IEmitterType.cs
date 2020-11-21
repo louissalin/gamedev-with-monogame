@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Choppers.Engine.Particles.EmitterTypes
+namespace Game.Engine.Particles.EmitterTypes
 {
     public interface IEmitterType
     {

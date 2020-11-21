@@ -1,8 +1,8 @@
-﻿using Choppers.Engine.Objects;
-using Choppers.Engine.States;
+﻿using Game.Engine.Objects;
+using Game.Engine.States;
 using Microsoft.Xna.Framework;
 
-namespace Choppers.States.Gameplay
+namespace Game.States.Gameplay
 {
     public class GameplayEvents : BaseGameStateEvent
     {

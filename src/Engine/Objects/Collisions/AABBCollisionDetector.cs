@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Choppers.Engine.Objects.Collisions
+namespace Game.Engine.Objects.Collisions
 {
     /// <summary>
     /// AABB stands for Aligned Axis Boundind Box

@@ -1,8 +1,8 @@
-﻿using Choppers.Engine.Input;
+﻿using Game.Engine.Input;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
-namespace Choppers.Input
+namespace Game.Input
 {
     public class DevInputMapper : BaseInputMapper
     {

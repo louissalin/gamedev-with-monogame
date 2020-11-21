@@ -1,10 +1,10 @@
-﻿using Choppers.Engine.States;
-using Choppers.States.Gameplay;
+﻿using Game.Engine.States;
+using Game.States.Gameplay;
 using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Collections.Generic;
 
-namespace Choppers.Engine.Sound
+namespace Game.Engine.Sound
 {
     public class SoundManager
     {

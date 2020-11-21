@@ -1,10 +1,10 @@
-﻿using Choppers.Engine.States;
+﻿using Game.Engine.States;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 
-namespace Choppers.Engine.Objects
+namespace Game.Engine.Objects
 {
     public class BaseGameObject
     {

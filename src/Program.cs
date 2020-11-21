@@ -1,10 +1,9 @@
-﻿using Choppers.Engine;
-using Choppers.States;
+﻿using Game.Engine;
+using Game.States;
 using System;
 
-namespace Choppers
+namespace Game
 {
-#if WINDOWS || LINUX
     /// <summary>
     /// The main class.
     /// </summary>
@@ -20,8 +19,11 @@ namespace Choppers
         static void Main()
         {
             using (var game = new MainGame(WIDTH, HEIGHT, new SplashState()))
+            {
+                game.IsFixedTimeStep = true;
+                game.TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0f / 60);
                 game.Run();
+            }
         }
     }
-#endif
 }

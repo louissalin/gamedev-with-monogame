@@ -1,9 +1,9 @@
-﻿using Choppers.Engine.Objects;
-using Choppers.States.Particles;
+﻿using Game.Engine.Objects;
+using Game.States.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Choppers.Objects
+namespace Game.Objects
 {
     public class MissileSprite : BaseGameObject, IGameObjectWithDamage
     {

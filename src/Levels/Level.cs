@@ -1,9 +1,9 @@
-﻿using Choppers.Engine.States;
+﻿using Game.Engine.States;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace Choppers.Levels
+namespace Game.Levels
 {
     public class Level
     {

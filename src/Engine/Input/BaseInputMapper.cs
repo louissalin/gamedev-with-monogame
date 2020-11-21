@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
-namespace Choppers.Engine.Input
+namespace Game.Engine.Input
 {
     public class BaseInputMapper
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 
-namespace Choppers.Engine.Particles.EmitterTypes
+namespace Game.Engine.Particles.EmitterTypes
 {
     public class ConeEmitterType : IEmitterType
     {

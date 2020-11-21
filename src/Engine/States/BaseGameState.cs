@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Choppers.Engine.Input;
-using Choppers.Engine.Objects;
-using Choppers.Engine.Sound;
+using Game.Engine.Input;
+using Game.Engine.Objects;
+using Game.Engine.Sound;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Choppers.Engine.States
+namespace Game.Engine.States
 {
     public abstract class BaseGameState
     {
@@ -74,7 +74,8 @@ namespace Choppers.Engine.States
 
             foreach (var gameObject in _gameObjects)
             {
-                gameObject.OnNotify(gameEvent);
+                if (gameObject != null)
+                    gameObject.OnNotify(gameEvent);
             }
 
             _soundManager.OnNotify(gameEvent);
@@ -97,7 +98,7 @@ namespace Choppers.Engine.States
 
         public virtual void Render(SpriteBatch spriteBatch)
         {
-            foreach (var gameObject in _gameObjects.OrderBy(a => a.zIndex))
+            foreach (var gameObject in _gameObjects.Where(a => a != null).OrderBy(a => a.zIndex))
             {
                 if (_debug)
                 {

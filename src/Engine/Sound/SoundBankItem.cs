@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Audio;
 
-namespace Choppers.Engine.Sound
+namespace Game.Engine.Sound
 {
     public class SoundBankItem
     {

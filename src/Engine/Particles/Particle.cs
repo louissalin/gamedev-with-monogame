@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 
-namespace Choppers.Engine.Particles
+namespace Game.Engine.Particles
 {
     public class Particle
     {

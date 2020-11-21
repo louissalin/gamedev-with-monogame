@@ -1,13 +1,13 @@
-﻿using Choppers.Engine.Input;
-using Choppers.Engine.Objects;
-using Choppers.Engine.Objects.Collisions;
-using Choppers.Engine.States;
-using Choppers.Input;
-using Choppers.Levels;
-using Choppers.Objects;
-using Choppers.Objects.Text;
-using Choppers.States.Gameplay;
-using Choppers.States.Particles;
+﻿using Game.Engine.Input;
+using Game.Engine.Objects;
+using Game.Engine.Objects.Collisions;
+using Game.Engine.States;
+using Game.Input;
+using Game.Levels;
+using Game.Objects;
+using Game.Objects.Text;
+using Game.States.Gameplay;
+using Game.States.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,7 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Choppers.States
+namespace Game.States
 {
     public class GameplayState : BaseGameState
     {

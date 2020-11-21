@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 
-namespace Choppers.Engine.Objects.Animations
+namespace Game.Engine.Objects.Animations
 {
     public class AnimationFrame
     {

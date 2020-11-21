@@ -1,7 +1,7 @@
-﻿using Choppers.Engine.Objects;
+﻿using Game.Engine.Objects;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Choppers.Objects.Text
+namespace Game.Objects.Text
 {
     public class LivesText : BaseTextObject
     {

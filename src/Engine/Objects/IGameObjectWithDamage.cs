@@ -1,4 +1,4 @@
-﻿namespace Choppers.Engine.Objects
+﻿namespace Game.Engine.Objects
 {
     public interface IGameObjectWithDamage
     {

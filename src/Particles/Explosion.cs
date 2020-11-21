@@ -1,10 +1,10 @@
-﻿using Choppers.Engine.Particles;
-using Choppers.Engine.Particles.EmitterTypes;
+﻿using Game.Engine.Particles;
+using Game.Engine.Particles.EmitterTypes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace Choppers.States.Particles
+namespace Game.States.Particles
 {
     public class ExplosionParticleState : EmitterParticleState
     {

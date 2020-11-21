@@ -1,11 +1,11 @@
-﻿using Choppers.Engine.Objects;
-using Choppers.Engine.States;
-using Choppers.States.Gameplay;
+﻿using Game.Engine.Objects;
+using Game.Engine.States;
+using Game.States.Gameplay;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
-namespace Choppers.Objects
+namespace Game.Objects
 {
     public class ChopperSprite : BaseGameObject
     {

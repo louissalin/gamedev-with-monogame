@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Choppers.Engine.Particles
+namespace Game.Engine.Particles
 {
     public class RandomNumberGenerator
     {

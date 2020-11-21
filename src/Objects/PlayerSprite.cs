@@ -1,10 +1,10 @@
-﻿using Choppers.Engine.Objects;
-using Choppers.Engine.Objects.Animations;
+﻿using Game.Engine.Objects;
+using Game.Engine.Objects.Animations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace Choppers.Objects
+namespace Game.Objects
 {
     public class PlayerSprite : BaseGameObject
     {

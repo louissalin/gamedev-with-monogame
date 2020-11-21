@@ -1,8 +1,8 @@
-﻿using Choppers.Engine.Objects;
+﻿using Game.Engine.Objects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Choppers.Objects
+namespace Game.Objects
 {
     public class BulletSprite : BaseGameObject, IGameObjectWithDamage
     {

@@ -1,9 +1,9 @@
-﻿using Choppers.Engine.Particles;
-using Choppers.Engine.Particles.EmitterTypes;
+﻿using Game.Engine.Particles;
+using Game.Engine.Particles.EmitterTypes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Choppers.States.Particles
+namespace Game.States.Particles
 {
     public class ExhaustParticleState : EmitterParticleState
     {

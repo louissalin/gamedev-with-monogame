@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Choppers.Engine.Objects.Animations
+namespace Game.Engine.Objects.Animations
 {
     public class Animation
     {

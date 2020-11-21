@@ -1,6 +1,6 @@
-﻿using Choppers.Engine.Input;
+﻿using Game.Engine.Input;
 
-namespace Choppers.Input
+namespace Game.Input
 {
     public class SplashInputCommand : BaseInputCommand 
     {

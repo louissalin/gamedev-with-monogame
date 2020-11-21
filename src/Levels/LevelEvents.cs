@@ -1,6 +1,6 @@
-﻿using Choppers.Engine.States;
+﻿using Game.Engine.States;
 
-namespace Choppers.Levels
+namespace Game.Levels
 {
     public class LevelEvents : BaseGameStateEvent
     {

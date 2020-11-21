@@ -1,11 +1,11 @@
-﻿using Choppers.Engine.States;
+﻿using Game.Engine.States;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace Choppers.Levels
+namespace Game.Levels
 {
     public class LevelReader
     {
@@ -22,7 +22,7 @@ namespace Choppers.Levels
         public List<List<BaseGameStateEvent>> LoadLevel(int nb)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            var assemblyName = assembly.FullName.Split(',')[0].Replace('-', '_');
+            var assemblyName = assembly.FullName.Split(',')[0];
             var fileName = $"{assemblyName}.Levels.LevelData.Level{nb}.txt";
 
             var stream = assembly.GetManifestResourceStream(fileName);

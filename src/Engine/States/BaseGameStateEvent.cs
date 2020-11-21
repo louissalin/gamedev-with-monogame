@@ -1,4 +1,4 @@
-﻿namespace Choppers.Engine.States
+﻿namespace Game.Engine.States
 {
     public class BaseGameStateEvent 
     {

@@ -1,11 +1,11 @@
-﻿using Choppers.Engine.Objects;
-using Choppers.Engine.Particles.EmitterTypes;
+﻿using Game.Engine.Objects;
+using Game.Engine.Particles.EmitterTypes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 
-namespace Choppers.Engine.Particles
+namespace Game.Engine.Particles
 {
     public class Emitter : BaseGameObject
     {

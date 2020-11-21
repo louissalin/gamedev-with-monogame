@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Choppers.Engine.Objects.Collisions
+namespace Game.Engine.Objects.Collisions
 {
     public class SegmentAABBCollisionDetector<A> 
         where A : BaseGameObject

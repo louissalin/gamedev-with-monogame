@@ -1,10 +1,10 @@
-﻿using Choppers.Objects;
+﻿using Game.Objects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 
-namespace Choppers.States.Gameplay
+namespace Game.States.Gameplay
 {
     public class ChopperGenerator
     {

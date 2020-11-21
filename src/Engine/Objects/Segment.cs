@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Choppers.Engine.Objects
+namespace Game.Engine.Objects
 {
     public class Segment
     {

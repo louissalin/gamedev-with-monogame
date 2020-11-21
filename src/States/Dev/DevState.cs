@@ -1,11 +1,11 @@
-﻿using Choppers.Engine.Input;
-using Choppers.Engine.States;
-using Choppers.Input;
-using Choppers.Objects;
+﻿using Game.Engine.Input;
+using Game.Engine.States;
+using Game.Input;
+using Game.Objects;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace Choppers.States
+namespace Game.States
 {
     /// <summary>
     /// Used to test out new things, like particle engines and shooting missiles
