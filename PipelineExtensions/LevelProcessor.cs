@@ -6,7 +6,7 @@ using TOutput = System.String;
 namespace PipelineExtensions
 {
     [ContentProcessor(DisplayName = "Processor1")]
-    class Processor1 : ContentProcessor<TInput, TOutput>
+    class LevelProcessor : ContentProcessor<TInput, TOutput>
     {
         public override TOutput Process(TInput input, ContentProcessorContext context)
         {
