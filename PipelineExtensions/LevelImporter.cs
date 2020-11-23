@@ -1,15 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Content.Pipeline;
+using System.IO;
 
 using TImport = System.String;
 
 namespace PipelineExtensions
 {
-    [ContentImporter(".txt", DisplayName = "Importer1", DefaultProcessor = "Processor1")]
+    [ContentImporter(".txt", DisplayName = "LevelImporter", DefaultProcessor = "LevelProcessor")]
     public class LevelImporter : ContentImporter<TImport>
     {
         public override TImport Import(string filename, ContentImporterContext context)
         {
-            return default(TImport);
+            return File.ReadAllText(filename);
         }
     }
 }

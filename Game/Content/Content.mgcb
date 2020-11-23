@@ -14,6 +14,11 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin ../../assets/levels/Level1.txt
+/importer:LevelImporter
+/processor:LevelProcessor
+/build:../../assets/levels/Level1.txt;Levels/Level1.txt
+
 #begin ../../assets/music/FutureAmbient_1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

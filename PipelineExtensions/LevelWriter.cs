@@ -1,8 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 using TWrite = PipelineExtensions.Level;
 
@@ -13,12 +10,12 @@ namespace PipelineExtensions
     {
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            throw new NotImplementedException();
+            return "PipelineExtensions.LevelReader, PipelineExtensions";
         }
 
         protected override void Write(ContentWriter output, TWrite value)
         {
-            throw new NotImplementedException();
+            output.Write(value.LevelStringEncoding);
         }
     }
 }

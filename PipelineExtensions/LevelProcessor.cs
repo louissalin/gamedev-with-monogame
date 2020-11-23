@@ -1,16 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Content.Pipeline;
 
 using TInput = System.String;
-using TOutput = System.String;
+using TOutput = PipelineExtensions.Level;
 
 namespace PipelineExtensions
 {
-    [ContentProcessor(DisplayName = "Processor1")]
-    class LevelProcessor : ContentProcessor<TInput, TOutput>
+    [ContentProcessor(DisplayName = "LevelProcessor")]
+    public class LevelProcessor : ContentProcessor<TInput, TOutput>
     {
         public override TOutput Process(TInput input, ContentProcessorContext context)
         {
-            return default(TOutput);
+            return new Level(input);
         }
     }
 }
