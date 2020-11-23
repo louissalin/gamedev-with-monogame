@@ -17,7 +17,14 @@ namespace PipelineExtensions
             }
         }
 
-        public class GenerateTurret : LevelEvent { }
+        public class GenerateTurret : LevelEvent
+        {
+            public float XPosition { get; set; }
+            public GenerateTurret(float xPosition)
+            {
+                XPosition = xPosition;
+            }
+        }
 
         public class StartLevel : LevelEvent { }
 
@@ -28,7 +35,8 @@ namespace PipelineExtensions
 
     public class Level
     {
-        private const int NB_ROWS = 11;
+        public const int NB_ROWS = 11;
+        public const int NB_TILE_ROWS = 10;
 
         public string LevelStringEncoding { get; }
         public List<List<LevelEvent>> ProcessedLevel { get; }
@@ -79,7 +87,8 @@ namespace PipelineExtensions
                     return new LevelEvent.NoRowEvent();
 
                 case "1":
-                    return new LevelEvent();
+                    // turret x position must be computed later, after level is loaded from content manager
+                    return new LevelEvent.GenerateTurret(0.0f);
 
                 case "s":
                     return new LevelEvent.StartLevel();
@@ -93,6 +102,24 @@ namespace PipelineExtensions
 
                 default:
                     return new LevelEvent.Nothing();
+            }
+        }
+
+        public void ComputePositions(int viewportWidth)
+        {
+            for (int row = 0; row < ProcessedLevel.Count; row++)
+            {
+                for (int col = 0; col < ProcessedLevel[row].Count; col++)
+                {
+                    var levelEvent = ProcessedLevel[row][col];
+                    switch (levelEvent)
+                    {
+                        case LevelEvent.GenerateTurret t:
+                            var xPosition = col * viewportWidth / NB_TILE_ROWS;
+                            t.XPosition = xPosition;
+                            break;
+                    }
+                }
             }
         }
     }

@@ -16,7 +16,7 @@ namespace Engine2D.States
         protected bool _debug = false;
         protected bool _indestructible = false;
 
-        private ContentManager _contentManager;
+        protected ContentManager _contentManager;
         protected int _viewportHeight;
         protected int _viewportWidth;
         protected SoundManager _soundManager = new SoundManager();

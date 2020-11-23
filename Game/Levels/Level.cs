@@ -1,25 +1,24 @@
-﻿using Engine2D.States;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
+using PipelineExtensions;
 
 namespace Game.Levels
 {
     public class Level
     {
         private LevelReader _levelReader;
-        private List<List<BaseGameStateEvent>> _currentLevel;
+        private PipelineExtensions.Level _currentLevel;
         private int _currentLevelNumber;
         private int _currentLevelRow;
 
         private TimeSpan _startGameTime;
         private readonly TimeSpan TickTimeSpan = new TimeSpan(0, 0, 2);
 
-        public event EventHandler<LevelEvents.GenerateEnemies> OnGenerateEnemies;
-        public event EventHandler<LevelEvents.GenerateTurret> OnGenerateTurret;
-        public event EventHandler<LevelEvents.StartLevel> OnLevelStart;
-        public event EventHandler<LevelEvents.EndLevel> OnLevelEnd;
-        public event EventHandler<LevelEvents.NoRowEvent> OnLevelNoRowEvent;
+        public event EventHandler<LevelEvent.GenerateEnemies> OnGenerateEnemies;
+        public event EventHandler<LevelEvent.GenerateTurret> OnGenerateTurret;
+        public event EventHandler<LevelEvent.StartLevel> OnLevelStart;
+        public event EventHandler<LevelEvent.EndLevel> OnLevelEnd;
+        public event EventHandler<LevelEvent.NoRowEvent> OnLevelNoRowEvent;
 
         public Level(LevelReader reader)
         {
@@ -57,27 +56,27 @@ namespace Game.Levels
 
             _startGameTime = gameTime.TotalGameTime;
 
-            foreach (var e in _currentLevel[_currentLevelRow])
+            foreach (var e in _currentLevel.ProcessedLevel[_currentLevelRow])
             {
                 switch (e) 
                 {
-                    case LevelEvents.GenerateEnemies g:
+                    case LevelEvent.GenerateEnemies g:
                         OnGenerateEnemies?.Invoke(this, g);
                         break;
 
-                    case LevelEvents.GenerateTurret g:
+                    case LevelEvent.GenerateTurret g:
                         OnGenerateTurret?.Invoke(this, g);
                         break;
 
-                    case LevelEvents.StartLevel s:
+                    case LevelEvent.StartLevel s:
                         OnLevelStart?.Invoke(this, s);
                         break;
 
-                    case LevelEvents.EndLevel s:
+                    case LevelEvent.EndLevel s:
                         OnLevelEnd?.Invoke(this, s);
                         break;
 
-                    case LevelEvents.NoRowEvent n:
+                    case LevelEvent.NoRowEvent n:
                         OnLevelNoRowEvent?.Invoke(this, n);
                         break;
                 }

@@ -33,5 +33,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine2D.csproj" />
+    <ProjectReference Include="..\PipelineExtensions\PipelineExtensions.csproj" />
   </ItemGroup>
 </Project>

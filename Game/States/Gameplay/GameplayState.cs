@@ -109,7 +109,7 @@ namespace Game.States
 
             _chopperGenerator = new ChopperGenerator(_chopperTexture, AddChopper);
 
-            var levelReader = new LevelReader(_viewportWidth);
+            var levelReader = new LevelReader(_contentManager, _viewportWidth);
             _level = new Level(levelReader);
 
             _level.OnGenerateEnemies += _level_OnGenerateEnemies;
@@ -234,26 +234,26 @@ namespace Game.States
             return _screenBoxTexture;
         }
 
-        private void _level_OnLevelStart(object sender, LevelEvents.StartLevel e)
+        private void _level_OnLevelStart(object sender, PipelineExtensions.LevelEvent.StartLevel e)
         {
             _levelStartEndText.Text = "Good luck, Player 1!";
             _levelStartEndText.Position = new Vector2(350, 300);
             AddGameObject(_levelStartEndText);
         }
 
-        private void _level_OnLevelEnd(object sender, LevelEvents.EndLevel e)
+        private void _level_OnLevelEnd(object sender, PipelineExtensions.LevelEvent.EndLevel e)
         {
             _levelStartEndText.Text = "You escaped. Congrats!";
             _levelStartEndText.Position = new Vector2(300, 300);
             AddGameObject(_levelStartEndText);
         }
 
-        private void _level_OnLevelNoRowEvent(object sender, LevelEvents.NoRowEvent e)
+        private void _level_OnLevelNoRowEvent(object sender, PipelineExtensions.LevelEvent.NoRowEvent e)
         {
             RemoveGameObject(_levelStartEndText);
         }
 
-        private void _level_OnGenerateTurret(object sender, LevelEvents.GenerateTurret e)
+        private void _level_OnGenerateTurret(object sender, PipelineExtensions.LevelEvent.GenerateTurret e)
         {
             var turret = new TurretSprite(LoadTexture(TurretTexture), LoadTexture(TurretMG2Texture), SCOLLING_SPEED);
 
@@ -284,7 +284,7 @@ namespace Game.States
             _turretBulletList.Add(bullet2);
         }
 
-        private void _level_OnGenerateEnemies(object sender, LevelEvents.GenerateEnemies e)
+        private void _level_OnGenerateEnemies(object sender, PipelineExtensions.LevelEvent.GenerateEnemies e)
         {
             _chopperGenerator.GenerateChoppers(e.NbEnemies);
         }
