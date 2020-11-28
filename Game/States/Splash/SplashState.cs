@@ -10,7 +10,9 @@ namespace Game.States
     {
         public override void LoadContent()
         {
-            AddGameObject(new SplashImage(LoadTexture("Images/splash")));
+            var splash = new SplashImage(LoadTexture("Images/splash"));
+            splash.Activate();
+            AddGameObject(splash);
         }
 
         public override void HandleInput(Microsoft.Xna.Framework.GameTime gameTime)

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Engine2D.Objects
 {
-    public abstract class BaseGameObject
+    public class BaseGameObject
     {
         protected Texture2D _texture;
         protected Texture2D _boundingBoxTexture;
