@@ -8,6 +8,8 @@ namespace Engine2D.Objects
         private LinkedList<T> _activePool = new LinkedList<T>();
         private LinkedList<T> _inactivePool = new LinkedList<T>();
 
+        public IEnumerable<T> ActiveObjects { get { return _activePool; } }
+
         public GameObjectPool() { }
 
         public IEnumerable<T> GetOrCreate(int nbObjects, Func<T> createNbObjectFn)
@@ -39,7 +41,7 @@ namespace Engine2D.Objects
             return activatedObjects;
         }
 
-        public void DeactivateObject(T gameObject)
+        public void DeactivateObject(T gameObject, Action<T> postDeactivateFn)
         {
             gameObject.Deactivate();
 
@@ -49,6 +51,30 @@ namespace Engine2D.Objects
                 _activePool.Remove(gameObject);
                 _inactivePool.AddLast(gameObject);
             }
+
+            postDeactivateFn(gameObject);
         }
+
+        public void DeactivateObject(T gameObject)
+        {
+            DeactivateObject(gameObject, _ => { });
+        }
+
+        public void DeactivateAllObjects(Action<T> postDeactivateFn)
+        {
+            foreach (var gameObject in ActiveObjects)
+            {
+                DeactivateObject(gameObject, postDeactivateFn);
+            }
+        }
+
+        public void DeactivateAllObjects()
+        {
+            foreach (var gameObject in ActiveObjects)
+            {
+                DeactivateObject(gameObject);
+            }
+        }
+
     }
 }
