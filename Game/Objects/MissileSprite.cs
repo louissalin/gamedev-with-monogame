@@ -63,7 +63,7 @@ namespace Game.Objects
 
         public void Update(GameTime gameTime)
         {
-            if (Destroyed)
+            if (!Active)
             {
                 return;
             }
@@ -76,7 +76,7 @@ namespace Game.Objects
 
         public override void Render(SpriteBatch spriteBatch)
         {
-            if (Destroyed)
+            if (!Active)
             {
                 return;
             }

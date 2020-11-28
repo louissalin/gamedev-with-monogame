@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Engine2D.Objects
 {
-    public class BaseGameObject
+    public abstract class BaseGameObject
     {
         protected Texture2D _texture;
         protected Texture2D _boundingBoxTexture;
@@ -19,7 +19,7 @@ namespace Engine2D.Objects
         public int zIndex;
         public event EventHandler<BaseGameStateEvent> OnObjectChanged;
 
-        public bool Destroyed { get; private set; }
+        public bool Active { get; private set; }
 
         public virtual int Width { get { return _texture.Width; } }
         public virtual int Height { get { return _texture.Height; } }
@@ -51,7 +51,7 @@ namespace Engine2D.Objects
 
         public virtual void Render(SpriteBatch spriteBatch)
         {
-            if (!Destroyed)
+            if (Active)
             {
                 spriteBatch.Draw(_texture, _position, Color.White);
             }
@@ -59,7 +59,7 @@ namespace Engine2D.Objects
 
         public void RenderBoundingBoxes(SpriteBatch spriteBatch)
         {
-            if (Destroyed)
+            if (!Active)
             {
                 return;
             }
@@ -75,9 +75,14 @@ namespace Engine2D.Objects
             }
         }
 
-        public void Destroy()
+        public void Activate()
         {
-            Destroyed = true;
+            Active = true;
+        }
+
+        public void Deactivate()
+        {
+            Active = false;
         }
         
         public void SendEvent(BaseGameStateEvent e)
@@ -104,5 +109,6 @@ namespace Engine2D.Objects
             _boundingBoxTexture = new Texture2D(graphicsDevice, 1, 1);
             _boundingBoxTexture.SetData<Color>(new Color[] { Color.White });
         }
+
     }
 }

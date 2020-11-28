@@ -316,7 +316,7 @@ namespace Game.States
                 var hitEvent = new GameplayEvents.ObjectHitBy(bullet);
                 chopper.OnNotify(hitEvent);
                 _soundManager.OnNotify(hitEvent);
-                bullet.Destroy();
+                bullet.Deactivate();
             });
 
             missileCollisionDetector.DetectCollisions(_enemyList, (missile, chopper) =>
@@ -324,7 +324,7 @@ namespace Game.States
                 var hitEvent = new GameplayEvents.ObjectHitBy(missile);
                 chopper.OnNotify(hitEvent);
                 _soundManager.OnNotify(hitEvent);
-                missile.Destroy();
+                missile.Deactivate();
             });
 
             bulletCollisionDetector.DetectCollisions(_turretList, (bullet, turret) =>
@@ -332,7 +332,7 @@ namespace Game.States
                 var hitEvent = new GameplayEvents.ObjectHitBy(bullet);
                 turret.OnNotify(hitEvent);
                 _soundManager.OnNotify(hitEvent);
-                bullet.Destroy();
+                bullet.Deactivate();
             });
 
             missileCollisionDetector.DetectCollisions(_turretList, (missile, turret) =>
@@ -340,7 +340,7 @@ namespace Game.States
                 var hitEvent = new GameplayEvents.ObjectHitBy(missile);
                 turret.OnNotify(hitEvent);
                 _soundManager.OnNotify(hitEvent);
-                missile.Destroy();
+                missile.Deactivate();
             });
 
             if (!_playerDead)
@@ -469,7 +469,7 @@ namespace Game.States
             {
                 var performRemoval = predicate(item);
 
-                if (performRemoval || item.Destroyed)
+                if (performRemoval || !item.Active)
                 {
                     RemoveGameObject(item);
                 }
@@ -496,7 +496,7 @@ namespace Game.States
                     if (ge.CurrentLife <= 0)
                     {
                         AddExplosion(new Vector2(chopper.Position.X - 40, chopper.Position.Y - 40));
-                        chopper.Destroy();
+                        chopper.Deactivate();
                     }
                     break;
             }
