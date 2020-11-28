@@ -10,7 +10,7 @@ namespace Engine2D.Objects
 
         public GameObjectPool() { }
 
-        public IEnumerable<T> GetObject(int nbObjects, Func<T> createNbObjectFn)
+        public IEnumerable<T> GetOrCreate(int nbObjects, Func<T> createNbObjectFn)
         {
             var activatedObjects = new List<T>();
 
