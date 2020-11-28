@@ -3,69 +3,51 @@ using System.Collections.Generic;
 
 namespace Engine2D.Objects
 {
-    public class GameObjectPool
+    public class GameObjectPool<T> where T : BaseGameObject
     {
-        private Dictionary<Type, LinkedList<BaseGameObject>> _activePools;
-        private Dictionary<Type, LinkedList<BaseGameObject>> _inactivePools;
+        private LinkedList<T> _activePool = new LinkedList<T>();
+        private LinkedList<T> _inactivePool = new LinkedList<T>();
 
-        public GameObjectPool()
-        {
-            _activePools = new Dictionary<Type, LinkedList<BaseGameObject>>();
-        }
+        public GameObjectPool() { }
 
-        public void CreatePool(Type type, LinkedList<BaseGameObject> pool)
+        public IEnumerable<T> GetObject(int nbObjects, Func<T> createNbObjectFn)
         {
-            if (!_activePools.ContainsKey(type))
+            var activatedObjects = new List<T>();
+
+            var nbToReactivate = Math.Min(_inactivePool.Count, nbObjects);
+            var nbToCreate = nbObjects - nbToReactivate;
+
+            for (int i = 0; i < nbToReactivate; i++)
             {
-                _activePools[type] = pool;
-                _inactivePools[type] = new LinkedList<BaseGameObject>();
+                var gameObject = _inactivePool.First.Value;
+                gameObject.Activate();
+                activatedObjects.Add(gameObject);
+
+                _activePool.AddLast(gameObject);
+                _inactivePool.RemoveFirst();
             }
-        }
 
-        public IEnumerable<BaseGameObject> GetObject(Type type, int nbObjects, Func<BaseGameObject> createNbObjectFn)
-        {
-            var activatedObjects = new List<BaseGameObject>();
-
-            if (_activePools.ContainsKey(type))
+            for (int i = 0; i < nbToCreate; i++)
             {
-                var nbToReactivate = Math.Min(_inactivePools[type].Count, nbObjects);
-                var nbToCreate = nbObjects - nbToReactivate;
+                var gameObject = createNbObjectFn();
+                gameObject.Activate();
+                activatedObjects.Add(gameObject);
 
-                for (int i = 0; i < nbToReactivate; i++)
-                {
-                    var gameObject = _inactivePools[type].First.Value;
-                    gameObject.Activate();
-                    activatedObjects.Add(gameObject);
-
-                    _activePools[type].AddLast(gameObject);
-                    _inactivePools[type].RemoveFirst();
-                }
-
-                for (int i = 0; i < nbToCreate; i++)
-                {
-                    var gameObject = createNbObjectFn();
-                    gameObject.Activate();
-                    activatedObjects.Add(gameObject);
-
-                    _activePools[type].AddLast(gameObject);
-                }
+                _activePool.AddLast(gameObject);
             }
 
             return activatedObjects;
         }
 
-        public void DeactivateObject(Type type, BaseGameObject gameObject)
+        public void DeactivateObject(T gameObject)
         {
             gameObject.Deactivate();
 
-            if (_activePools.ContainsKey(type))
+            var activeObject = _activePool.Find(gameObject);
+            if (activeObject != null)
             {
-                var activeObject = _activePools[type].Find(gameObject);
-                if (activeObject != null)
-                {
-                    _activePools[type].Remove(gameObject);
-                    _inactivePools[type].AddLast(gameObject);
-                }
+                _activePool.Remove(gameObject);
+                _inactivePool.AddLast(gameObject);
             }
         }
     }
