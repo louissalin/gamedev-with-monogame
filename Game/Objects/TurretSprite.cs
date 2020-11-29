@@ -13,8 +13,6 @@ namespace Game.Objects
         private Texture2D _baseTexture;
         private Texture2D _cannonTexture;
 
-        private float _moveSpeed;
-
         // with an angle of zero, the turret points up, so track offset for calculations when tracking player
         private const float AngleOffset = MathHelper.Pi / 2;
         private const float Scale = 0.3f;
@@ -34,22 +32,15 @@ namespace Game.Objects
         private int _bulletsRemaining;
         private bool _attackMode;
 
-        public bool Active { get; set; }
+        public float MoveSpeed { get; set; }
+        public bool CanAttack { get; set; }
 
         public event EventHandler<GameplayEvents.TurretShoots> OnTurretShoots;
 
-        public TurretSprite(Texture2D baseTexture, Texture2D cannonTexture, float moveSpeed)
+        public TurretSprite(Texture2D baseTexture, Texture2D cannonTexture)
         {
-            _isShootingBullets = false;
-            _moveSpeed = moveSpeed;
             _baseTexture = baseTexture;
             _cannonTexture = cannonTexture;
-            _angle = MathHelper.Pi;  // point down by default
-            _bulletsRemaining = BulletsPerShot;
-            _attackMode = false;
-            Active = false;
-
-            _direction = CalculateDirection(AngleOffset);
 
             _baseTextureWidth = _baseTexture.Width * Scale;
             _baseTextureHeight = _baseTexture.Height * Scale;
@@ -58,15 +49,29 @@ namespace Game.Objects
             _cannonCenterPosition = new Vector2(_cannonTexture.Width / 2f, CannonCenterPosY);
 
             AddBoundingBox(new Engine2D.Objects.BoundingBox(new Vector2(0, 0), _baseTexture.Width * Scale, _baseTexture.Height * Scale));
+            Initialize();
         }
         
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            Active = false;
+            CanAttack = false;
+            _isShootingBullets = false;
+            _attackMode = false;
+            Direction = CalculateDirection(AngleOffset);
+            Angle = MathHelper.Pi;  // point down by default
+            _bulletsRemaining = BulletsPerShot;
+        }
+
         public void Update(GameTime gameTime, Vector2 currentPlayerCenter)
         {
             // move turret down
-            Position = Vector2.Add(_position, new Vector2(0, _moveSpeed));
+            Position = Vector2.Add(_position, new Vector2(0, MoveSpeed));
 
             // if turret is not active, it cannot spin or shoot
-            if (!Active)
+            if (!CanAttack)
             {
                 return;
             }
@@ -83,7 +88,7 @@ namespace Game.Objects
                 var playerVector = Vector2.Subtract(currentPlayerCenter, centerOfCannon);
                 playerVector.Normalize();
 
-                var angleTurret = Math.Atan2(_direction.Y, _direction.X);
+                var angleTurret = Math.Atan2(Direction.Y, Direction.X);
                 var anglePlayer = Math.Atan2(playerVector.Y, playerVector.X);
                 var angleDiff = angleTurret - anglePlayer;
 
@@ -133,19 +138,19 @@ namespace Game.Objects
             var cannonPosition = new Vector2(cannonPosX, cannonPosY);
 
             spriteBatch.Draw(_baseTexture, _position, _baseTexture.Bounds, color, 0, new Vector2(0, 0), Scale, SpriteEffects.None, 0f);
-            spriteBatch.Draw(_cannonTexture, cannonPosition, _cannonTexture.Bounds, Color.White, _angle, _cannonCenterPosition, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(_cannonTexture, cannonPosition, _cannonTexture.Bounds, Color.White, Angle, _cannonCenterPosition, Scale, SpriteEffects.None, 0f);
         }
 
         public void MoveLeft()
         {
-            _angle -= AngleSpeed;
-            _direction = CalculateDirection(AngleOffset);
+            Angle -= AngleSpeed;
+            Direction = CalculateDirection(AngleOffset);
         }
 
         public void MoveRight()
         {
-            _angle += AngleSpeed;
-            _direction = CalculateDirection(AngleOffset);
+            Angle += AngleSpeed;
+            Direction = CalculateDirection(AngleOffset);
         }
 
         public void Shoot(GameTime gameTime)
@@ -155,13 +160,13 @@ namespace Game.Objects
                 var centerOfCannon = Vector2.Add(_position, _baseCenterPosition);
 
                 // find perpendicular vectors to position bullets left and right of the center of the cannon
-                var perpendicularClockwiseDirection = new Vector2(_direction.Y, -_direction.X);
-                var perpendicularCounterClockwiseDirection = new Vector2(-_direction.Y, _direction.X);
+                var perpendicularClockwiseDirection = new Vector2(Direction.Y, -Direction.X);
+                var perpendicularCounterClockwiseDirection = new Vector2(-Direction.Y, Direction.X);
 
                 var bullet1Pos = Vector2.Add(centerOfCannon, perpendicularClockwiseDirection * 10);
                 var bullet2Pos = Vector2.Add(centerOfCannon, perpendicularCounterClockwiseDirection * 10);
 
-                var bulletInfo = new GameplayEvents.TurretShoots(bullet1Pos, bullet2Pos, _angle, _direction);
+                var bulletInfo = new GameplayEvents.TurretShoots(bullet1Pos, bullet2Pos, Angle, Direction);
 
                 _bulletsRemaining--;
                 _isShootingBullets = true;

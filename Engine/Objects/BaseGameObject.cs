@@ -12,14 +12,14 @@ namespace Engine2D.Objects
         protected Texture2D _boundingBoxTexture;
 
         protected Vector2 _position = Vector2.One;
-        protected float _angle;
-        protected Vector2 _direction;
         protected List<BoundingBox> _boundingBoxes = new List<BoundingBox>();
 
         public int zIndex;
         public event EventHandler<BaseGameStateEvent> OnObjectChanged;
 
         public bool Active { get; protected set; }
+        public float Angle { get; set; }
+        public Vector2 Direction { get; set; }
 
         public virtual int Width { get { return _texture.Width; } }
         public virtual int Height { get { return _texture.Height; } }
@@ -49,8 +49,8 @@ namespace Engine2D.Objects
 
         public virtual void Initialize()
         {
-            _angle = 0.0f;
-            _direction = new Vector2(0, 0);
+            Angle = 0.0f;
+            Direction = new Vector2(0, 0);
             _position = Vector2.One;
         }
 
@@ -104,12 +104,11 @@ namespace Engine2D.Objects
 
         protected Vector2 CalculateDirection(float angleOffset = 0.0f)
         {
-            _direction = new Vector2((float)Math.Cos(_angle - angleOffset), (float)Math.Sin(_angle - angleOffset));
-            _direction.Normalize();
+            Direction = new Vector2((float)Math.Cos(Angle - angleOffset), (float)Math.Sin(Angle - angleOffset));
+            Direction.Normalize();
 
-            return _direction;
+            return Direction;
         }
-
 
         private void CreateBoundingBoxTexture(GraphicsDevice graphicsDevice)
         {

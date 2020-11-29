@@ -82,12 +82,12 @@ namespace Game.Objects
 
                     if (_age > pAge)
                     {
-                        _direction = pDirection;
+                        Direction = pDirection;
                     }
                 }
             }
 
-            Position = Position + (_direction * Speed);
+            Position = Position + (Direction * Speed);
 
             _age++;
         }
@@ -103,9 +103,9 @@ namespace Game.Objects
             // if the chopper was just hit and is flashing, Color should alternate between OrangeRed and White
             var color = GetColor();
             spriteBatch.Draw(_texture, chopperDestRect, chopperRect, color, MathHelper.Pi, new Vector2(ChopperBladePosX, ChopperBladePosY), SpriteEffects.None, 0f);
-            spriteBatch.Draw(_texture, bladesDestRect, bladesRect, Color.White, _angle, new Vector2(BladesCenterX, BladesCenterY), SpriteEffects.None, 0f);
+            spriteBatch.Draw(_texture, bladesDestRect, bladesRect, Color.White, Angle, new Vector2(BladesCenterX, BladesCenterY), SpriteEffects.None, 0f);
 
-            _angle += BladeSpeed;
+            Angle += BladeSpeed;
         }
 
         public override void OnNotify(BaseGameStateEvent gameEvent)

@@ -59,6 +59,7 @@ namespace Game.Objects
             var bbHeight = bbOriginalHeight * bbRatio; 
 
             AddBoundingBox(new Engine2D.Objects.BoundingBox(new Vector2(bbPositionX, bbPositionY), bbWidth, bbHeight));
+            Initialize();
         }
 
         public void Update(GameTime gameTime)

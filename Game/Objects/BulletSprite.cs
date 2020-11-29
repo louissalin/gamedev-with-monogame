@@ -19,6 +19,7 @@ namespace Game.Objects
         {
             _texture = texture;
             AddBoundingBox(new Engine2D.Objects.BoundingBox(new Vector2(BBPosX, BBPosY), BBWidth, BBHeight));
+            Initialize();
         }
 
         public void MoveUp()

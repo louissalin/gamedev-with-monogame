@@ -19,7 +19,7 @@ namespace Game.States
 {
     public class GameplayState : BaseGameState
     {
-        private const float SCOLLING_SPEED = 2.0f;
+        private const float SCROLLING_SPEED = 2.0f;
 
         private const string BackgroundTexture = "Sprites/Barren";
         private const string PlayerFighter = "Sprites/Animations/FighterSpriteSheet";
@@ -92,7 +92,7 @@ namespace Game.States
 
             _levelStartEndText = new GameOverText(LoadFont(GameOverFont));
 
-            var background = new TerrainBackground(LoadTexture(BackgroundTexture), SCOLLING_SPEED);
+            var background = new TerrainBackground(LoadTexture(BackgroundTexture), SCROLLING_SPEED);
             background.zIndex = -100;
             AddGameObject(background);
 
@@ -190,7 +190,10 @@ namespace Game.States
             foreach (var turret in _turretList.ActiveObjects)
             {
                 turret.Update(gameTime, _playerSprite.CenterPosition);
-                turret.Active = turret.Position.Y > 0 && turret.Position.Y < _viewportHeight;
+                if (turret.Position.Y > 0 && turret.Position.Y < _viewportHeight)
+                {
+                    turret.CanAttack = true;
+                }
             }
 
             foreach (var bullet in _turretBulletList.ActiveObjects)
@@ -255,10 +258,11 @@ namespace Game.States
 
         private void _level_OnGenerateTurret(object sender, PipelineExtensions.LevelEvent.GenerateTurret e)
         {
-            var turret = _turretList.GetOrCreate(() => new TurretSprite(LoadTexture(TurretTexture), LoadTexture(TurretMG2Texture), SCOLLING_SPEED));
+            var turret = _turretList.GetOrCreate(() => new TurretSprite(LoadTexture(TurretTexture), LoadTexture(TurretMG2Texture)));
 
             // position the turret offscreen at the top
             turret.Position = new Vector2(e.XPosition, -100);
+            turret.MoveSpeed = SCROLLING_SPEED;
 
             turret.OnTurretShoots += _turret_OnTurretShoots;
             turret.OnObjectChanged += _onObjectChanged;
@@ -269,8 +273,15 @@ namespace Game.States
         {
             var bulletPositions = new List<Vector2> { e.Bullet1Position, e.Bullet2Position };
 
-            var bullet1 = _turretBulletList.GetOrCreate(() => new TurretBulletSprite(LoadTexture(TurretBulletTexture), e.Direction, e.Angle));
-            var bullet2 = _turretBulletList.GetOrCreate(() => new TurretBulletSprite(LoadTexture(TurretBulletTexture), e.Direction, e.Angle));
+            var bullet1 = _turretBulletList.GetOrCreate(() => new TurretBulletSprite(LoadTexture(TurretBulletTexture)));
+            bullet1.Angle = e.Angle;
+            bullet1.Direction = e.Direction;
+            bullet1.Direction.Normalize();
+
+            var bullet2 = _turretBulletList.GetOrCreate(() => new TurretBulletSprite(LoadTexture(TurretBulletTexture)));
+            bullet2.Angle = e.Angle;
+            bullet2.Direction = e.Direction;
+            bullet2.Direction.Normalize();
 
             bullet1.Position = e.Bullet1Position;
             bullet1.zIndex = -10;
@@ -379,6 +390,7 @@ namespace Game.States
             _turretBulletList.DeactivateAllObjects((obj) => RemoveGameObject(obj));
             _turretList.DeactivateAllObjects((obj) => RemoveGameObject(obj));
 
+            _playerSprite.Activate();
             AddGameObject(_playerSprite);
 
             // position the player in the middle of the screen, at the bottom, leaving a slight gap at the bottom
