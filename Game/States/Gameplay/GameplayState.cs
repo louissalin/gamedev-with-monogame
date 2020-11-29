@@ -255,30 +255,31 @@ namespace Game.States
 
         private void _level_OnGenerateTurret(object sender, PipelineExtensions.LevelEvent.GenerateTurret e)
         {
-            foreach (var turret in _turretList.GetOrCreate(1, () => new TurretSprite(LoadTexture(TurretTexture), LoadTexture(TurretMG2Texture), SCOLLING_SPEED)))
-            {
-                // position the turret offscreen at the top
-                turret.Position = new Vector2(e.XPosition, -100);
+            var turret = _turretList.GetOrCreate(() => new TurretSprite(LoadTexture(TurretTexture), LoadTexture(TurretMG2Texture), SCOLLING_SPEED));
 
-                turret.OnTurretShoots += _turret_OnTurretShoots;
-                turret.OnObjectChanged += _onObjectChanged;
-                AddGameObject(turret);
-            }
+            // position the turret offscreen at the top
+            turret.Position = new Vector2(e.XPosition, -100);
+
+            turret.OnTurretShoots += _turret_OnTurretShoots;
+            turret.OnObjectChanged += _onObjectChanged;
+            AddGameObject(turret);
         }
 
         private void _turret_OnTurretShoots(object sender, GameplayEvents.TurretShoots e)
         {
             var bulletPositions = new List<Vector2> { e.Bullet1Position, e.Bullet2Position };
-            var bulletNb = 0;
 
-            foreach (var bullet in _turretBulletList.GetOrCreate(2, () => new TurretBulletSprite(LoadTexture(TurretBulletTexture), e.Direction, e.Angle)))
-            {
-                bullet.Position = bulletPositions[bulletNb];
-                bullet.zIndex = -10;
-                bulletNb++;
+            var bullet1 = _turretBulletList.GetOrCreate(() => new TurretBulletSprite(LoadTexture(TurretBulletTexture), e.Direction, e.Angle));
+            var bullet2 = _turretBulletList.GetOrCreate(() => new TurretBulletSprite(LoadTexture(TurretBulletTexture), e.Direction, e.Angle));
 
-                AddGameObject(bullet);
-            }
+            bullet1.Position = e.Bullet1Position;
+            bullet1.zIndex = -10;
+
+            bullet2.Position = e.Bullet2Position;
+            bullet2.zIndex = -10;
+
+            AddGameObject(bullet1);
+            AddGameObject(bullet2);
         }
 
         private void _level_OnGenerateEnemies(object sender, PipelineExtensions.LevelEvent.GenerateEnemies e)
@@ -313,7 +314,7 @@ namespace Game.States
                 var hitEvent = new GameplayEvents.ObjectHitBy(bullet);
                 chopper.OnNotify(hitEvent);
                 _soundManager.OnNotify(hitEvent);
-                bullet.Deactivate();
+                _bulletList.DeactivateObject(bullet);
             });
 
             missileCollisionDetector.DetectCollisions(_enemyList.ActiveObjects, (missile, chopper) =>
@@ -321,7 +322,7 @@ namespace Game.States
                 var hitEvent = new GameplayEvents.ObjectHitBy(missile);
                 chopper.OnNotify(hitEvent);
                 _soundManager.OnNotify(hitEvent);
-                missile.Deactivate();
+                _missileList.DeactivateObject(missile);
             });
 
             bulletCollisionDetector.DetectCollisions(_turretList.ActiveObjects, (bullet, turret) =>
@@ -329,7 +330,7 @@ namespace Game.States
                 var hitEvent = new GameplayEvents.ObjectHitBy(bullet);
                 turret.OnNotify(hitEvent);
                 _soundManager.OnNotify(hitEvent);
-                bullet.Deactivate();
+                _bulletList.DeactivateObject(bullet);
             });
 
             missileCollisionDetector.DetectCollisions(_turretList.ActiveObjects, (missile, turret) =>
@@ -337,7 +338,7 @@ namespace Game.States
                 var hitEvent = new GameplayEvents.ObjectHitBy(missile);
                 turret.OnNotify(hitEvent);
                 _soundManager.OnNotify(hitEvent);
-                missile.Deactivate();
+                _missileList.DeactivateObject(missile);
             });
 
             if (!_playerDead)
@@ -454,15 +455,11 @@ namespace Game.States
                 pos = new Vector2(1500, 100);
             }
 
-            _enemyList.GetOrCreate(1, () =>
-            {
-                var chopper = new ChopperSprite(_chopperTexture, path);
-                chopper.OnObjectChanged += _onObjectChanged;
-                AddGameObject(chopper);
+            var newChopper = _enemyList.GetOrCreate(() => new ChopperSprite(_chopperTexture, path));
 
-                return chopper;
-            }); 
-
+            newChopper.Position = pos;
+            newChopper.OnObjectChanged += _onObjectChanged;
+            AddGameObject(newChopper);
         }
 
         private void DeactivateObjects<T>(IEnumerable<T> objectList, Func<T, bool> predicate) where T : BaseGameObject
@@ -484,14 +481,26 @@ namespace Game.States
 
         private void _onObjectChanged(object sender, BaseGameStateEvent e)
         {
-            var chopper = (BaseGameObject)sender;
+            var gameObject = (BaseGameObject)sender;
             switch (e)
             {
                 case GameplayEvents.ObjectLostLife ge:
                     if (ge.CurrentLife <= 0)
                     {
-                        AddExplosion(new Vector2(chopper.Position.X - 40, chopper.Position.Y - 40));
-                        chopper.Deactivate();
+                        AddExplosion(new Vector2(gameObject.Position.X - 40, gameObject.Position.Y - 40));
+
+                        switch (gameObject)
+                        {
+                            case ChopperSprite c:
+                                _enemyList.DeactivateObject(c);
+                                break;
+
+                            case TurretSprite t:
+                                _turretList.DeactivateObject(t);
+                                break;
+                        }
+
+                        RemoveGameObject(gameObject);
                     }
                     break;
             }
@@ -499,12 +508,8 @@ namespace Game.States
 
         private void AddExplosion(Vector2 position)
         {
-            _explosionList.GetOrCreate(1, () =>
-            {
-                var explosion = new ExplosionEmitter(_explosionTexture, position);
-                AddGameObject(explosion);
-                return explosion;
-            });
+            var explosion = _explosionList.GetOrCreate(() => new ExplosionEmitter(_explosionTexture, position));
+            AddGameObject(explosion);
         }
 
         private void UpdateExplosions(GameTime gameTime)
@@ -552,31 +557,21 @@ namespace Game.States
             var bulletLeftX = _playerSprite.Position.X + _playerSprite.Width / 2 - 40;
             var bulletRightX = _playerSprite.Position.X + _playerSprite.Width / 2 + 10;
 
-            var bulletXPositions = new List<float> { bulletLeftX, bulletRightX };
+            var bullet1 = _bulletList.GetOrCreate(() => new BulletSprite(_bulletTexture));
+            var bullet2 = _bulletList.GetOrCreate(() => new BulletSprite(_bulletTexture));
 
-            var n = 0;
-            _bulletList.GetOrCreate(2, () => 
-            {
-                var bulletSprite = new BulletSprite(_bulletTexture);
-                bulletSprite.Position = new Vector2(bulletXPositions[n], bulletY);
+            bullet1.Position = new Vector2(bulletLeftX, bulletY);
+            bullet2.Position = new Vector2(bulletRightX, bulletY);
 
-                AddGameObject(bulletSprite);
-                n++;
-
-                return bulletSprite;
-            });
+            AddGameObject(bullet1);
+            AddGameObject(bullet2);
         }
 
         private void CreateMissile()
         {
-            _missileList.GetOrCreate(1, () =>
-            {
-                var missileSprite = new MissileSprite(_missileTexture, _exhaustTexture);
-                missileSprite.Position = new Vector2(_playerSprite.Position.X + 33, _playerSprite.Position.Y - 25);
-
-                AddGameObject(missileSprite);
-                return missileSprite;
-            });
+            var missileSprite = _missileList.GetOrCreate(() => new MissileSprite(_missileTexture, _exhaustTexture));
+            missileSprite.Position = new Vector2(_playerSprite.Position.X + 33, _playerSprite.Position.Y - 25);
+            AddGameObject(missileSprite);
         }
 
         private void KeepPlayerInBounds()

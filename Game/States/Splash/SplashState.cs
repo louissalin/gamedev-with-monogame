@@ -15,7 +15,7 @@ namespace Game.States
             AddGameObject(splash);
         }
 
-        public override void HandleInput(Microsoft.Xna.Framework.GameTime gameTime)
+        public override void HandleInput(GameTime gameTime)
         {
             InputManager.GetCommands(cmd =>
             {

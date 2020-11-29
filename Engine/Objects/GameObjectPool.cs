@@ -8,37 +8,45 @@ namespace Engine2D.Objects
         private LinkedList<T> _activePool = new LinkedList<T>();
         private LinkedList<T> _inactivePool = new LinkedList<T>();
 
-        public IEnumerable<T> ActiveObjects { get { return _activePool; } }
+        public IEnumerable<T> ActiveObjects 
+        { 
+            get 
+            {
+                var list = new List<T>();
+                foreach (var gameObject in _activePool)
+                {
+                    list.Add(gameObject);
+                }
+
+                return list;
+            } 
+        }
 
         public GameObjectPool() { }
 
-        public IEnumerable<T> GetOrCreate(int nbObjects, Func<T> createNbObjectFn)
+        public T GetOrCreate(Func<T> createNbObjectFn)
         {
-            var activatedObjects = new List<T>();
+            T activatedObject;
 
-            var nbToReactivate = Math.Min(_inactivePool.Count, nbObjects);
-            var nbToCreate = nbObjects - nbToReactivate;
-
-            for (int i = 0; i < nbToReactivate; i++)
+            if (_inactivePool.Count > 0)
             {
                 var gameObject = _inactivePool.First.Value;
                 gameObject.Activate();
-                activatedObjects.Add(gameObject);
+                activatedObject = gameObject;
 
                 _activePool.AddLast(gameObject);
                 _inactivePool.RemoveFirst();
             }
-
-            for (int i = 0; i < nbToCreate; i++)
+            else
             {
                 var gameObject = createNbObjectFn();
                 gameObject.Activate();
-                activatedObjects.Add(gameObject);
+                activatedObject = gameObject;
 
                 _activePool.AddLast(gameObject);
             }
 
-            return activatedObjects;
+            return activatedObject;
         }
 
         public void DeactivateObject(T gameObject, Action<T> postDeactivateFn)
