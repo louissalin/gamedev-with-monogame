@@ -315,6 +315,7 @@ namespace Game.States
                 chopper.OnNotify(hitEvent);
                 _soundManager.OnNotify(hitEvent);
                 _bulletList.DeactivateObject(bullet);
+                RemoveGameObject(bullet);
             });
 
             missileCollisionDetector.DetectCollisions(_enemyList.ActiveObjects, (missile, chopper) =>
@@ -323,6 +324,7 @@ namespace Game.States
                 chopper.OnNotify(hitEvent);
                 _soundManager.OnNotify(hitEvent);
                 _missileList.DeactivateObject(missile);
+                RemoveGameObject(missile);
             });
 
             bulletCollisionDetector.DetectCollisions(_turretList.ActiveObjects, (bullet, turret) =>
@@ -331,6 +333,7 @@ namespace Game.States
                 turret.OnNotify(hitEvent);
                 _soundManager.OnNotify(hitEvent);
                 _bulletList.DeactivateObject(bullet);
+                RemoveGameObject(bullet);
             });
 
             missileCollisionDetector.DetectCollisions(_turretList.ActiveObjects, (missile, turret) =>
@@ -339,6 +342,7 @@ namespace Game.States
                 turret.OnNotify(hitEvent);
                 _soundManager.OnNotify(hitEvent);
                 _missileList.DeactivateObject(missile);
+                RemoveGameObject(missile);
             });
 
             if (!_playerDead)
