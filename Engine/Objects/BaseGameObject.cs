@@ -51,7 +51,7 @@ namespace Engine2D.Objects
         {
             Angle = 0.0f;
             Direction = new Vector2(0, 0);
-            _position = Vector2.One;
+            Position = Vector2.One;
         }
 
         public virtual void OnNotify(BaseGameStateEvent gameEvent) { }
