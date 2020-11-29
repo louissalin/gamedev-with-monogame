@@ -71,18 +71,19 @@ namespace Engine2D.Objects.Collisions
 
         private bool DetectCollision(P passiveObject, A activeObject)
         {
+            var hasCollided = false;
             foreach(var passiveBB in passiveObject.BoundingBoxes)
             {
                 foreach(var activeBB in activeObject.BoundingBoxes)
                 {
                     if (passiveBB.CollidesWith(activeBB))
                     {
-                        return true;
+                        return hasCollided = true;
                     }
                 }
             }
 
-            return false;
+            return hasCollided;
         }
     }
 }

@@ -35,19 +35,16 @@ namespace Engine2D.Objects.Collisions
 
         private bool DetectCollision(A passiveObject, Segment segment)
         {
+            var hasCollided = false;
             foreach(var activeBB in passiveObject.BoundingBoxes)
             {
                 if (DetectCollision(segment.P1, activeBB) || DetectCollision(segment.P2, activeBB))
                 {
-                    return true;
-                }
-                else
-                {
-                    return false;
+                    hasCollided = true;
                 }
             }
 
-            return false;
+            return hasCollided;
         }
         private bool DetectCollision(Vector2 p, BoundingBox bb)
         {
