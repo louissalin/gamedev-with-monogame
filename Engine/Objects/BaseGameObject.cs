@@ -19,7 +19,7 @@ namespace Engine2D.Objects
         public int zIndex;
         public event EventHandler<BaseGameStateEvent> OnObjectChanged;
 
-        public bool Active { get; private set; }
+        public bool Active { get; protected set; }
 
         public virtual int Width { get { return _texture.Width; } }
         public virtual int Height { get { return _texture.Height; } }
@@ -45,6 +45,13 @@ namespace Engine2D.Objects
             {
                 return _boundingBoxes;
             }
+        }
+
+        public virtual void Initialize()
+        {
+            _angle = 0.0f;
+            _direction = new Vector2(0, 0);
+            _position = Vector2.One;
         }
 
         public virtual void OnNotify(BaseGameStateEvent gameEvent) { }

@@ -21,7 +21,7 @@ namespace Engine2D.States
         protected int _viewportWidth;
         protected SoundManager _soundManager = new SoundManager();
 
-        private readonly List<BaseGameObject> _gameObjects = new List<BaseGameObject>();
+        protected readonly List<BaseGameObject> _gameObjects = new List<BaseGameObject>();
 
         protected InputManager InputManager {get; set;}
 

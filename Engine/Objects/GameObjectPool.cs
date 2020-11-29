@@ -51,11 +51,11 @@ namespace Engine2D.Objects
 
         public void DeactivateObject(T gameObject, Action<T> postDeactivateFn)
         {
-            gameObject.Deactivate();
-
             var activeObject = _activePool.Find(gameObject);
             if (activeObject != null)
             {
+                gameObject.Deactivate();
+
                 _activePool.Remove(gameObject);
                 _inactivePool.AddLast(gameObject);
             }

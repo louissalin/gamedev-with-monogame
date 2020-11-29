@@ -459,9 +459,11 @@ namespace Game.States
                 pos = new Vector2(1500, 100);
             }
 
-            var newChopper = _enemyList.GetOrCreate(() => new ChopperSprite(_chopperTexture, path));
+            var newChopper = _enemyList.GetOrCreate(() => new ChopperSprite(_chopperTexture));
 
+            newChopper.Initialize();
             newChopper.Position = pos;
+            newChopper.Path = path;
             newChopper.OnObjectChanged += _onObjectChanged;
             AddGameObject(newChopper);
         }

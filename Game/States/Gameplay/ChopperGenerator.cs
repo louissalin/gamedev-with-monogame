@@ -36,6 +36,7 @@ namespace Game.States.Gameplay
         {
             _timer.Stop();
             _generating = false;
+            _generateLeft = true;
         }
 
         private void _timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
