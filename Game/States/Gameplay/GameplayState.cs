@@ -404,7 +404,7 @@ namespace Game.States
 
         private async void KillPlayer()
         {
-            if (_indestructible)
+            if (_indestructible || _playerDead)
             {
                 return;
             }

@@ -13,7 +13,7 @@ namespace Engine2D.States
 {
     public abstract class BaseGameState
     {
-        protected bool _debug = true;
+        protected bool _debug = false;
         protected bool _indestructible = false;
 
         protected ContentManager _contentManager;
