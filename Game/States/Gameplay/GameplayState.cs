@@ -331,27 +331,24 @@ namespace Game.States
 
             missileCollisionDetector.DetectCollisions(_enemyList.ActiveObjects, (missile, chopper) =>
             {
-                var hitEvent = new GameplayEvents.ObjectHitBy(missile);
-                chopper.OnNotify(hitEvent);
-                _soundManager.OnNotify(hitEvent);
+                HandleCollision(missile, chopper);
+
                 _missileList.DeactivateObject(missile);
                 RemoveGameObject(missile);
             });
 
             bulletCollisionDetector.DetectCollisions(_turretList.ActiveObjects, (bullet, turret) =>
             {
-                var hitEvent = new GameplayEvents.ObjectHitBy(bullet);
-                turret.OnNotify(hitEvent);
-                _soundManager.OnNotify(hitEvent);
+                HandleCollision(bullet, turret);
+
                 _bulletList.DeactivateObject(bullet);
                 RemoveGameObject(bullet);
             });
 
             missileCollisionDetector.DetectCollisions(_turretList.ActiveObjects, (missile, turret) =>
             {
-                var hitEvent = new GameplayEvents.ObjectHitBy(missile);
-                turret.OnNotify(hitEvent);
-                _soundManager.OnNotify(hitEvent);
+                HandleCollision(missile, turret);
+
                 _missileList.DeactivateObject(missile);
                 RemoveGameObject(missile);
             });
@@ -373,6 +370,20 @@ namespace Game.States
                 {
                     KillPlayer();
                 });
+            }
+        }
+
+        private void HandleCollision(BaseGameObject hitBy, BaseGameObject hitObject)
+        {
+            // only allow hitting objects if the projectile is still on the screen. Otherwise we can 
+            // destroy turrets before they show up
+            if (hitBy is IGameObjectWithDamage && hitBy.Position.Y >= 0)
+            {
+                var projectile = (IGameObjectWithDamage) hitBy;
+                var hitEvent = new GameplayEvents.ObjectHitBy(projectile);
+
+                hitObject.OnNotify(hitEvent);
+                _soundManager.OnNotify(hitEvent);
             }
         }
 
