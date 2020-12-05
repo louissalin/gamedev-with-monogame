@@ -526,7 +526,9 @@ namespace Game.States
 
         private void AddExplosion(Vector2 position)
         {
-            var explosion = _explosionList.GetOrCreate(() => new ExplosionEmitter(_explosionTexture, position));
+            var explosion = _explosionList.GetOrCreate(() => new ExplosionEmitter(_explosionTexture));
+            explosion.Position = position;
+
             AddGameObject(explosion);
         }
 

@@ -3,7 +3,18 @@ using System.Collections.Generic;
 
 namespace Engine2D.Objects
 {
-    public class GameObjectPool<T> where T : BaseGameObject
+    public interface IGameObjectPool<T> where T : BaseGameObject
+    {
+        IEnumerable<T> ActiveObjects { get; }
+
+        T GetOrCreate(Func<T> createNbObjectFn);
+
+        void DeactivateObject(T gameObject, Action<T> postDeactivateFn);
+        void DeactivateAllObjects(Action<T> postDeactivateFn);
+        void DeactivateAllObjects();
+    }
+
+    public class GameObjectPool<T> : IGameObjectPool<T> where T : BaseGameObject
     {
         private LinkedList<T> _activePool = new LinkedList<T>();
         private LinkedList<T> _inactivePool = new LinkedList<T>();

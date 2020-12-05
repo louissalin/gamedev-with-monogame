@@ -8,9 +8,8 @@ namespace Game.Objects
     {
         private float _scrolling_speed;
 
-        public TerrainBackground(Texture2D texture, float scrollingSpeed)
+        public TerrainBackground(Texture2D texture, float scrollingSpeed) : base(texture)
         {
-            _texture = texture;
             _position = new Vector2(0, 0);
             _scrolling_speed = scrollingSpeed;
         }

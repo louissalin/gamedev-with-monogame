@@ -7,6 +7,11 @@ namespace Engine2D.Objects
     {
         protected SpriteFont _font;
 
+        public BaseTextObject(SpriteFont font) : base(null)
+        {
+            _font = font;
+        }
+
         public string Text { get; set; }
 
         public override void Render(SpriteBatch spriteBatch)

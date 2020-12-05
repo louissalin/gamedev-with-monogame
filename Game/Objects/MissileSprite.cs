@@ -29,17 +29,22 @@ namespace Game.Objects
                 var emitterPosX = _position.X + emitterOffsetX;
                 var emitterPosY = _position.Y + _missileHeight + emitterOffsetY;
 
-                _exhaustEmitter.Position = new Vector2(emitterPosX, emitterPosY);
+                if (_exhaustEmitter != null)
+                {
+                    _exhaustEmitter.Position = new Vector2(emitterPosX, emitterPosY);
+                }
+
                 base.Position = value;
             }
         }
 
         public int Damage => 25;
 
-        public MissileSprite(Texture2D missleTexture, Texture2D exhaustTexture)
+        public MissileSprite(Texture2D missleTexture, Texture2D exhaustTexture) : base(null)
         {
             _texture = missleTexture;
-            _exhaustEmitter = new ExhaustEmitter(exhaustTexture, _position);
+            _exhaustEmitter = new ExhaustEmitter(exhaustTexture);
+            _exhaustEmitter.Position = _position;
 
             var ratio = (float) _texture.Height / (float) _texture.Width;
             _missileWidth = 50;
@@ -59,7 +64,6 @@ namespace Game.Objects
             var bbHeight = bbOriginalHeight * bbRatio; 
 
             AddBoundingBox(new Engine2D.Objects.BoundingBox(new Vector2(bbPositionX, bbPositionY), bbWidth, bbHeight));
-            Initialize();
         }
 
         public void Update(GameTime gameTime)

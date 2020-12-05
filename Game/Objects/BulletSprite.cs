@@ -15,11 +15,9 @@ namespace Game.Objects
 
         public int Damage => 10;
 
-        public BulletSprite(Texture2D texture)
+        public BulletSprite(Texture2D texture) : base(texture)
         {
-            _texture = texture;
             AddBoundingBox(new Engine2D.Objects.BoundingBox(new Vector2(BBPosX, BBPosY), BBWidth, BBHeight));
-            Initialize();
         }
 
         public void MoveUp()

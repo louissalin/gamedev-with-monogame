@@ -46,9 +46,8 @@ namespace Game.Objects
             }
         }
 
-        public PlayerSprite(Texture2D texture)
+        public PlayerSprite(Texture2D texture) : base(texture)
         {
-            _texture = texture;
             AddBoundingBox(new Engine2D.Objects.BoundingBox(new Vector2(BB1PosX, BB1PosY), BB1Width, BB1Height));
             AddBoundingBox(new Engine2D.Objects.BoundingBox(new Vector2(BB2PosX, BB2PosY), BB2Width, BB2Height));
 

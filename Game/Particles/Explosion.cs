@@ -41,7 +41,7 @@ namespace Game.States.Particles
         private const int MaxParticles = 200;
         private const float Radius = 50f;
 
-        public ExplosionEmitter(Texture2D texture, Vector2 position) : 
-            base(texture, position, new ExplosionParticleState(), new CircleEmitterType(Radius), NbParticles, MaxParticles) { }
+        public ExplosionEmitter(Texture2D texture) : 
+            base(texture, new ExplosionParticleState(), new CircleEmitterType(Radius), NbParticles, MaxParticles) { }
     }
 }

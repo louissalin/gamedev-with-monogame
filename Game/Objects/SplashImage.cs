@@ -5,9 +5,8 @@ namespace Game.Objects
 {
     public class SplashImage : BaseGameObject
     {
-        public SplashImage(Texture2D texture)
+        public SplashImage(Texture2D texture) : base(texture)
         {
-            _texture = texture;
         }
     }
 }

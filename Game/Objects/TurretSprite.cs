@@ -37,7 +37,7 @@ namespace Game.Objects
 
         public event EventHandler<GameplayEvents.TurretShoots> OnTurretShoots;
 
-        public TurretSprite(Texture2D baseTexture, Texture2D cannonTexture)
+        public TurretSprite(Texture2D baseTexture, Texture2D cannonTexture) : base(null)
         {
             _baseTexture = baseTexture;
             _cannonTexture = cannonTexture;
@@ -49,7 +49,6 @@ namespace Game.Objects
             _cannonCenterPosition = new Vector2(_cannonTexture.Width / 2f, CannonCenterPosY);
 
             AddBoundingBox(new Engine2D.Objects.BoundingBox(new Vector2(0, 0), _baseTexture.Width * Scale, _baseTexture.Height * Scale));
-            Initialize();
         }
         
         public override void Initialize()

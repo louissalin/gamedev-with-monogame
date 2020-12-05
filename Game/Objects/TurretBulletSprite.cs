@@ -18,13 +18,9 @@ namespace Game.Objects
             } 
         }
 
-        public TurretBulletSprite(Texture2D texture)
+        public TurretBulletSprite(Texture2D texture) : base(texture)
         {
-            _texture = texture;
-
             _bulletCenterPosition = new Vector2(_texture.Width / 2, _texture.Height / 2);
-
-            Initialize();
         }
 
         public override void Initialize()

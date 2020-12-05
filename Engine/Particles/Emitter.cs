@@ -19,14 +19,18 @@ namespace Engine2D.Particles
 
         public int Age { get; set; }
 
-        public Emitter(Texture2D texture, Vector2 position, EmitterParticleState particleState, IEmitterType emitterType, int nbParticleEmittedPerUpdate, int maxParticles)
+        public Emitter(Texture2D texture, EmitterParticleState particleState, IEmitterType emitterType, int nbParticleEmittedPerUpdate, int maxParticles)
+            : base(texture)
         {
             _emitterParticleState = particleState;
             _emitterType = emitterType;
-            _texture = texture;
             _nbParticleEmittedPerUpdate = nbParticleEmittedPerUpdate;
             _maxNbParticle = maxParticles;
-            Position = position;
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
             Age = 0;
         }
 

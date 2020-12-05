@@ -19,7 +19,7 @@ namespace Game.Objects.Text
             }
         }
 
-        public LivesText(SpriteFont font)
+        public LivesText(SpriteFont font) : base(font)
         {
             _font = font;
         }

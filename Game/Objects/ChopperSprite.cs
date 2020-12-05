@@ -48,14 +48,11 @@ namespace Game.Objects
 
         public List<(int, Vector2)> Path { get; set; }
 
-        public ChopperSprite(Texture2D texture)
+        public ChopperSprite(Texture2D texture) : base(texture)
         {
-            Initialize();
-
-            _texture = texture;
             AddBoundingBox(new Engine2D.Objects.BoundingBox(new Vector2(BBPosX, BBPosY), BBWidth, BBHeight));
         }
-        
+
         public override void Initialize()
         {
             _age = 0;
