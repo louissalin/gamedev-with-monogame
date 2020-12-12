@@ -34,6 +34,7 @@ namespace Game.States
 
         private const string TextFont = "Fonts/Lives";
         private const string GameOverFont = "Fonts/GameOver";
+        private const string StatsFont = "Fonts/Stats";
 
         private const string BulletSound = "Sounds/bulletSound";
         private const string MissileSound = "Sounds/missileSound";
@@ -54,6 +55,7 @@ namespace Game.States
         private Texture2D _chopperTexture;
         private Texture2D _screenBoxTexture;
 
+        private StatsObject _statsText;
         private LivesText _livesText;
         private GameOverText _levelStartEndText;
         private PlayerSprite _playerSprite;
@@ -89,6 +91,14 @@ namespace Game.States
             _livesText.NbLives = StartingPlayerLives;
             _livesText.Position = new Vector2(10.0f, 690.0f);
             AddGameObject(_livesText);
+
+            _statsText = new StatsObject(LoadFont(StatsFont));
+            _statsText.Position = new Vector2(10, 10);
+
+            if (_debug)
+            {
+                AddGameObject(_statsText);
+            }
 
             _levelStartEndText = new GameOverText(LoadFont(GameOverFont));
 
@@ -211,6 +221,11 @@ namespace Game.States
             DeactivateObjects(_enemyList.ActiveObjects);
             DeactivateObjects(_turretBulletList.ActiveObjects);
             DeactivateObjects(_turretList.ActiveObjects, turret => turret.Position.Y > _viewportHeight + 200);
+
+            if (_debug)
+            {
+                _statsText.Update(gameTime);
+            }
         }
 
         public override void Render(SpriteBatch spriteBatch)

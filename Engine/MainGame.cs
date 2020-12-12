@@ -8,7 +8,7 @@ namespace Engine2D
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class MainGame : Microsoft.Xna.Framework.Game
+    public class MainGame : Game
     {
         private BaseGameState _currentGameState;
 
