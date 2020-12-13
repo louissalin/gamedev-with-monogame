@@ -519,7 +519,12 @@ namespace Game.States
 
         private void DeactivateObjects<T>(GameObjectPool<T> objectList) where T : BaseGameObject
         {
-            DeactivateObjects(objectList, item => item.Position.Y < -50);
+            DeactivateObjects(objectList, item => 
+                item.Position.Y < -50 || 
+                item.Position.Y > _viewportHeight + 50 ||
+                item.Position.X < -50 ||
+                item.Position.X > _viewportWidth + 50
+            );
         }
 
         private void _onObjectChanged(object sender, BaseGameStateEvent e)
