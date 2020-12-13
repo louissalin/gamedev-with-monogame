@@ -216,11 +216,11 @@ namespace Game.States
             DetectCollisions();
 
             // deactivate game objects that have gone out of view
-            DeactivateObjects(_bulletList.ActiveObjects);
-            DeactivateObjects(_missileList.ActiveObjects);
-            DeactivateObjects(_enemyList.ActiveObjects);
-            DeactivateObjects(_turretBulletList.ActiveObjects);
-            DeactivateObjects(_turretList.ActiveObjects, turret => turret.Position.Y > _viewportHeight + 200);
+            DeactivateObjects(_bulletList);
+            DeactivateObjects(_missileList);
+            DeactivateObjects(_enemyList);
+            DeactivateObjects(_turretBulletList);
+            DeactivateObjects(_turretList, turret => turret.Position.Y > _viewportHeight + 200);
 
             if (_debug)
             {
@@ -506,19 +506,18 @@ namespace Game.States
             AddGameObject(newChopper);
         }
 
-        private void DeactivateObjects<T>(IEnumerable<T> objectList, Func<T, bool> predicate) where T : BaseGameObject
+        private void DeactivateObjects<T>(GameObjectPool<T> objectList, Func<T, bool> predicate) where T : BaseGameObject
         {
-            foreach(T item in objectList)
+            foreach(T item in objectList.ActiveObjects)
             {
                 if (predicate(item))
                 {
-                    item.Deactivate();
-                    RemoveGameObject(item);
+                    objectList.DeactivateObject(item, _ => RemoveGameObject(item));
                 }
             }
         }
 
-        private void DeactivateObjects<T>(IEnumerable<T> objectList) where T : BaseGameObject
+        private void DeactivateObjects<T>(GameObjectPool<T> objectList) where T : BaseGameObject
         {
             DeactivateObjects(objectList, item => item.Position.Y < -50);
         }
