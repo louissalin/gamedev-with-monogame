@@ -21,7 +21,7 @@ namespace Game
             using (var game = new MainGame(WIDTH, HEIGHT, new SplashState()))
             {
                 game.IsFixedTimeStep = true;
-                game.TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0f / 60);
+                game.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 50);
                 game.Run();
             }
         }

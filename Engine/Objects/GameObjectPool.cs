@@ -5,7 +5,7 @@ namespace Engine2D.Objects
 {
     public interface IGameObjectPool<T> where T : BaseGameObject
     {
-        IEnumerable<T> ActiveObjects { get; }
+        List<T> ActiveObjects { get; }
 
         T GetOrCreate(Func<T> createNbObjectFn);
 
@@ -19,7 +19,7 @@ namespace Engine2D.Objects
         private LinkedList<T> _activePool = new LinkedList<T>();
         private LinkedList<T> _inactivePool = new LinkedList<T>();
 
-        public IEnumerable<T> ActiveObjects 
+        public List<T> ActiveObjects 
         { 
             get 
             {
@@ -42,6 +42,7 @@ namespace Engine2D.Objects
             if (_inactivePool.Count > 0)
             {
                 var gameObject = _inactivePool.First.Value;
+                System.Diagnostics.Debug.WriteLine($"reusing old instance of {gameObject}");
                 gameObject.Activate();
                 activatedObject = gameObject;
 
@@ -51,6 +52,7 @@ namespace Engine2D.Objects
             else
             {
                 var gameObject = createNbObjectFn();
+                System.Diagnostics.Debug.WriteLine($"creating new instance of {gameObject}");
                 gameObject.Activate();
                 activatedObject = gameObject;
 

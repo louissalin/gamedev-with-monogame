@@ -340,32 +340,25 @@ namespace Game.States
                 var hitEvent = new GameplayEvents.ObjectHitBy(bullet);
                 chopper.OnNotify(hitEvent);
                 _soundManager.OnNotify(hitEvent);
-                _bulletList.DeactivateObject(bullet);
-                RemoveGameObject(bullet);
+                _bulletList.DeactivateObject(bullet, b => RemoveGameObject(b));
             });
 
             missileCollisionDetector.DetectCollisions(_enemyList.ActiveObjects, (missile, chopper) =>
             {
                 HandleCollision(missile, chopper);
-
-                _missileList.DeactivateObject(missile);
-                RemoveGameObject(missile);
+                _missileList.DeactivateObject(missile, m => RemoveGameObject(m));
             });
 
             bulletCollisionDetector.DetectCollisions(_turretList.ActiveObjects, (bullet, turret) =>
             {
                 HandleCollision(bullet, turret);
-
-                _bulletList.DeactivateObject(bullet);
-                RemoveGameObject(bullet);
+                _bulletList.DeactivateObject(bullet, b => RemoveGameObject(b));
             });
 
             missileCollisionDetector.DetectCollisions(_turretList.ActiveObjects, (missile, turret) =>
             {
                 HandleCollision(missile, turret);
-
-                _missileList.DeactivateObject(missile);
-                RemoveGameObject(missile);
+                _missileList.DeactivateObject(missile, m => RemoveGameObject(m));
             });
 
             if (!_playerDead)
@@ -409,12 +402,12 @@ namespace Game.States
                 _chopperGenerator.StopGenerating();
             }
 
-            _bulletList.DeactivateAllObjects((obj) => RemoveGameObject(obj));
-            _missileList.DeactivateAllObjects((obj) => RemoveGameObject(obj));
-            _enemyList.DeactivateAllObjects((obj) => RemoveGameObject(obj));
-            _explosionList.DeactivateAllObjects((obj) => RemoveGameObject(obj));
-            _turretBulletList.DeactivateAllObjects((obj) => RemoveGameObject(obj));
-            _turretList.DeactivateAllObjects((obj) => RemoveGameObject(obj));
+            _bulletList.DeactivateAllObjects(obj => RemoveGameObject(obj));
+            _missileList.DeactivateAllObjects(obj => RemoveGameObject(obj));
+            _enemyList.DeactivateAllObjects(obj => RemoveGameObject(obj));
+            _explosionList.DeactivateAllObjects(obj => RemoveGameObject(obj));
+            _turretBulletList.DeactivateAllObjects(obj => RemoveGameObject(obj));
+            _turretList.DeactivateAllObjects(obj => RemoveGameObject(obj));
 
             _playerSprite.Activate();
             AddGameObject(_playerSprite);
