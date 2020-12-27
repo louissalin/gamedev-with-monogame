@@ -11,6 +11,8 @@ namespace Game
     /// </summary>
     public static class Program
     {
+        private const bool DEBUG = true;
+
         private const int WIDTH = 1280;
         private const int HEIGHT = 720;
 
@@ -27,7 +29,7 @@ namespace Game
             Strings.Culture = CultureInfo.CurrentCulture;
             //Strings.Culture = CultureInfo.GetCultureInfo(JAPANESE);
 
-            using (var game = new MainGame(WIDTH, HEIGHT, new SplashState()))
+            using (var game = new MainGame(WIDTH, HEIGHT, new SplashState(), DEBUG))
             {
                 game.IsFixedTimeStep = true;
                 game.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 50);

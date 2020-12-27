@@ -1,4 +1,5 @@
-﻿using Engine2D.Input;
+﻿using Engine2D;
+using Engine2D.Input;
 using Engine2D.Objects;
 using Engine2D.Objects.Collisions;
 using Engine2D.PipelineExtensions;
@@ -102,7 +103,7 @@ namespace Game.States
             _statsText = new StatsObject(LoadFont(StatsFont));
             _statsText.Position = new Vector2(10, 10);
 
-            if (_debug)
+            if (Debug.Instance.IsDebugMode)
             {
                 AddGameObject(_statsText);
             }
@@ -229,7 +230,7 @@ namespace Game.States
             DeactivateObjects(_turretBulletList);
             DeactivateObjects(_turretList, turret => turret.Position.Y > _viewportHeight + 200);
 
-            if (_debug)
+            if (Debug.Instance.IsDebugMode)
             {
                 _statsText.Update(gameTime);
             }
