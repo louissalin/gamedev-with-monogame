@@ -7,35 +7,27 @@ namespace Engine2D.Objects.Atlas
 {
     public class Atlas
     {
-        private readonly Dictionary<string, Rectangle> _tilesByName;
         private readonly Dictionary<int, Rectangle> _tilesById;
 
         public Texture2D Texture { get; private set; }
 
-        public Atlas(Texture2D texture, IEnumerable<TileDefinition> tileDefinitions)
+        public Atlas(Texture2D texture, IEnumerable<TileData> tileData)
         {
             Texture = texture;
             _tilesById = new Dictionary<int, Rectangle>();
-            _tilesByName = new Dictionary<string, Rectangle>();
 
-            InitializeTiles(tileDefinitions);
+            InitializeTiles(tileData);
         }
 
-        private void InitializeTiles(IEnumerable<TileDefinition> tileDefinitions)
+        private void InitializeTiles(IEnumerable<TileData> tileData)
         {
-            foreach(var tileDef in tileDefinitions)
+            foreach(var tileDef in tileData)
             {
-                if (_tilesByName.ContainsKey(tileDef.Name) )
-                {
-                    throw new AtlasException("Name already present in Atlas");
-                }
-
                 if (_tilesById.ContainsKey(tileDef.Id) )
                 {
                     throw new AtlasException("Id already present in Atlas");
                 }
 
-                _tilesByName.Add(tileDef.Name, new Rectangle(tileDef.X, tileDef.Y, tileDef.Width, tileDef.Height));
                 _tilesById.Add(tileDef.Id, new Rectangle(tileDef.X, tileDef.Y, tileDef.Width, tileDef.Height));
             }
         }
@@ -51,18 +43,15 @@ namespace Engine2D.Objects.Atlas
                 throw new AtlasException($"Id {id} not found in atlas");
             }
         }
+    }
 
-        public Rectangle GetAtlasRectangle(string name)
-        {
-            if (_tilesByName.ContainsKey(name))
-            {
-                return _tilesByName[name];
-            }
-            else
-            {
-                throw new AtlasException($"Name {name} not found in atlas");
-            }
-        }
+    public struct TileData
+    {
+        public int Id;
+        public int X;
+        public int Y;
+        public int Width;
+        public int Height;
     }
 
     public class AtlasException : Exception
