@@ -13,7 +13,6 @@ namespace Engine2D.States
 {
     public abstract class BaseGameState
     {
-        protected bool _debug = true;
         protected bool _indestructible = true;
 
         protected ContentManager _contentManager;
@@ -100,7 +99,7 @@ namespace Engine2D.States
         {
             foreach (var gameObject in _gameObjects.Where(a => a != null).OrderBy(a => a.zIndex))
             {
-                if (_debug)
+                if (Debug.Instance.IsDebugMode)
                 {
                     gameObject.RenderBoundingBoxes(spriteBatch);
                 }

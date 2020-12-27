@@ -24,7 +24,7 @@ namespace Engine2D
 
         private BaseGameState _firstGameState;
 
-        public MainGame(int width, int height, BaseGameState firstGameState)
+        public MainGame(int width, int height, BaseGameState firstGameState, bool debugMode)
         {
             Content.RootDirectory = "Content";
             graphics = new GraphicsDeviceManager(this);
@@ -33,6 +33,9 @@ namespace Engine2D
             _DesignedResolutionWidth = width;
             _DesignedResolutionHeight = height;
             _designedResolutionAspectRatio = width / (float)height;
+
+            var debug = new Debug(debugMode);
+            Debug.Instance = debug;
         }
 
         /// <summary>
