@@ -1,6 +1,7 @@
 ﻿using Engine2D.Input;
 using Engine2D.Objects;
 using Engine2D.Objects.Collisions;
+using Engine2D.PipelineExtensions;
 using Engine2D.States;
 using Game.Input;
 using Game.Levels;
@@ -23,6 +24,8 @@ namespace Game.States
 
         private const string BackgroundTexture = "Sprites/Barren";
         private const string PlayerFighter = "Sprites/Animations/FighterSpriteSheet";
+        private const string PlayerAnimationTurnLeft = "Sprites/Animations/FighterSpriteTurnLeft";
+        private const string PlayerAnimationTurnRight = "Sprites/Animations/FighterSpriteTurnRight";
         private const string BulletTexture = "Sprites/bullet";
         private const string ExhaustTexture = "Sprites/Cloud";
         private const string MissileTexture = "Sprites/Missile";
@@ -86,7 +89,10 @@ namespace Game.States
             _explosionTexture = LoadTexture(ExplosionTexture);
             _chopperTexture = LoadTexture(ChopperTexture);
 
-            _playerSprite = new PlayerSprite(LoadTexture(PlayerFighter));
+            var turnLeftAnimation = LoadAnimation(PlayerAnimationTurnLeft);
+            var turnRightAnimation = LoadAnimation(PlayerAnimationTurnRight);
+            _playerSprite = new PlayerSprite(LoadTexture(PlayerFighter), turnLeftAnimation, turnRightAnimation);
+
             _livesText = new LivesText(LoadFont(TextFont));
             _livesText.NbLives = StartingPlayerLives;
             _livesText.Position = new Vector2(10.0f, 690.0f);

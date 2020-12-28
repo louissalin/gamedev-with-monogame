@@ -15,10 +15,15 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin ../../assets/animations/player.xml
+#begin ../../assets/animations/Player/turn_left.xml
 /importer:XmlImporter
 /processor:PassThroughProcessor
-/build:../../assets/animations/player.xml;Sprites/Animations/FighterSprite.xml
+/build:../../assets/animations/Player/turn_left.xml;Sprites/Animations/FighterSpriteTurnLeft.xml
+
+#begin ../../assets/animations/Player/turn_right.xml
+/importer:XmlImporter
+/processor:PassThroughProcessor
+/build:../../assets/animations/Player/turn_right.xml;Sprites/Animations/FighterSpriteTurnRight.xml
 
 #begin ../../assets/levels/Level1.txt
 /importer:LevelImporter

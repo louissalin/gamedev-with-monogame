@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Engine2D.Input;
 using Engine2D.Objects;
+using Engine2D.PipelineExtensions;
 using Engine2D.Sound;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -56,6 +57,11 @@ namespace Engine2D.States
         protected Texture2D LoadTexture(string textureName)
         {
             return _contentManager.Load<Texture2D>(textureName);
+        }
+
+        protected AnimationData LoadAnimation(string animationName)
+        {
+            return _contentManager.Load<AnimationData>(animationName);
         }
 
         protected SpriteFont LoadFont(string fontName)

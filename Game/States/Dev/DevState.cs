@@ -16,6 +16,8 @@ namespace Game.States
         private const string TurretMG2Texture = "Sprites/Turrets/MG2";
         private const string TurretBulletTexture = "Sprites/Turrets/Bullet_MG";
 
+        private const string PlayerAnimationTurnLeft = "Sprites/Animations/FighterSpriteTurnLeft";
+        private const string PlayerAnimationTurnRight = "Sprites/Animations/FighterSpriteTurnRight";
         private const string PlayerFighter = "Sprites/Animations/FighterSpriteSheet";
         private PlayerSprite _playerSprite;
 
@@ -32,7 +34,9 @@ namespace Game.States
             _turret.Activate();
             AddGameObject(_turret);
 
-            _playerSprite = new PlayerSprite(LoadTexture(PlayerFighter));
+            var turnLeftAnimation = LoadAnimation(PlayerAnimationTurnLeft);
+            var turnRightAnimation = LoadAnimation(PlayerAnimationTurnRight);
+            _playerSprite = new PlayerSprite(LoadTexture(PlayerFighter), turnLeftAnimation, turnRightAnimation);
             // position the player in the middle of the screen, at the bottom, leaving a slight gap at the bottom
             var playerXPos = _viewportWidth / 2 - _playerSprite.Width / 2;
             var playerYPos = _viewportHeight - _playerSprite.Height - 30;
