@@ -4,7 +4,6 @@ namespace Engine2D.PipelineExtensions
 {
     public class AnimationData
     {
-        public string Name;
         public int AnimationSpeed;
         public bool IsLooping;
         public List<AnimationFrameData> Frames;

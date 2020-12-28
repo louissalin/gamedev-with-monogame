@@ -80,7 +80,6 @@ namespace Engine2D.Objects.Animations
         public Animation(AnimationData data)
         {
             _isLoop = data.IsLooping;
-            Name = data.Name;
 
             foreach( var frame in data.Frames )
             {

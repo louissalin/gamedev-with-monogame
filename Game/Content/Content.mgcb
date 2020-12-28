@@ -11,8 +11,14 @@
 #-------------------------------- References --------------------------------#
 
 /reference:..\..\PipelineExtensions\bin\Release\netstandard2.0\PipelineExtensions.dll
+/reference:..\..\Engine2DPipelineExtensions\bin\Release\netstandard2.0\Engine2DPipelineExtensions.dll
 
 #---------------------------------- Content ---------------------------------#
+
+#begin ../../assets/animations/player.xml
+/importer:XmlImporter
+/processor:PassThroughProcessor
+/build:../../assets/animations/player.xml;Sprites/Animations/FighterSprite.xml
 
 #begin ../../assets/levels/Level1.txt
 /importer:LevelImporter
