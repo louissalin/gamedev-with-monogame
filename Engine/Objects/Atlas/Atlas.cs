@@ -11,7 +11,7 @@ namespace Engine2D.Objects.Atlas
 
         public Texture2D Texture { get; private set; }
 
-        public Atlas(Texture2D texture, IEnumerable<TileData> tileData)
+        public Atlas(Texture2D texture, AtlasDefinition tileData)
         {
             Texture = texture;
             _tilesById = new Dictionary<int, Rectangle>();
@@ -19,8 +19,13 @@ namespace Engine2D.Objects.Atlas
             InitializeTiles(tileData);
         }
 
-        private void InitializeTiles(IEnumerable<TileData> tileData)
+        private void InitializeTiles(AtlasDefinition atlasDefinition)
         {
+            foreach (var block in atlasDefinition.TileBlocks)
+            {
+                +++++++++++
+            }
+
             foreach(var tileDef in tileData)
             {
                 if (_tilesById.ContainsKey(tileDef.Id) )

@@ -150,6 +150,11 @@
 /processorParam:TextureFormat=Color
 /build:../../assets/png/ground.png;Sprites/Ground/ground.png
 
+#begin ../../assets/png/ground.xml
+/importer:XmlImporter
+/processor:PassThroughProcessor
+/build:../../assets/png/ground.xml;Sprites/Ground/ground.xml
+
 #begin ../../assets/png/MG2.png
 /importer:TextureImporter
 /processor:TextureProcessor
