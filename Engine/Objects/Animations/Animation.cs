@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Engine2D.PipelineExtensions;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,6 +11,8 @@ namespace Engine2D.Objects.Animations
         private int _animationAge = 0;
         private int _lifespan = -1;
         private bool _isLoop = false;
+
+        public string Name { get; private set; }
 
         public int Lifespan {
             get
@@ -72,6 +75,18 @@ namespace Engine2D.Objects.Animations
         public Animation(bool looping)
         {
             _isLoop = looping;
+        }
+
+        public Animation(AnimationData data)
+        {
+            _isLoop = data.IsLooping;
+            Name = data.Name;
+
+            foreach( var frame in data.Frames )
+            {
+                AddFrame(new Rectangle(frame.X, frame.Y, frame.CellWidth, frame.CellHeight), 
+                         data.AnimationSpeed);
+            }
         }
 
         public void AddFrame(Rectangle sourceRectangle, int lifespan)
