@@ -3,6 +3,7 @@ using Engine2D.Objects;
 using Engine2D.Objects.Collisions;
 using Engine2D.PipelineExtensions;
 using Engine2D.States;
+using Game.Content;
 using Game.Input;
 using Game.Levels;
 using Game.Objects;

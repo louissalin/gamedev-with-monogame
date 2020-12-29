@@ -34,7 +34,7 @@
     <ProjectReference Include="..\PipelineExtensions\PipelineExtensions.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Strings.Designer.cs">
+    <Compile Update="Content\Strings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Strings.resx</DependentUpon>
@@ -46,11 +46,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="Strings.ja.resx">
+    <EmbeddedResource Update="Content\Strings.ja.resx">
       <LastGenOutput>Strings.ja.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strings.resx">
+    <EmbeddedResource Update="Content\Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
