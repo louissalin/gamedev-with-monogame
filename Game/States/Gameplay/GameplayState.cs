@@ -260,14 +260,14 @@ namespace Game.States
 
         private void _level_OnLevelStart(object sender, PipelineExtensions.LevelEvent.StartLevel e)
         {
-            _levelStartEndText.Text = "Good luck, Player 1!";
+            _levelStartEndText.Text = Strings.GoodLuckPlayer1;
             _levelStartEndText.Position = new Vector2(350, 300);
             AddGameObject(_levelStartEndText);
         }
 
         private void _level_OnLevelEnd(object sender, PipelineExtensions.LevelEvent.EndLevel e)
         {
-            _levelStartEndText.Text = "You escaped. Congrats!";
+            _levelStartEndText.Text = Strings.YouEscaped;
             _levelStartEndText.Position = new Vector2(300, 300);
             AddGameObject(_levelStartEndText);
         }
