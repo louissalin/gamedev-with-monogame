@@ -25,7 +25,7 @@ namespace Game
         static void Main()
         {
             Strings.Culture = CultureInfo.CurrentCulture;
-            //Strings.Culture = CultureInfo.GetCultureInfo(FRENCH);
+            //Strings.Culture = CultureInfo.GetCultureInfo(JAPANESE);
 
             using (var game = new MainGame(WIDTH, HEIGHT, new SplashState()))
             {
