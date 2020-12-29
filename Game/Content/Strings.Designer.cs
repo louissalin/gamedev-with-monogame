@@ -70,6 +70,15 @@ namespace Game.Content {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lives.
+        /// </summary>
+        internal static string Lives {
+            get {
+                return ResourceManager.GetString("Lives", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You escaped. Congrats!.
         /// </summary>
         internal static string YouEscaped {

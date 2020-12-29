@@ -120,6 +120,9 @@
   <data name="GoodLuckPlayer1" xml:space="preserve">
     <value>Good Luck, Player 1!</value>
   </data>
+  <data name="Lives" xml:space="preserve">
+    <value>Lives</value>
+  </data>
   <data name="YouEscaped" xml:space="preserve">
     <value>You escaped. Congrats!</value>
   </data>

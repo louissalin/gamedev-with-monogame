@@ -1,4 +1,5 @@
 ﻿using Engine2D.Objects;
+using Game.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Game.Objects.Text
@@ -15,7 +16,7 @@ namespace Game.Objects.Text
             set
             {
                 _nbLives = value;
-                Text = $"Lives: {_nbLives}";
+                Text = $"{Strings.Lives}: {_nbLives}";
             }
         }
 
