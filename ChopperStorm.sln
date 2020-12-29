@@ -13,7 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\Unit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelEditor", "..\LevelEditor\LevelEditor.csproj", "{B2059D0E-A3B4-45AC-94F7-1D93ED479742}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine2DPipelineExtensions", "Engine2DPipelineExtensions\Engine2DPipelineExtensions.csproj", "{2AC02A0B-EBA8-4FC6-8018-2A69AA6637DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Engine2DPipelineExtensions", "Engine2DPipelineExtensions\Engine2DPipelineExtensions.csproj", "{2AC02A0B-EBA8-4FC6-8018-2A69AA6637DB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DBE4BA2A-E0AC-474A-9DCE-13AFAA4A341C}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
