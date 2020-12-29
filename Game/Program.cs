@@ -23,7 +23,8 @@ namespace Game
         [STAThread]
         static void Main()
         {
-            Strings.Culture = CultureInfo.GetCultureInfo(ENGLISH);
+            Strings.Culture = CultureInfo.CurrentCulture;
+            //Strings.Culture = CultureInfo.GetCultureInfo(FRENCH);
 
             using (var game = new MainGame(WIDTH, HEIGHT, new SplashState()))
             {
