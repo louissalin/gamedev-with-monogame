@@ -23,17 +23,7 @@ namespace Engine2D.Objects.Atlas
         {
             foreach (var block in atlasDefinition.TileBlocks)
             {
-                +++++++++++
-            }
-
-            foreach(var tileDef in tileData)
-            {
-                if (_tilesById.ContainsKey(tileDef.Id) )
-                {
-                    throw new AtlasException("Id already present in Atlas");
-                }
-
-                _tilesById.Add(tileDef.Id, new Rectangle(tileDef.X, tileDef.Y, tileDef.Width, tileDef.Height));
+                //+++++++++++
             }
         }
 
