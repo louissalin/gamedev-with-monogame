@@ -15,7 +15,6 @@ namespace Engine2D.Particles
         private IEmitterType _emitterType;
         private int _nbParticleEmittedPerUpdate = 0;
         private int _maxNbParticle = 0;
-        private bool _active = true;
 
         public int Age { get; set; }
 
@@ -36,7 +35,7 @@ namespace Engine2D.Particles
 
         public void Update(GameTime gameTime)
         {
-            if (_active)
+            if (Active)
             {
                 EmitParticles();
             }
@@ -65,10 +64,6 @@ namespace Engine2D.Particles
             {
                 spriteBatch.Draw(_texture, particle.Position, sourceRectangle, Color.White * particle.Opacity, 0.0f, new Vector2(0, 0), particle.Scale, SpriteEffects.None, zIndex);
             }
-        }
-        public void Deactivate()
-        {
-            _active = false;
         }
 
         public void DeactivaleAllParticules()

@@ -88,12 +88,12 @@ namespace Engine2D.Objects
             }
         }
 
-        public void Activate()
+        public virtual void Activate()
         {
             Active = true;
         }
 
-        public void Deactivate()
+        public virtual void Deactivate()
         {
             Active = false;
         }

@@ -75,6 +75,18 @@ namespace Game.Objects
             base.Initialize();
         }
 
+        public override void Activate()
+        {
+            base.Activate();
+            _exhaustEmitter.Activate();
+        }
+
+        public override void Deactivate()
+        {
+            base.Deactivate();
+            _exhaustEmitter.Deactivate();
+        }
+
         public void Update(GameTime gameTime)
         {
             if (!Active)
