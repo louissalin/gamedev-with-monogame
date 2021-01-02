@@ -69,24 +69,10 @@ namespace Game.Objects
                 return;
             }
 
-            // Choppers follow a path where the direction changes at a certain frame, which is tracked by the chopper's age
-            if (Path != null)
-            {
-                foreach (var p in Path)
-                {
-                    int pAge = p.Item1;
-                    Vector2 pDirection = p.Item2;
-
-                    if (_age > pAge)
-                    {
-                        Direction = pDirection;
-                    }
-                }
-            }
+            _age++;
+            SetDirection();
 
             Position = Position + (Direction * Speed);
-
-            _age++;
         }
 
         public override void Render(SpriteBatch spriteBatch)
@@ -121,6 +107,24 @@ namespace Game.Objects
             _hitAt = 0;
             _life -= o.Damage;
         }
+        private void SetDirection()
+        {
+            // Choppers follow a path where the direction changes at a certain frame, which is tracked by the chopper's age
+            if (Path != null)
+            {
+                foreach (var p in Path)
+                {
+                    int pAge = p.Item1;
+                    Vector2 pDirection = p.Item2;
+
+                    if (_age > pAge)
+                    {
+                        Direction = pDirection;
+                    }
+                }
+            }
+        }
+
 
         private Color GetColor()
         {

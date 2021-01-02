@@ -226,7 +226,7 @@ namespace Game.States
             // deactivate game objects that have gone out of view
             DeactivateObjects(_bulletList);
             DeactivateObjects(_missileList);
-            DeactivateObjects(_enemyList);
+            DeactivateObjects(_enemyList, chopper => chopper.Position.Y > _viewportHeight + 100);
             DeactivateObjects(_turretBulletList);
             DeactivateObjects(_turretList, turret => turret.Position.Y > _viewportHeight + 200);
 
@@ -500,7 +500,6 @@ namespace Game.States
 
             var newChopper = _enemyList.GetOrCreate(() => new ChopperSprite(_chopperTexture));
 
-            newChopper.Initialize();
             newChopper.Position = pos;
             newChopper.Path = path;
             newChopper.OnObjectChanged += _onObjectChanged;
