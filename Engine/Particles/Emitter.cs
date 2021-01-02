@@ -48,8 +48,7 @@ namespace Engine2D.Particles
                 var stillAlive = particleNode.Value.Update(gameTime);
                 if (!stillAlive)
                 {
-                    _activeParticles.Remove(particleNode);
-                    _inactiveParticles.AddLast(particleNode.Value);
+                    DeactivateParticle(particleNode);
                 }
 
                 particleNode = nextNode;
@@ -72,6 +71,24 @@ namespace Engine2D.Particles
             _active = false;
         }
 
+        public void DeactivaleAllParticules()
+        {
+            var particleNode = _activeParticles.First;
+            while (particleNode != null)
+            {
+                var nextNode = particleNode.Next;
+                DeactivateParticle(particleNode);
+
+                particleNode = nextNode;
+            }
+        }
+
+        private void DeactivateParticle(LinkedListNode<Particle> particleNode)
+        {
+            _activeParticles.Remove(particleNode);
+            _inactiveParticles.AddLast(particleNode.Value);
+        }
+
         private void EmitParticles()
         {
             // make sure we're not at max particles
@@ -91,17 +108,17 @@ namespace Engine2D.Particles
             {
                 var particleNode = _inactiveParticles.First;
 
-                EmitNewParticle(particleNode.Value);
+                InitializeParticle(particleNode.Value);
                 _inactiveParticles.Remove(particleNode);
             }
 
             for(var i = 0; i < nbToCreate; i++)
             {
-                EmitNewParticle(new Particle());
+                InitializeParticle(new Particle());
             }
         }
 
-        private void EmitNewParticle(Particle particle)
+        private void InitializeParticle(Particle particle)
         {
             var lifespan = _emitterParticleState.GenerateLifespan();
             var velocity = _emitterParticleState.GenerateVelocity();

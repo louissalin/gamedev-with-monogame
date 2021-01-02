@@ -42,7 +42,8 @@ namespace Engine2D.Objects
             if (_inactivePool.Count > 0)
             {
                 var gameObject = _inactivePool.First.Value;
-                System.Diagnostics.Debug.WriteLine($"reusing old instance of {gameObject}");
+                Debug.Instance.Log($"reusing old instance of {gameObject}");
+                gameObject.Initialize();
                 gameObject.Activate();
                 activatedObject = gameObject;
 
@@ -52,7 +53,7 @@ namespace Engine2D.Objects
             else
             {
                 var gameObject = createNbObjectFn();
-                System.Diagnostics.Debug.WriteLine($"creating new instance of {gameObject}");
+                Debug.Instance.Log($"creating new instance of {gameObject}");
                 gameObject.Activate();
                 activatedObject = gameObject;
 

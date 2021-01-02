@@ -10,7 +10,7 @@ namespace Game.Objects
         private const float StartSpeed = 0.5f;
         private const float Acceleration = 0.15f;
 
-        private float _speed = StartSpeed;
+        private float _speed;
 
         // keep track of scaled down texture size
         private int _missileHeight;
@@ -23,6 +23,8 @@ namespace Game.Objects
         { 
             set 
             {
+                base.Position = value;
+                
                 var emitterOffsetX = 18;
                 var emitterOffsetY = -10;
 
@@ -33,18 +35,14 @@ namespace Game.Objects
                 {
                     _exhaustEmitter.Position = new Vector2(emitterPosX, emitterPosY);
                 }
-
-                base.Position = value;
             }
         }
 
         public int Damage => 25;
 
-        public MissileSprite(Texture2D missleTexture, Texture2D exhaustTexture) : base(null)
+        public MissileSprite(Texture2D missleTexture, Texture2D exhaustTexture) : base(missleTexture)
         {
-            _texture = missleTexture;
             _exhaustEmitter = new ExhaustEmitter(exhaustTexture);
-            _exhaustEmitter.Position = _position;
 
             var ratio = (float) _texture.Height / (float) _texture.Width;
             _missileWidth = 50;
@@ -64,6 +62,17 @@ namespace Game.Objects
             var bbHeight = bbOriginalHeight * bbRatio; 
 
             AddBoundingBox(new Engine2D.Objects.BoundingBox(new Vector2(bbPositionX, bbPositionY), bbWidth, bbHeight));
+        }
+
+        public override void Initialize()
+        {
+            _speed = StartSpeed;
+            if (_exhaustEmitter != null)
+            {
+                _exhaustEmitter.DeactivaleAllParticules();
+            }
+
+            base.Initialize();
         }
 
         public void Update(GameTime gameTime)

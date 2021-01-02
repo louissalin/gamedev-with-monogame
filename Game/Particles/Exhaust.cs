@@ -2,6 +2,7 @@
 using Engine2D.Particles.EmitterTypes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Game.States.Particles
 {
