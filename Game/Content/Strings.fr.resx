@@ -124,6 +124,6 @@
     <value>Vies</value>
   </data>
   <data name="YouEscaped" xml:space="preserve">
-    <value>Vous vous êtes échappé</value>
+    <value>Vous vous êtes échappé. Bravo!</value>
   </data>
 </root>

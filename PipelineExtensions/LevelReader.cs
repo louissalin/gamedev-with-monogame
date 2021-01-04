@@ -1,15 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Content;
 
-using TRead = PipelineExtensions.Level;
-
 namespace PipelineExtensions
 {
-
-    public class LevelReader : ContentTypeReader<TRead>
+    public class LevelReader : ContentTypeReader<Level>
     {
-        protected override TRead Read(ContentReader input, TRead existingInstance)
+        protected override Level Read(ContentReader input, Level existingInstance)
         {
-            return new TRead(input.ReadString());
+            return new Level(input.ReadString());
         }
     }
 }
