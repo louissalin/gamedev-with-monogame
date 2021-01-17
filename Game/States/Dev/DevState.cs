@@ -60,15 +60,36 @@ namespace Game.States
                     NotifyEvent(new BaseGameStateEvent.GameQuit());
                 }
 
-                if (cmd is DevInputCommand.DevLeft)
+                if (cmd is DevInputCommand.DevCamLeft)
                 {
                     _camera.Position += new Vector2(-10.0f, 0);
                 }
 
-                if (cmd is DevInputCommand.DevRight)
+                if (cmd is DevInputCommand.DevCamRight)
                 {
                     _camera.Position += new Vector2(10.0f, 0);
                 }
+
+                if (cmd is DevInputCommand.DevCamUp)
+                {
+                    _camera.Position += new Vector2(0, -10.0f);
+                }
+
+                if (cmd is DevInputCommand.DevCamDown)
+                {
+                    _camera.Position += new Vector2(0, 10.0f);
+                }
+
+                if (cmd is DevInputCommand.DevCamRotateLeft)
+                {
+                    _camera.Rotate(-0.05f);
+                }
+
+                if (cmd is DevInputCommand.DevCamRotateRight)
+                {
+                    _camera.Rotate(0.05f);
+                }
+
 
                 if (cmd is DevInputCommand.DevShoot)
                 {

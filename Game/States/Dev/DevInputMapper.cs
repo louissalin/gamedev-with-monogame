@@ -32,17 +32,37 @@ namespace Game.Input
 
             if (state.IsKeyDown(Keys.Right))
             {
-                commands.Add(new DevInputCommand.DevRight());
+                commands.Add(new DevInputCommand.DevCamRight());
             }
 
             if (state.IsKeyDown(Keys.Left))
             {
-                commands.Add(new DevInputCommand.DevLeft());
+                commands.Add(new DevInputCommand.DevCamLeft());
+            }
+
+            if (state.IsKeyDown(Keys.Up))
+            {
+                commands.Add(new DevInputCommand.DevCamUp());
+            }
+
+            if (state.IsKeyDown(Keys.Down))
+            {
+                commands.Add(new DevInputCommand.DevCamDown());
             }
 
             if (state.IsKeyDown(Keys.Space))
             {
                 commands.Add(new DevInputCommand.DevShoot());
+            }
+
+            if (state.IsKeyDown(Keys.O))
+            {
+                commands.Add(new DevInputCommand.DevCamRotateLeft());
+            }
+
+            if (state.IsKeyDown(Keys.P))
+            {
+                commands.Add(new DevInputCommand.DevCamRotateRight());
             }
 
 
