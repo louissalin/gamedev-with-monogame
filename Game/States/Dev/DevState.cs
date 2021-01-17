@@ -36,8 +36,15 @@ namespace Game.States
 
         public override void Render(SpriteBatch spriteBatch)
         {
+            // parallax parameter affects how movement of camera is applied.
+            // with Zero, the position of the camera doesn't change
+            // with One, it moves as desired (ie 10 units per update, as written below)
+            // with Two, it moves twice as fast
+            //var transformMatrix = _camera.GetViewMatrix(Vector2.Zero);
+            //var transformMatrix = _camera.GetViewMatrix(Vector2.One); // default
+            //var transformMatrix = _camera.GetViewMatrix(Vector2.One * 2);
+
             var transformMatrix = _camera.GetViewMatrix();
-            // TODO: try above with parallax of Vector.Zero
 
             spriteBatch.Begin(transformMatrix: transformMatrix);
                 _playerSprite.Render(spriteBatch);
@@ -55,12 +62,12 @@ namespace Game.States
 
                 if (cmd is DevInputCommand.DevLeft)
                 {
-                    _playerSprite.MoveLeft();
+                    _camera.Position += new Vector2(-10.0f, 0);
                 }
 
                 if (cmd is DevInputCommand.DevRight)
                 {
-                    _playerSprite.MoveRight();
+                    _camera.Position += new Vector2(10.0f, 0);
                 }
 
                 if (cmd is DevInputCommand.DevShoot)
