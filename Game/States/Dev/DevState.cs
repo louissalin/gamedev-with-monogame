@@ -122,19 +122,41 @@ namespace Game.States
                     _playerSprite.StopVerticalMoving();
                 }
 
+                KeepPlayerInBounds();
+
                 if (cmd is DevInputCommand.DevShoot)
                 {
                 }
             });
         }
 
+        private void KeepPlayerInBounds()
+        {
+            if (_playerSprite.Position.X < _camera.BoundingRectangle.Left)
+            {
+                _playerSprite.Position = new Vector2(0, _playerSprite.Position.Y);
+            }
+
+            if (_playerSprite.Position.X + _playerSprite.Width > _camera.BoundingRectangle.Right)
+            {
+                _playerSprite.Position = new Vector2(_camera.BoundingRectangle.Right - _playerSprite.Width, _playerSprite.Position.Y);
+            }
+
+            if (_playerSprite.Position.Y < _camera.BoundingRectangle.Top)
+            {
+                _playerSprite.Position = new Vector2(_playerSprite.Position.X, _camera.BoundingRectangle.Top);
+            }
+
+            if (_playerSprite.Position.Y + _playerSprite.Height > _camera.BoundingRectangle.Bottom )
+            {
+                _playerSprite.Position = new Vector2(_playerSprite.Position.X, _camera.BoundingRectangle.Bottom - _playerSprite.Height);
+            }
+        }
+
         public override void UpdateGameState(GameTime gameTime) 
         {
             _playerSprite.Update(gameTime);
             _camera.Position += new Vector2(0, -CAMERA_SPEED);
-
-            Debug.Instance.Log($"Camera: {_camera.Position}");
-            Debug.Instance.Log($"Player: {_playerSprite.Position}");
         }
 
         protected override void SetInputManager()

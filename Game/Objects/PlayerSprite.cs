@@ -14,8 +14,6 @@ namespace Game.Objects
         private Vector2 _playerBoostDownSpeed = new Vector2(0, -6.0f);
         private const float PlayerHorizontalSpeed = 10.0f;
 
-        private Vector2 _playerCurrentUpSpeed;
-
         private const int BB1PosX = 29;
         private const int BB1PosY = 2;
         private const int BB1Width = 57;
@@ -50,6 +48,8 @@ namespace Game.Objects
             }
         }
 
+        public Vector2 CurrentUpSpeed { get; private set; }
+
         public PlayerSprite(Texture2D texture, AnimationData turnLeftAnimation, AnimationData turnRightAnimation) : base(texture)
         {
             AddBoundingBox(new Engine2D.Objects.BoundingBox(new Vector2(BB1PosX, BB1PosY), BB1Width, BB1Height));
@@ -62,7 +62,7 @@ namespace Game.Objects
             _leftToCenterAnimation = _turnLeftAnimation.ReverseAnimation;
             _rightToCenterAnimation = _turnRightAnimation.ReverseAnimation;
 
-            _playerCurrentUpSpeed = _playerNormalUpSpeed;
+            CurrentUpSpeed = _playerNormalUpSpeed;
         }
 
         public void StopMoving()
@@ -82,7 +82,7 @@ namespace Game.Objects
 
         public void StopVerticalMoving()
         {
-            _playerCurrentUpSpeed = _playerNormalUpSpeed;
+            CurrentUpSpeed = _playerNormalUpSpeed;
         }
 
         public void MoveLeft()
@@ -107,17 +107,17 @@ namespace Game.Objects
 
         public void MoveUp()
         {
-            _playerCurrentUpSpeed = _playerBoostUpSpeed;
+            CurrentUpSpeed = _playerBoostUpSpeed;
         }
 
         public void MoveDown()
         {
-            _playerCurrentUpSpeed = _playerBoostDownSpeed;
+            CurrentUpSpeed = _playerBoostDownSpeed;
         }
 
         public void Update(GameTime gametime)
         {
-            Position += _playerCurrentUpSpeed;
+            Position += CurrentUpSpeed;
 
             if (_currentAnimation != null)
             {
