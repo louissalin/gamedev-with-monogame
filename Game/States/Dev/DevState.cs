@@ -3,6 +3,9 @@ using Engine2D.States;
 using Game.Input;
 using Game.Objects;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
+using MonoGame.Extended.ViewportAdapters;
 using System.Collections.Generic;
 
 namespace Game.States
@@ -12,60 +15,33 @@ namespace Game.States
     /// </summary>
     public class DevState : BaseGameState
     {
-        private const string TurretTexture = "Sprites/Turrets/Tower";
-        private const string TurretMG2Texture = "Sprites/Turrets/MG2";
-        private const string TurretBulletTexture = "Sprites/Turrets/Bullet_MG";
-
         private const string PlayerAnimationTurnLeft = "Sprites/Animations/FighterSpriteTurnLeft";
         private const string PlayerAnimationTurnRight = "Sprites/Animations/FighterSpriteTurnRight";
         private const string PlayerFighter = "Sprites/Animations/FighterSpriteSheet";
         private PlayerSprite _playerSprite;
 
-        private TurretSprite _turret;
-
-        private List<TurretBulletSprite> _bullets = new List<TurretBulletSprite>();
+        private OrthographicCamera _camera;
 
         public override void LoadContent()
         {
-            _turret = new TurretSprite(LoadTexture(TurretTexture), LoadTexture(TurretMG2Texture));
-            _turret.MoveSpeed = 0;
-            _turret.Position = new Vector2(605, 200);
-            _turret.OnTurretShoots += _turret_OnTurretShoots;
-            _turret.Activate();
-            AddGameObject(_turret);
+            var viewportAdapter = new DefaultViewportAdapter(_graphicsDevice);
+            _camera = new OrthographicCamera(viewportAdapter);
 
-            var turnLeftAnimation = LoadAnimation(PlayerAnimationTurnLeft);
-            var turnRightAnimation = LoadAnimation(PlayerAnimationTurnRight);
-            _playerSprite = new PlayerSprite(LoadTexture(PlayerFighter), turnLeftAnimation, turnRightAnimation);
-            // position the player in the middle of the screen, at the bottom, leaving a slight gap at the bottom
-            var playerXPos = _viewportWidth / 2 - _playerSprite.Width / 2;
-            var playerYPos = _viewportHeight - _playerSprite.Height - 30;
-            _playerSprite.Position = new Vector2(playerXPos, playerYPos);
-            AddGameObject(_playerSprite);
+            _playerSprite = new PlayerSprite(LoadTexture(PlayerFighter),
+                                             LoadAnimation(PlayerAnimationTurnLeft),
+                                             LoadAnimation(PlayerAnimationTurnRight));
+
+            _playerSprite.Position = new Vector2(0, 0);
         }
 
-        private void _turret_OnTurretShoots(object sender, Gameplay.GameplayEvents.TurretShoots e)
+        public override void Render(SpriteBatch spriteBatch)
         {
-            // create bullet1
-            var bullet1 = new TurretBulletSprite(LoadTexture(TurretBulletTexture));
-            bullet1.Angle = e.Angle;
-            bullet1.Direction = e.Direction;
-            bullet1.Direction.Normalize();
-            bullet1.Position = e.Bullet1Position;
-            bullet1.zIndex = -10;
+            var transformMatrix = _camera.GetViewMatrix();
+            // TODO: try above with parallax of Vector.Zero
 
-            var bullet2 = new TurretBulletSprite(LoadTexture(TurretBulletTexture));
-            bullet2.Angle = e.Angle;
-            bullet2.Direction = e.Direction;
-            bullet2.Direction.Normalize();
-            bullet2.Position = e.Bullet2Position;
-            bullet2.zIndex = -10;
-
-            AddGameObject(bullet1);
-            AddGameObject(bullet2);
-
-            _bullets.Add(bullet1);
-            _bullets.Add(bullet2);
+            spriteBatch.Begin(transformMatrix: transformMatrix);
+                _playerSprite.Render(spriteBatch);
+            spriteBatch.End();
         }
 
         public override void HandleInput(GameTime gameTime)
@@ -95,13 +71,6 @@ namespace Game.States
 
         public override void UpdateGameState(GameTime gameTime) 
         {
-            _playerSprite.Update(gameTime);
-            _turret.Update(gameTime, _playerSprite.CenterPosition);
-
-            foreach (var bullet in _bullets)
-            {
-                bullet.Update();
-            }
         }
 
         protected override void SetInputManager()

@@ -19,18 +19,21 @@ namespace Engine2D.States
         protected ContentManager _contentManager;
         protected int _viewportHeight;
         protected int _viewportWidth;
+        protected GraphicsDevice _graphicsDevice;
+        protected GameWindow _window;
         protected SoundManager _soundManager = new SoundManager();
 
         protected readonly List<BaseGameObject> _gameObjects = new List<BaseGameObject>();
 
         protected InputManager InputManager {get; set;}
 
-        public void Initialize(ContentManager contentManager, int viewportWidth, int viewportHeight)
+        public void Initialize(ContentManager contentManager, GameWindow window, GraphicsDevice graphicsDevice)
         {
             _contentManager = contentManager;
-            _viewportHeight = viewportHeight;
-            _viewportWidth = viewportWidth;
-
+            _viewportHeight = graphicsDevice.Viewport.Height;
+            _viewportWidth = graphicsDevice.Viewport.Width;
+            _graphicsDevice = graphicsDevice;
+            _window = window;
             SetInputManager();
         }
 
@@ -103,6 +106,8 @@ namespace Engine2D.States
 
         public virtual void Render(SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin();
+
             foreach (var gameObject in _gameObjects.Where(a => a != null).OrderBy(a => a.zIndex))
             {
                 if (Debug.Instance.IsDebugMode)
@@ -112,6 +117,8 @@ namespace Engine2D.States
 
                 gameObject.Render(spriteBatch);
             }
+
+            spriteBatch.End();
         }
     }
 }

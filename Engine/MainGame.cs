@@ -12,8 +12,8 @@ namespace Engine2D
     {
         private BaseGameState _currentGameState;
 
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        GraphicsDeviceManager _graphics;
+        SpriteBatch _spriteBatch;
 
         private RenderTarget2D _renderTarget;
         private Rectangle _renderScaleRectangle;
@@ -27,7 +27,7 @@ namespace Engine2D
         public MainGame(int width, int height, BaseGameState firstGameState, bool debugMode)
         {
             Content.RootDirectory = "Content";
-            graphics = new GraphicsDeviceManager(this);
+            _graphics = new GraphicsDeviceManager(this);
 
             _firstGameState = firstGameState;
             _DesignedResolutionWidth = width;
@@ -46,13 +46,13 @@ namespace Engine2D
         /// </summary>
         protected override void Initialize()
         {
-            graphics.PreferredBackBufferWidth = _DesignedResolutionWidth;
-            graphics.PreferredBackBufferHeight = _DesignedResolutionHeight;
-            graphics.IsFullScreen = false;
-            graphics.SynchronizeWithVerticalRetrace = false;
-            graphics.ApplyChanges();
+            _graphics.PreferredBackBufferWidth = _DesignedResolutionWidth;
+            _graphics.PreferredBackBufferHeight = _DesignedResolutionHeight;
+            _graphics.IsFullScreen = false;
+            _graphics.SynchronizeWithVerticalRetrace = false;
+            _graphics.ApplyChanges();
 
-            _renderTarget = new RenderTarget2D(graphics.GraphicsDevice, _DesignedResolutionWidth, _DesignedResolutionHeight, false,
+            _renderTarget = new RenderTarget2D(_graphics.GraphicsDevice, _DesignedResolutionWidth, _DesignedResolutionHeight, false,
                 SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.DiscardContents);
 
             _renderScaleRectangle = GetScaleRectangle();
@@ -96,7 +96,7 @@ namespace Engine2D
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             SwitchGameState(_firstGameState);
         }
@@ -117,7 +117,7 @@ namespace Engine2D
 
             _currentGameState = gameState;
 
-            _currentGameState.Initialize(Content, graphics.GraphicsDevice.Viewport.Width, graphics.GraphicsDevice.Viewport.Height);
+            _currentGameState.Initialize(Content, Window, GraphicsDevice);
 
             _currentGameState.LoadContent();
 
@@ -168,22 +168,18 @@ namespace Engine2D
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
-
-            _currentGameState.Render(spriteBatch);
-
-            spriteBatch.End();
+            _currentGameState.Render(_spriteBatch);
 
             // Now render the scaled content
-            graphics.GraphicsDevice.SetRenderTarget(null);
+            _graphics.GraphicsDevice.SetRenderTarget(null);
 
-            graphics.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1.0f, 0);
+            _graphics.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1.0f, 0);
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque);
+            _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque);
 
-            spriteBatch.Draw(_renderTarget, _renderScaleRectangle, Color.White);
+            _spriteBatch.Draw(_renderTarget, _renderScaleRectangle, Color.White);
 
-            spriteBatch.End();
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
