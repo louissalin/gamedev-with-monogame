@@ -1,4 +1,5 @@
-﻿using Engine2D.Input;
+﻿using Engine2D;
+using Engine2D.Input;
 using Engine2D.States;
 using Game.Input;
 using Game.Objects;
@@ -6,7 +7,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.ViewportAdapters;
-using System.Collections.Generic;
 
 namespace Game.States
 {
@@ -21,6 +21,8 @@ namespace Game.States
         private PlayerSprite _playerSprite;
 
         private OrthographicCamera _camera;
+
+        private const float CAMERA_SPEED = 10.0f;
 
         public override void LoadContent()
         {
@@ -90,6 +92,35 @@ namespace Game.States
                     _camera.Rotate(0.05f);
                 }
 
+                if (cmd is DevInputCommand.DevPlayerUp)
+                {
+                    _playerSprite.MoveUp();
+                }
+
+                if (cmd is DevInputCommand.DevPlayerDown)
+                {
+                    _playerSprite.MoveDown();
+                }
+
+                if (cmd is DevInputCommand.DevPlayerRight)
+                {
+                    _playerSprite.MoveRight();
+                }
+
+                if (cmd is DevInputCommand.DevPlayerLeft)
+                {
+                    _playerSprite.MoveLeft();
+                }
+
+                if (cmd is DevInputCommand.DevPlayerStopsMovingHorizontal)
+                {
+                    _playerSprite.StopMoving();
+                }
+
+                if (cmd is DevInputCommand.DevPlayerStopsMovingVertical)
+                {
+                    _playerSprite.StopVerticalMoving();
+                }
 
                 if (cmd is DevInputCommand.DevShoot)
                 {
@@ -99,6 +130,11 @@ namespace Game.States
 
         public override void UpdateGameState(GameTime gameTime) 
         {
+            _playerSprite.Update(gameTime);
+            _camera.Position += new Vector2(0, -CAMERA_SPEED);
+
+            Debug.Instance.Log($"Camera: {_camera.Position}");
+            Debug.Instance.Log($"Player: {_playerSprite.Position}");
         }
 
         protected override void SetInputManager()

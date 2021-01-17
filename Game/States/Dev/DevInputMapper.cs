@@ -60,6 +60,32 @@ namespace Game.Input
                 commands.Add(new DevInputCommand.DevCamRotateLeft());
             }
 
+            if (state.IsKeyDown(Keys.W))
+            {
+                commands.Add(new DevInputCommand.DevPlayerUp());
+            }
+            else if (state.IsKeyDown(Keys.S))
+            {
+                commands.Add(new DevInputCommand.DevPlayerDown());
+            }
+            else
+            {
+                commands.Add(new DevInputCommand.DevPlayerStopsMovingVertical());
+            }
+
+            if (state.IsKeyDown(Keys.A))
+            {
+                commands.Add(new DevInputCommand.DevPlayerLeft());
+            } 
+            else if (state.IsKeyDown(Keys.D))
+            {
+                commands.Add(new DevInputCommand.DevPlayerRight());
+            }
+            else
+            {
+                commands.Add(new DevInputCommand.DevPlayerStopsMovingHorizontal());
+            }
+
             if (state.IsKeyDown(Keys.P))
             {
                 commands.Add(new DevInputCommand.DevCamRotateRight());

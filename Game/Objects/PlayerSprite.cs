@@ -3,14 +3,18 @@ using Engine2D.Objects.Animations;
 using Engine2D.PipelineExtensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace Game.Objects
 {
     public class PlayerSprite : BaseGameObject
     {
+        // Camera speed is -10
+        private Vector2 _playerNormalUpSpeed = new Vector2(0, -8.0f);
+        private Vector2 _playerBoostUpSpeed = new Vector2(0, -15.0f);
+        private Vector2 _playerBoostDownSpeed = new Vector2(0, -6.0f);
         private const float PlayerHorizontalSpeed = 10.0f;
-        private const float PlayerVerticalSpeed = 8.0f;
+
+        private Vector2 _playerCurrentUpSpeed;
 
         private const int BB1PosX = 29;
         private const int BB1PosY = 2;
@@ -57,6 +61,8 @@ namespace Game.Objects
             _turnRightAnimation = new Animation(turnRightAnimation);
             _leftToCenterAnimation = _turnLeftAnimation.ReverseAnimation;
             _rightToCenterAnimation = _turnRightAnimation.ReverseAnimation;
+
+            _playerCurrentUpSpeed = _playerNormalUpSpeed;
         }
 
         public void StopMoving()
@@ -72,6 +78,11 @@ namespace Game.Objects
                 _currentAnimation = _rightToCenterAnimation;
                 _movingRight = false;
             }
+        }
+
+        public void StopVerticalMoving()
+        {
+            _playerCurrentUpSpeed = _playerNormalUpSpeed;
         }
 
         public void MoveLeft()
@@ -96,16 +107,18 @@ namespace Game.Objects
 
         public void MoveUp()
         {
-            Position = new Vector2(Position.X, Position.Y - PlayerVerticalSpeed);
+            _playerCurrentUpSpeed = _playerBoostUpSpeed;
         }
 
         public void MoveDown()
         {
-            Position = new Vector2(Position.X, Position.Y + PlayerVerticalSpeed);
+            _playerCurrentUpSpeed = _playerBoostDownSpeed;
         }
-        
+
         public void Update(GameTime gametime)
         {
+            Position += _playerCurrentUpSpeed;
+
             if (_currentAnimation != null)
             {
                 _currentAnimation.Update(gametime);

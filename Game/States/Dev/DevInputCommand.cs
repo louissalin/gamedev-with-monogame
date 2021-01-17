@@ -18,5 +18,12 @@ namespace Game.Input
         public class DevCamDown : DevInputCommand { }
         public class DevCamRotateLeft : DevInputCommand { }
         public class DevCamRotateRight : DevInputCommand { }
+
+        public class DevPlayerLeft : DevInputCommand { }
+        public class DevPlayerRight : DevInputCommand { }
+        public class DevPlayerUp : DevInputCommand { }
+        public class DevPlayerDown : DevInputCommand { }
+        public class DevPlayerStopsMovingHorizontal : DevInputCommand { }
+        public class DevPlayerStopsMovingVertical : DevInputCommand { }
     }
 }
