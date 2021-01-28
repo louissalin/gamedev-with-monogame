@@ -108,15 +108,7 @@ namespace Engine2D.States
         {
             spriteBatch.Begin();
 
-            foreach (var gameObject in _gameObjects.Where(a => a != null).OrderBy(a => a.zIndex))
-            {
-                if (Debug.Instance.IsDebugMode)
-                {
-                    gameObject.RenderBoundingBoxes(spriteBatch);
-                }
-
-                gameObject.Render(spriteBatch);
-            }
+            // TODO: add scenes and render visible scenes
 
             spriteBatch.End();
         }
