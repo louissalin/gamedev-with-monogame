@@ -30,7 +30,7 @@ namespace Game
             //Strings.Culture = CultureInfo.GetCultureInfo(JAPANESE);
 
             //using (var game = new MainGame(WIDTH, HEIGHT, new SplashState(), DEBUG))
-            using (var game = new MainGame(WIDTH, HEIGHT, new DevState(), DEBUG))
+            using (var game = new MainGame(WIDTH, HEIGHT, new TestCameraState(), DEBUG))
             {
                 game.IsFixedTimeStep = true;
                 game.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 50);
