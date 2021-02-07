@@ -13,7 +13,7 @@ namespace GameEditor
         private bool _cameraDrag;
         private int _mouseX;
         private int _mouseY;
-        private TextureAtlas _atlas;
+        private TextureAtlas _groundAtlas;
 
         protected override void Initialize()
         {
@@ -92,7 +92,12 @@ namespace GameEditor
                 { "beach_bm_01", new Rectangle(640, 896, 128, 128) },
             };
 
-            _atlas = new TextureAtlas("ground", _texture, regions);
+            _groundAtlas = new TextureAtlas("ground", _texture, regions);
+
+            foreach(var regionName in regions.Keys)
+            {
+                var x = regions[regionName]
+            }
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -145,7 +150,7 @@ namespace GameEditor
 
             Editor.BeginCamera2D();
             //Editor.spriteBatch.Draw(_texture, new Rectangle(0, 0, _texture.Width, _texture.Height), Color.White);
-            Editor.spriteBatch.Draw(_texture, new Rectangle(400, 400, 128, 128), _atlas["beach_bm_01_grass"].Bounds, Color.White);
+            Editor.spriteBatch.Draw(_texture, new Rectangle(400, 400, 128, 128), _groundAtlas["beach_bm_01_grass"].Bounds, Color.White);
             Editor.EndCamera2D();
         }
     }
