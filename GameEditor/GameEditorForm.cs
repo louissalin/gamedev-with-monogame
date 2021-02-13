@@ -14,11 +14,18 @@ namespace GameEditor
         private void GameControl_OnInitialized(object sender, System.EventArgs e)
         {
             InitializeListsOfTiles();
+            groundListView.ItemSelectionChanged += GroundListView_ItemSelectionChanged;
+        }
+
+        private void GroundListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            gameControl.CurrentAtlasName = GameControl.GROUND;
+            gameControl.CurrentTileName = e.Item.Name;
         }
 
         private void InitializeListsOfTiles()
         {
-            foreach (var tile in gameControl.GroundAtlas)
+            foreach (var tile in gameControl.Atlas[GameControl.GROUND])
             {
                 groundListView.Items.Add(tile.Name);
             }
