@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.TextureAtlases;
 using MonoGame.Forms.Controls;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -13,7 +14,11 @@ namespace GameEditor
         private bool _cameraDrag;
         private int _mouseX;
         private int _mouseY;
-        private TextureAtlas _groundAtlas;
+
+        public TextureAtlas GroundAtlas;
+        public TextureAtlas BuildingsAtlas;
+
+        public event EventHandler<EventArgs> OnInitialized;
 
         protected override void Initialize()
         {
@@ -92,12 +97,9 @@ namespace GameEditor
                 { "beach_bm_01", new Rectangle(640, 896, 128, 128) },
             };
 
-            _groundAtlas = new TextureAtlas("ground", _texture, regions);
+            GroundAtlas = new TextureAtlas("ground", _texture, regions);
 
-            foreach(var regionName in regions.Keys)
-            {
-                var x = regions[regionName]
-            }
+            OnInitialized(this, EventArgs.Empty);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -112,6 +114,13 @@ namespace GameEditor
             if (e.Button == MouseButtons.Left)
             {
                 // put down a tile
+                // TODO
+            }
+
+            
+            if (e.Button == MouseButtons.Right)
+            {
+                // remove tile
                 // TODO
             }
         }
@@ -150,7 +159,7 @@ namespace GameEditor
 
             Editor.BeginCamera2D();
             //Editor.spriteBatch.Draw(_texture, new Rectangle(0, 0, _texture.Width, _texture.Height), Color.White);
-            Editor.spriteBatch.Draw(_texture, new Rectangle(400, 400, 128, 128), _groundAtlas["beach_bm_01_grass"].Bounds, Color.White);
+            Editor.spriteBatch.Draw(_texture, new Rectangle(400, 400, 128, 128), GroundAtlas["beach_bm_01_grass"].Bounds, Color.White);
             Editor.EndCamera2D();
         }
     }

@@ -29,23 +29,14 @@ namespace GameEditor
         /// </summary>
         private void InitializeComponent()
         {
-            this.gameControl1 = new GameEditor.GameControl();
             this.objectTabControl = new System.Windows.Forms.TabControl();
             this.groundTabPage = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groundListView = new System.Windows.Forms.ListView();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.gameControl = new GameEditor.GameControl();
             this.objectTabControl.SuspendLayout();
             this.groundTabPage.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // gameControl1
-            // 
-            this.gameControl1.Location = new System.Drawing.Point(12, 12);
-            this.gameControl1.MouseHoverUpdatesOnly = false;
-            this.gameControl1.Name = "gameControl1";
-            this.gameControl1.Size = new System.Drawing.Size(1269, 1018);
-            this.gameControl1.TabIndex = 0;
-            this.gameControl1.Text = "gameControl1";
             // 
             // objectTabControl
             // 
@@ -68,6 +59,17 @@ namespace GameEditor
             this.groundTabPage.Text = "ground";
             this.groundTabPage.UseVisualStyleBackColor = true;
             // 
+            // groundListView
+            // 
+            this.groundListView.HideSelection = false;
+            this.groundListView.Location = new System.Drawing.Point(6, 3);
+            this.groundListView.Name = "groundListView";
+            this.groundListView.Size = new System.Drawing.Size(291, 980);
+            this.groundListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.groundListView.TabIndex = 0;
+            this.groundListView.UseCompatibleStateImageBehavior = false;
+            this.groundListView.View = System.Windows.Forms.View.List;
+            // 
             // tabPage2
             // 
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
@@ -78,14 +80,14 @@ namespace GameEditor
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // groundListView
+            // gameControl
             // 
-            this.groundListView.HideSelection = false;
-            this.groundListView.Location = new System.Drawing.Point(6, 3);
-            this.groundListView.Name = "groundListView";
-            this.groundListView.Size = new System.Drawing.Size(291, 980);
-            this.groundListView.TabIndex = 0;
-            this.groundListView.UseCompatibleStateImageBehavior = false;
+            this.gameControl.Location = new System.Drawing.Point(12, 12);
+            this.gameControl.MouseHoverUpdatesOnly = false;
+            this.gameControl.Name = "gameControl";
+            this.gameControl.Size = new System.Drawing.Size(1269, 1018);
+            this.gameControl.TabIndex = 0;
+            this.gameControl.Text = "gameControl";
             // 
             // GameEditorForm
             // 
@@ -93,7 +95,7 @@ namespace GameEditor
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1610, 1042);
             this.Controls.Add(this.objectTabControl);
-            this.Controls.Add(this.gameControl1);
+            this.Controls.Add(this.gameControl);
             this.Name = "GameEditorForm";
             this.Text = "Game Editor";
             this.objectTabControl.ResumeLayout(false);
@@ -104,7 +106,7 @@ namespace GameEditor
 
         #endregion
 
-        private GameControl gameControl1;
+        private GameControl gameControl;
         private System.Windows.Forms.TabControl objectTabControl;
         private System.Windows.Forms.TabPage groundTabPage;
         private System.Windows.Forms.ListView groundListView;

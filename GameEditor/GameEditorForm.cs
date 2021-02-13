@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace GameEditor
 {
@@ -15,6 +7,21 @@ namespace GameEditor
         public GameEditorForm()
         {
             InitializeComponent();
+
+            gameControl.OnInitialized += GameControl_OnInitialized;
+        }
+
+        private void GameControl_OnInitialized(object sender, System.EventArgs e)
+        {
+            InitializeListsOfTiles();
+        }
+
+        private void InitializeListsOfTiles()
+        {
+            foreach (var tile in gameControl.GroundAtlas)
+            {
+                groundListView.Items.Add(tile.Name);
+            }
         }
     }
 }
