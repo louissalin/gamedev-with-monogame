@@ -143,7 +143,7 @@ namespace GameEditor
 
             if (e.Button == MouseButtons.Left)
             {
-                AddTile(e.Location);
+                AddTile();
             }
 
             
@@ -154,7 +154,7 @@ namespace GameEditor
             }
         }
 
-        private void AddTile(System.Drawing.Point location)
+        private void AddTile()
         {
             TextureAtlas atlas;
             if (CurrentAtlasName == GROUND)
@@ -213,28 +213,31 @@ namespace GameEditor
         {
             base.Draw();
 
+            var backgroundRectangle = new Texture2D(GraphicsDevice, 1, 1);
+            backgroundRectangle.SetData(new[] { Color.CadetBlue });
+
             var transformMatrix = _camera.GetViewMatrix();
 
             Editor.spriteBatch.Begin(transformMatrix: transformMatrix);
+                Editor.spriteBatch.Draw(backgroundRectangle, new Rectangle(-1, -1, TILE_SIZE * LEVEL_WIDTH + 1, TILE_SIZE * LEVEL_LENGTH + 1), Color.White);
 
-            for (int y = 0; y < LEVEL_LENGTH; y++)
-            {
-                for (int x = 0; x < LEVEL_WIDTH; x++)
+                for (int y = 0; y < LEVEL_LENGTH; y++)
                 {
-                    var cell = _groundGrid[x, y];
-                    if (cell != null)
+                    for (int x = 0; x < LEVEL_WIDTH; x++)
                     {
-                        var rectangle = new Rectangle(
-                            x * TILE_SIZE,
-                            y * TILE_SIZE,
-                            TILE_SIZE, 
-                            TILE_SIZE
-                        );
-                        Editor.spriteBatch.Draw(_texture, rectangle, Atlas[GROUND][cell].Bounds, Color.White);
+                        var cell = _groundGrid[x, y];
+                        if (cell != null)
+                        {
+                            var rectangle = new Rectangle(
+                                x * TILE_SIZE,
+                                y * TILE_SIZE,
+                                TILE_SIZE, 
+                                TILE_SIZE
+                            );
+                            Editor.spriteBatch.Draw(_texture, rectangle, Atlas[GROUND][cell].Bounds, Color.White);
+                        }
                     }
                 }
-            }
-
             Editor.spriteBatch.End();
 
             //Editor.BeginCamera2D();
