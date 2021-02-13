@@ -145,13 +145,17 @@ namespace GameEditor
             {
                 AddTile();
             }
-
             
             if (e.Button == MouseButtons.Right)
             {
-                // remove tile
-                // TODO
+                RemoveTile();
             }
+        }
+
+        private void RemoveTile()
+        {
+            var point = GetGridCoordinates();
+            _groundGrid[point.X, point.Y] = null;
         }
 
         private void AddTile()
@@ -168,16 +172,23 @@ namespace GameEditor
 
             if (CurrentTileName != null && CurrentTileName.Length > 0)
             {
-                var worldCoords = _camera.ScreenToWorld(_mouseX, _mouseY);
-                var gridX = (int) worldCoords.X / TILE_SIZE;
-                var gridY = (int) worldCoords.Y / TILE_SIZE;
+                var point = GetGridCoordinates();
 
-                if (gridX >= 0 && gridX < LEVEL_WIDTH &&
-                    gridY >= 0 && gridY < LEVEL_LENGTH)
+                if (point.X >= 0 && point.X < LEVEL_WIDTH &&
+                    point.Y >= 0 && point.Y < LEVEL_LENGTH)
                 {
-                    _groundGrid[gridX, gridY] = CurrentTileName;
+                    _groundGrid[point.X, point.Y] = CurrentTileName;
                 }
             }
+        }
+
+        private Point GetGridCoordinates()
+        {
+            var worldCoords = _camera.ScreenToWorld(_mouseX, _mouseY);
+            var gridX = (int) worldCoords.X / TILE_SIZE;
+            var gridY = (int) worldCoords.Y / TILE_SIZE;
+
+            return new Point(gridX, gridY);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
