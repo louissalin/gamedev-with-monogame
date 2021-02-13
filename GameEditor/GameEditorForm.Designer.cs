@@ -42,7 +42,7 @@ namespace GameEditor
             // 
             this.objectTabControl.Controls.Add(this.groundTabPage);
             this.objectTabControl.Controls.Add(this.tabPage2);
-            this.objectTabControl.Location = new System.Drawing.Point(1298, 12);
+            this.objectTabControl.Location = new System.Drawing.Point(1472, 12);
             this.objectTabControl.Name = "objectTabControl";
             this.objectTabControl.SelectedIndex = 0;
             this.objectTabControl.Size = new System.Drawing.Size(311, 1018);
@@ -87,7 +87,7 @@ namespace GameEditor
             this.gameControl.Location = new System.Drawing.Point(12, 12);
             this.gameControl.MouseHoverUpdatesOnly = false;
             this.gameControl.Name = "gameControl";
-            this.gameControl.Size = new System.Drawing.Size(1280, 720);
+            this.gameControl.Size = new System.Drawing.Size(1458, 865);
             this.gameControl.TabIndex = 0;
             this.gameControl.Text = "gameControl";
             // 
@@ -95,7 +95,7 @@ namespace GameEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1613, 1042);
+            this.ClientSize = new System.Drawing.Size(1776, 1042);
             this.Controls.Add(this.objectTabControl);
             this.Controls.Add(this.gameControl);
             this.Name = "GameEditorForm";

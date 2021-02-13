@@ -14,6 +14,8 @@ namespace GameEditor
     {
         public const string GROUND = "ground";
         public const int TILE_SIZE = 128;
+        public const int LEVEL_LENGTH = 100;
+        public const int LEVEL_WIDTH = 10;
 
         private OrthographicCamera _camera;
         private Texture2D _texture;
@@ -39,8 +41,7 @@ namespace GameEditor
 
             _texture = Editor.Content.Load<Texture2D>("Atlas/ground");
             CurrentAtlasName = GROUND;
-            MouseClick += GameControl_MouseClick;
-            _groundGrid = new string[10, 100];
+            _groundGrid = new string[LEVEL_WIDTH, LEVEL_LENGTH];
 
             // load atlas
             Atlas = new Dictionary<string, TextureAtlas>();
@@ -121,27 +122,6 @@ namespace GameEditor
             OnInitialized(this, EventArgs.Empty);
         }
 
-        private void GameControl_MouseClick(object sender, MouseEventArgs e)
-        {
-            TextureAtlas atlas = null;
-            if (CurrentAtlasName == GROUND)
-            {
-                atlas = Atlas[GROUND];
-            }
-            else
-            {
-                return;
-            }
-
-            if (CurrentTileName != null && CurrentTileName.Length > 0)
-            {
-                var tile = atlas[CurrentTileName];
-
-
-                // TODO: need to add to grid...
-            }
-        }
-
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
@@ -153,8 +133,7 @@ namespace GameEditor
 
             if (e.Button == MouseButtons.Left)
             {
-                // put down a tile
-                // TODO
+                AddTile(e.Location);
             }
 
             
@@ -162,6 +141,32 @@ namespace GameEditor
             {
                 // remove tile
                 // TODO
+            }
+        }
+
+        private void AddTile(System.Drawing.Point location)
+        {
+            TextureAtlas atlas;
+            if (CurrentAtlasName == GROUND)
+            {
+                atlas = Atlas[GROUND];
+            }
+            else
+            {
+                return;
+            }
+
+            if (CurrentTileName != null && CurrentTileName.Length > 0)
+            {
+                var worldCoords = _camera.ScreenToWorld(_mouseX, _mouseY);
+                var gridX = (int) worldCoords.X / TILE_SIZE;
+                var gridY = (int) ((LEVEL_LENGTH * TILE_SIZE) - _camera.BoundingRectangle.Height + worldCoords.Y) / TILE_SIZE;
+
+                if (gridX > 0 && gridX <= LEVEL_WIDTH &&
+                    gridY > 0 && gridY <= LEVEL_LENGTH)
+                {
+                    _groundGrid[gridX, gridY] = CurrentTileName;
+                }
             }
         }
 

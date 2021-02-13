@@ -20,7 +20,7 @@ namespace GameEditor
         private void GroundListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             gameControl.CurrentAtlasName = GameControl.GROUND;
-            gameControl.CurrentTileName = e.Item.Name;
+            gameControl.CurrentTileName = e.Item.Text;
         }
 
         private void InitializeListsOfTiles()
