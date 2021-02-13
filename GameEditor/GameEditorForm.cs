@@ -16,11 +16,17 @@ namespace GameEditor
         {
             InitializeListsOfTiles();
             groundListView.ItemSelectionChanged += GroundListView_ItemSelectionChanged;
+            objectTabControl.SelectedIndexChanged += ObjectTabControl_SelectedIndexChanged;
+        }
+
+        private void ObjectTabControl_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            gameControl.CurrentAtlasName = objectTabControl.SelectedTab.Text;
+            gameControl.CurrentTileName = null;
         }
 
         private void GroundListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            gameControl.CurrentAtlasName = GameControl.GROUND;
             gameControl.CurrentTileName = e.Item.Text;
         }
 

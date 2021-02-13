@@ -13,6 +13,9 @@ namespace GameEditor
     public class GameControl : MonoGameControl
     {
         public const string GROUND = "ground";
+        public const string BUILDINGS = "buildings";
+        public const string OBJECTS = "objects";
+
         public const int TILE_SIZE = 128;
         public const int LEVEL_LENGTH = 100;
         public const int LEVEL_WIDTH = 10;
@@ -24,6 +27,8 @@ namespace GameEditor
         private int _mouseY;
 
         private string[,] _groundGrid;
+        private string[,] _buildingsGrid;
+        private string[,] _objectsGrid;
 
         public Dictionary<string, TextureAtlas> Atlas { get; private set; }
 
@@ -40,9 +45,11 @@ namespace GameEditor
             _camera = new OrthographicCamera(viewportAdapter);
             ResetCameraPosition();
 
-            _texture = Editor.Content.Load<Texture2D>("Atlas/ground");
             CurrentAtlasName = GROUND;
+            _texture = Editor.Content.Load<Texture2D>("Atlas/ground");
             _groundGrid = new string[LEVEL_WIDTH, LEVEL_LENGTH];
+            _buildingsGrid = new string[LEVEL_WIDTH, LEVEL_LENGTH];
+            _objectsGrid = new string[LEVEL_WIDTH, LEVEL_LENGTH];
 
             // load atlas
             Atlas = new Dictionary<string, TextureAtlas>();
@@ -123,10 +130,29 @@ namespace GameEditor
             OnInitialized(this, EventArgs.Empty);
         }
 
+        private string[,] GetCurrentGrid()
+        {
+            if (CurrentAtlasName == GROUND)
+            {
+                return _groundGrid;
+            }
+
+            if (CurrentAtlasName == BUILDINGS)
+            {
+                return _buildingsGrid;
+            }
+
+            if (CurrentAtlasName == OBJECTS)
+            {
+                return _objectsGrid;
+            }
+
+            return null;
+        }
+
         private void ResetCameraPosition()
         {
             _camera.Position = new Vector2(
-                //ClientSize.Width / 2,
                 0,
                 LEVEL_LENGTH * TILE_SIZE - ClientSize.Height
             );
@@ -155,21 +181,11 @@ namespace GameEditor
         private void RemoveTile()
         {
             var point = GetGridCoordinates();
-            _groundGrid[point.X, point.Y] = null;
+            GetCurrentGrid()[point.X, point.Y] = null;
         }
 
         private void AddTile()
         {
-            TextureAtlas atlas;
-            if (CurrentAtlasName == GROUND)
-            {
-                atlas = Atlas[GROUND];
-            }
-            else
-            {
-                return;
-            }
-
             if (CurrentTileName != null && CurrentTileName.Length > 0)
             {
                 var point = GetGridCoordinates();
@@ -177,7 +193,7 @@ namespace GameEditor
                 if (point.X >= 0 && point.X < LEVEL_WIDTH &&
                     point.Y >= 0 && point.Y < LEVEL_LENGTH)
                 {
-                    _groundGrid[point.X, point.Y] = CurrentTileName;
+                    GetCurrentGrid()[point.X, point.Y] = CurrentTileName;
                 }
             }
         }
@@ -235,24 +251,26 @@ namespace GameEditor
                 {
                     for (int x = 0; x < LEVEL_WIDTH; x++)
                     {
-                        var cell = _groundGrid[x, y];
-                        if (cell != null)
-                        {
-                            var rectangle = new Rectangle(
-                                x * TILE_SIZE,
-                                y * TILE_SIZE,
-                                TILE_SIZE, 
-                                TILE_SIZE
-                            );
-                            Editor.spriteBatch.Draw(_texture, rectangle, Atlas[GROUND][cell].Bounds, Color.White);
-                        }
+                        DrawGridElement(_groundGrid[x, y], x, y);
+                        DrawGridElement(_buildingsGrid[x, y], x, y);
+                        DrawGridElement(_objectsGrid[x, y], x, y);
                     }
                 }
             Editor.spriteBatch.End();
+        }
 
-            //Editor.BeginCamera2D();
-            //Editor.spriteBatch.Draw(_texture, new Rectangle(400, 400, 128, 128), Atlas[GROUND]["beach_bm_01_grass"].Bounds, Color.White);
-            //Editor.EndCamera2D();
+        private void DrawGridElement(string gridName, int x, int y)
+        {
+            if (gridName != null)
+            {
+                var rectangle = new Rectangle(
+                    x * TILE_SIZE,
+                    y * TILE_SIZE,
+                    TILE_SIZE,
+                    TILE_SIZE
+                );
+                Editor.spriteBatch.Draw(_texture, rectangle, Atlas[GROUND][gridName].Bounds, Color.White);
+            }
         }
     }
 
