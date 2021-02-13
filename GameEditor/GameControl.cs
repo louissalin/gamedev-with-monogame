@@ -38,6 +38,7 @@ namespace GameEditor
 
             var viewportAdapter = new DefaultViewportAdapter(Editor.graphics);
             _camera = new OrthographicCamera(viewportAdapter);
+            ResetCameraPosition();
 
             _texture = Editor.Content.Load<Texture2D>("Atlas/ground");
             CurrentAtlasName = GROUND;
@@ -122,6 +123,15 @@ namespace GameEditor
             OnInitialized(this, EventArgs.Empty);
         }
 
+        private void ResetCameraPosition()
+        {
+            _camera.Position = new Vector2(
+                //ClientSize.Width / 2,
+                0,
+                LEVEL_LENGTH * TILE_SIZE - ClientSize.Height
+            );
+        }
+
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
@@ -160,7 +170,7 @@ namespace GameEditor
             {
                 var worldCoords = _camera.ScreenToWorld(_mouseX, _mouseY);
                 var gridX = (int) worldCoords.X / TILE_SIZE;
-                var gridY = (int) ((LEVEL_LENGTH * TILE_SIZE) - _camera.BoundingRectangle.Height + worldCoords.Y) / TILE_SIZE;
+                var gridY = (int) worldCoords.Y / TILE_SIZE;
 
                 if (gridX > 0 && gridX <= LEVEL_WIDTH &&
                     gridY > 0 && gridY <= LEVEL_LENGTH)
@@ -206,6 +216,7 @@ namespace GameEditor
             var transformMatrix = _camera.GetViewMatrix();
 
             Editor.spriteBatch.Begin(transformMatrix: transformMatrix);
+                //for(int y = )
                 Editor.spriteBatch.Draw(_texture, new Rectangle(400, 400, 128, 128), Atlas[GROUND]["beach_bm_01_grass"].Bounds, Color.White);
             Editor.spriteBatch.End();
 

@@ -8,6 +8,7 @@ namespace GameEditor
         {
             InitializeComponent();
 
+            gameControl.ClientSize = new System.Drawing.Size(1280, 720);
             gameControl.OnInitialized += GameControl_OnInitialized;
         }
 
