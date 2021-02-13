@@ -172,8 +172,8 @@ namespace GameEditor
                 var gridX = (int) worldCoords.X / TILE_SIZE;
                 var gridY = (int) worldCoords.Y / TILE_SIZE;
 
-                if (gridX > 0 && gridX <= LEVEL_WIDTH &&
-                    gridY > 0 && gridY <= LEVEL_LENGTH)
+                if (gridX >= 0 && gridX < LEVEL_WIDTH &&
+                    gridY >= 0 && gridY < LEVEL_LENGTH)
                 {
                     _groundGrid[gridX, gridY] = CurrentTileName;
                 }
@@ -196,7 +196,6 @@ namespace GameEditor
 
             if (_cameraDrag)
             {
-                //Editor.Cam.Move(new Vector2(_mouseX - e.X, _mouseY - e.Y));
                 _camera.Move(new Vector2(_mouseX - e.X, _mouseY - e.Y));
             }
 
@@ -219,7 +218,7 @@ namespace GameEditor
             var transformMatrix = _camera.GetViewMatrix();
 
             Editor.spriteBatch.Begin(transformMatrix: transformMatrix);
-                Editor.spriteBatch.Draw(backgroundRectangle, new Rectangle(-1, -1, TILE_SIZE * LEVEL_WIDTH + 1, TILE_SIZE * LEVEL_LENGTH + 1), Color.White);
+                Editor.spriteBatch.Draw(backgroundRectangle, new Rectangle(-5, -5, TILE_SIZE * LEVEL_WIDTH + 10, TILE_SIZE * LEVEL_LENGTH + 10), Color.White);
 
                 for (int y = 0; y < LEVEL_LENGTH; y++)
                 {
