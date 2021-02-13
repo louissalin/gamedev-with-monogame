@@ -216,8 +216,25 @@ namespace GameEditor
             var transformMatrix = _camera.GetViewMatrix();
 
             Editor.spriteBatch.Begin(transformMatrix: transformMatrix);
-                //for(int y = )
-                Editor.spriteBatch.Draw(_texture, new Rectangle(400, 400, 128, 128), Atlas[GROUND]["beach_bm_01_grass"].Bounds, Color.White);
+
+            for (int y = 0; y < LEVEL_LENGTH; y++)
+            {
+                for (int x = 0; x < LEVEL_WIDTH; x++)
+                {
+                    var cell = _groundGrid[x, y];
+                    if (cell != null)
+                    {
+                        var rectangle = new Rectangle(
+                            x * TILE_SIZE,
+                            y * TILE_SIZE,
+                            TILE_SIZE, 
+                            TILE_SIZE
+                        );
+                        Editor.spriteBatch.Draw(_texture, rectangle, Atlas[GROUND][cell].Bounds, Color.White);
+                    }
+                }
+            }
+
             Editor.spriteBatch.End();
 
             //Editor.BeginCamera2D();
