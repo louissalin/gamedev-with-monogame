@@ -36,9 +36,9 @@ namespace GameEditor
             this.buildingsListView = new System.Windows.Forms.ListView();
             this.objectsTabPage = new System.Windows.Forms.TabPage();
             this.objectsListView = new System.Windows.Forms.ListView();
-            this.gameControl = new GameEditor.GameControl();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonSave = new System.Windows.Forms.Button();
             this.comboLevelNb = new System.Windows.Forms.ComboBox();
+            this.gameControl = new GameEditor.GameControl();
             this.objectTabControl.SuspendLayout();
             this.groundTabPage.SuspendLayout();
             this.buildingsTabPage.SuspendLayout();
@@ -121,25 +121,14 @@ namespace GameEditor
             this.objectsListView.UseCompatibleStateImageBehavior = false;
             this.objectsListView.View = System.Windows.Forms.View.List;
             // 
-            // gameControl
+            // buttonSave
             // 
-            this.gameControl.CurrentAtlasName = null;
-            this.gameControl.CurrentTileName = null;
-            this.gameControl.Location = new System.Drawing.Point(12, 161);
-            this.gameControl.MouseHoverUpdatesOnly = false;
-            this.gameControl.Name = "gameControl";
-            this.gameControl.Size = new System.Drawing.Size(1691, 865);
-            this.gameControl.TabIndex = 0;
-            this.gameControl.Text = "gameControl";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(494, 83);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonSave.Location = new System.Drawing.Point(200, 37);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(75, 23);
+            this.buttonSave.TabIndex = 2;
+            this.buttonSave.Text = "Save";
+            this.buttonSave.UseVisualStyleBackColor = true;
             // 
             // comboLevelNb
             // 
@@ -155,13 +144,24 @@ namespace GameEditor
             this.comboLevelNb.Size = new System.Drawing.Size(121, 24);
             this.comboLevelNb.TabIndex = 3;
             // 
+            // gameControl
+            // 
+            this.gameControl.CurrentAtlasName = null;
+            this.gameControl.CurrentTileName = null;
+            this.gameControl.Location = new System.Drawing.Point(12, 161);
+            this.gameControl.MouseHoverUpdatesOnly = false;
+            this.gameControl.Name = "gameControl";
+            this.gameControl.Size = new System.Drawing.Size(1691, 865);
+            this.gameControl.TabIndex = 0;
+            this.gameControl.Text = "gameControl";
+            // 
             // GameEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2067, 1042);
             this.Controls.Add(this.comboLevelNb);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.objectTabControl);
             this.Controls.Add(this.gameControl);
             this.Name = "GameEditorForm";
@@ -184,7 +184,7 @@ namespace GameEditor
         private System.Windows.Forms.ListView buildingsListView;
         private System.Windows.Forms.TabPage objectsTabPage;
         private System.Windows.Forms.ListView objectsListView;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.ComboBox comboLevelNb;
     }
 }

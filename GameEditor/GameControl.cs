@@ -122,7 +122,19 @@ namespace GameEditor
             var groundAtlas = new TextureAtlas(GROUND, _texture, regions);
             Atlas.Add(GROUND, groundAtlas);
 
+            // start with empty levels
+            for (var i = 0; i < 5; i++)
+            {
+                var newLevel = new GameEditorLevel();
+                _levels.Add(newLevel);
+            }
+
             OnInitialized(this, EventArgs.Empty);
+        }
+
+        internal void SaveCurrentLevel()
+        {
+            GetCurrentLevel().Save(CurrentLevel);
         }
 
         private string[,] GetCurrentGrid()
@@ -147,11 +159,6 @@ namespace GameEditor
 
         private GameEditorLevel GetCurrentLevel()
         {
-            if (_levels.Count < CurrentLevel)
-            {
-                return new GameEditorLevel();
-            }
-
             return _levels[CurrentLevel - 1];
         }
 
