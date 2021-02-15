@@ -33,10 +33,12 @@ namespace GameEditor
             this.groundTabPage = new System.Windows.Forms.TabPage();
             this.groundListView = new System.Windows.Forms.ListView();
             this.buildingsTabPage = new System.Windows.Forms.TabPage();
-            this.gameControl = new GameEditor.GameControl();
-            this.objectsTabPage = new System.Windows.Forms.TabPage();
             this.buildingsListView = new System.Windows.Forms.ListView();
+            this.objectsTabPage = new System.Windows.Forms.TabPage();
             this.objectsListView = new System.Windows.Forms.ListView();
+            this.gameControl = new GameEditor.GameControl();
+            this.button1 = new System.Windows.Forms.Button();
+            this.comboLevelNb = new System.Windows.Forms.ComboBox();
             this.objectTabControl.SuspendLayout();
             this.groundTabPage.SuspendLayout();
             this.buildingsTabPage.SuspendLayout();
@@ -87,27 +89,6 @@ namespace GameEditor
             this.buildingsTabPage.Text = "buildings";
             this.buildingsTabPage.UseVisualStyleBackColor = true;
             // 
-            // gameControl
-            // 
-            this.gameControl.CurrentAtlasName = null;
-            this.gameControl.CurrentTileName = null;
-            this.gameControl.Location = new System.Drawing.Point(12, 12);
-            this.gameControl.MouseHoverUpdatesOnly = false;
-            this.gameControl.Name = "gameControl";
-            this.gameControl.Size = new System.Drawing.Size(1691, 865);
-            this.gameControl.TabIndex = 0;
-            this.gameControl.Text = "gameControl";
-            // 
-            // objectsTabPage
-            // 
-            this.objectsTabPage.Controls.Add(this.objectsListView);
-            this.objectsTabPage.Location = new System.Drawing.Point(4, 25);
-            this.objectsTabPage.Name = "objectsTabPage";
-            this.objectsTabPage.Size = new System.Drawing.Size(303, 989);
-            this.objectsTabPage.TabIndex = 2;
-            this.objectsTabPage.Text = "objects";
-            this.objectsTabPage.UseVisualStyleBackColor = true;
-            // 
             // buildingsListView
             // 
             this.buildingsListView.HideSelection = false;
@@ -118,6 +99,16 @@ namespace GameEditor
             this.buildingsListView.TabIndex = 1;
             this.buildingsListView.UseCompatibleStateImageBehavior = false;
             this.buildingsListView.View = System.Windows.Forms.View.List;
+            // 
+            // objectsTabPage
+            // 
+            this.objectsTabPage.Controls.Add(this.objectsListView);
+            this.objectsTabPage.Location = new System.Drawing.Point(4, 25);
+            this.objectsTabPage.Name = "objectsTabPage";
+            this.objectsTabPage.Size = new System.Drawing.Size(303, 989);
+            this.objectsTabPage.TabIndex = 2;
+            this.objectsTabPage.Text = "objects";
+            this.objectsTabPage.UseVisualStyleBackColor = true;
             // 
             // objectsListView
             // 
@@ -130,11 +121,47 @@ namespace GameEditor
             this.objectsListView.UseCompatibleStateImageBehavior = false;
             this.objectsListView.View = System.Windows.Forms.View.List;
             // 
+            // gameControl
+            // 
+            this.gameControl.CurrentAtlasName = null;
+            this.gameControl.CurrentTileName = null;
+            this.gameControl.Location = new System.Drawing.Point(12, 161);
+            this.gameControl.MouseHoverUpdatesOnly = false;
+            this.gameControl.Name = "gameControl";
+            this.gameControl.Size = new System.Drawing.Size(1691, 865);
+            this.gameControl.TabIndex = 0;
+            this.gameControl.Text = "gameControl";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(494, 83);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // comboLevelNb
+            // 
+            this.comboLevelNb.FormattingEnabled = true;
+            this.comboLevelNb.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+            this.comboLevelNb.Location = new System.Drawing.Point(73, 36);
+            this.comboLevelNb.Name = "comboLevelNb";
+            this.comboLevelNb.Size = new System.Drawing.Size(121, 24);
+            this.comboLevelNb.TabIndex = 3;
+            // 
             // GameEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2067, 1042);
+            this.Controls.Add(this.comboLevelNb);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.objectTabControl);
             this.Controls.Add(this.gameControl);
             this.Name = "GameEditorForm";
@@ -157,6 +184,8 @@ namespace GameEditor
         private System.Windows.Forms.ListView buildingsListView;
         private System.Windows.Forms.TabPage objectsTabPage;
         private System.Windows.Forms.ListView objectsListView;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox comboLevelNb;
     }
 }
 

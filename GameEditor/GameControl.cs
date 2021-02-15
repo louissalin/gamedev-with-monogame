@@ -4,6 +4,7 @@ using MonoGame.Extended;
 using MonoGame.Extended.TextureAtlases;
 using MonoGame.Extended.ViewportAdapters;
 using MonoGame.Forms.Controls;
+using PipelineExtensions;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -17,23 +18,19 @@ namespace GameEditor
         public const string OBJECTS = "objects";
 
         public const int TILE_SIZE = 128;
-        public const int LEVEL_LENGTH = 100;
-        public const int LEVEL_WIDTH = 10;
 
         private OrthographicCamera _camera;
         private Texture2D _texture;
         private bool _cameraDrag;
         private int _mouseX;
         private int _mouseY;
-
-        private string[,] _groundGrid;
-        private string[,] _buildingsGrid;
-        private string[,] _objectsGrid;
+        private List<GameEditorLevel> _levels = new List<GameEditorLevel>();
 
         public Dictionary<string, TextureAtlas> Atlas { get; private set; }
 
         public string CurrentTileName { get; set; }
         public string CurrentAtlasName { get; set; }
+        public int CurrentLevel { get; private set; }
 
         public event EventHandler<EventArgs> OnInitialized;
 
@@ -46,10 +43,8 @@ namespace GameEditor
             ResetCameraPosition();
 
             CurrentAtlasName = GROUND;
+            CurrentLevel = 1;
             _texture = Editor.Content.Load<Texture2D>("Atlas/ground");
-            _groundGrid = new string[LEVEL_WIDTH, LEVEL_LENGTH];
-            _buildingsGrid = new string[LEVEL_WIDTH, LEVEL_LENGTH];
-            _objectsGrid = new string[LEVEL_WIDTH, LEVEL_LENGTH];
 
             // load atlas
             Atlas = new Dictionary<string, TextureAtlas>();
@@ -134,28 +129,38 @@ namespace GameEditor
         {
             if (CurrentAtlasName == GROUND)
             {
-                return _groundGrid;
+                return GetCurrentLevel().GroundGrid;
             }
 
             if (CurrentAtlasName == BUILDINGS)
             {
-                return _buildingsGrid;
+                return GetCurrentLevel().BuildingGrid;
             }
 
             if (CurrentAtlasName == OBJECTS)
             {
-                return _objectsGrid;
+                return GetCurrentLevel().ObjectGrid;
             }
 
             return null;
+        }
+
+        private GameEditorLevel GetCurrentLevel()
+        {
+            if (_levels.Count < CurrentLevel)
+            {
+                return new GameEditorLevel();
+            }
+
+            return _levels[CurrentLevel - 1];
         }
 
         private void ResetCameraPosition()
         {
             _camera.Position = new Vector2(
                 0,
-                LEVEL_LENGTH * TILE_SIZE - ClientSize.Height
-            );
+                GameEditorLevel.LEVEL_LENGTH * TILE_SIZE - ClientSize.Height
+            ); ;
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -190,8 +195,8 @@ namespace GameEditor
             {
                 var point = GetGridCoordinates();
 
-                if (point.X >= 0 && point.X < LEVEL_WIDTH &&
-                    point.Y >= 0 && point.Y < LEVEL_LENGTH)
+                if (point.X >= 0 && point.X < GameEditorLevel.LEVEL_WIDTH &&
+                    point.Y >= 0 && point.Y < GameEditorLevel.LEVEL_LENGTH)
                 {
                     GetCurrentGrid()[point.X, point.Y] = CurrentTileName;
                 }
@@ -245,17 +250,21 @@ namespace GameEditor
             var transformMatrix = _camera.GetViewMatrix();
 
             Editor.spriteBatch.Begin(transformMatrix: transformMatrix);
-                Editor.spriteBatch.Draw(backgroundRectangle, new Rectangle(-5, -5, TILE_SIZE * LEVEL_WIDTH + 10, TILE_SIZE * LEVEL_LENGTH + 10), Color.White);
+            Editor.spriteBatch.Draw(
+                backgroundRectangle, 
+                new Rectangle(-5, -5, TILE_SIZE * GameEditorLevel.LEVEL_WIDTH + 10, 
+                              TILE_SIZE * GameEditorLevel.LEVEL_LENGTH + 10), 
+                Color.White);
 
-                for (int y = 0; y < LEVEL_LENGTH; y++)
+            for (int y = 0; y < GameEditorLevel.LEVEL_LENGTH; y++)
+            {
+                for (int x = 0; x < GameEditorLevel.LEVEL_WIDTH; x++)
                 {
-                    for (int x = 0; x < LEVEL_WIDTH; x++)
-                    {
-                        DrawGridElement(_groundGrid[x, y], x, y);
-                        DrawGridElement(_buildingsGrid[x, y], x, y);
-                        DrawGridElement(_objectsGrid[x, y], x, y);
-                    }
+                    DrawGridElement(GetCurrentLevel().GroundGrid[x, y], x, y);
+                    DrawGridElement(GetCurrentLevel().BuildingGrid[x, y], x, y);
+                    DrawGridElement(GetCurrentLevel().ObjectGrid[x, y], x, y);
                 }
+            }
             Editor.spriteBatch.End();
         }
 

@@ -123,6 +123,12 @@
     <Content Include="SharpDX.dll" />
     <Content Include="SharpDX.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PipelineExtensions\PipelineExtensions.csproj">
+      <Project>{ad91a877-9d25-4d09-a2a2-b5af43f16b8f}</Project>
+      <Name>PipelineExtensions</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MonoGame.Forms.DX.2.4.0\build\MonoGame.Forms.DX.targets" Condition="Exists('..\packages\MonoGame.Forms.DX.2.4.0\build\MonoGame.Forms.DX.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

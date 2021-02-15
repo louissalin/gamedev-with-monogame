@@ -10,6 +10,8 @@ namespace GameEditor
 
             gameControl.ClientSize = new System.Drawing.Size(1280, 720);
             gameControl.OnInitialized += GameControl_OnInitialized;
+
+            comboLevelNb.SelectedIndex = 0;
         }
 
         private void GameControl_OnInitialized(object sender, System.EventArgs e)
