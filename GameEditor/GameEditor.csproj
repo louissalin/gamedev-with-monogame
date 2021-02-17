@@ -132,6 +132,9 @@
     <None Include="Content\Atlas\ground.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\Levels\Level1.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="mgfxc.deps.json" />
     <None Include="mgfxc.runtimeconfig.dev.json" />
     <None Include="mgfxc.runtimeconfig.json" />
@@ -166,6 +169,7 @@
       <Name>PipelineExtensions</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MonoGame.Forms.DX.2.4.0\build\MonoGame.Forms.DX.targets" Condition="Exists('..\packages\MonoGame.Forms.DX.2.4.0\build\MonoGame.Forms.DX.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

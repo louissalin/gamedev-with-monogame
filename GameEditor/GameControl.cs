@@ -131,7 +131,12 @@ namespace GameEditor
             OnInitialized(this, EventArgs.Empty);
         }
 
-        internal void SaveCurrentLevel()
+        public void LoadLevel()
+        {
+            GetCurrentLevel().Load(Editor.Content, CurrentLevel);
+        }
+
+        public void SaveCurrentLevel()
         {
             GetCurrentLevel().Save(CurrentLevel);
         }
@@ -276,7 +281,7 @@ namespace GameEditor
 
         private void DrawGridElement(string gridName, int x, int y)
         {
-            if (gridName != null)
+            if (gridName != null && gridName != "")
             {
                 var rectangle = new Rectangle(
                     x * TILE_SIZE,

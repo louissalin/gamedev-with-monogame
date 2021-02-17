@@ -1,4 +1,6 @@
-﻿using PipelineExtensions;
+﻿using Microsoft.Xna.Framework.Content;
+using PipelineExtensions;
+using System;
 
 namespace GameEditor
 {
@@ -25,9 +27,12 @@ namespace GameEditor
             levelData.Save(levelNb);
         }
 
-        public static void Load(int levelNb)
+        public void Load(ContentManager content, int currentLevel)
         {
-            //TODO
+            var levelData = content.Load<GameEditorLevelData>($"levels/Level{currentLevel}");
+            GroundGrid = levelData.StringToArray(levelData.GroundGrid);
+            BuildingGrid = levelData.StringToArray(levelData.BuildingGrid);
+            ObjectGrid = levelData.StringToArray(levelData.ObjectGrid);
         }
     }
 }

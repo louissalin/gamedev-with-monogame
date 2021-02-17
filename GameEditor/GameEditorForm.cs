@@ -45,5 +45,10 @@ namespace GameEditor
                 groundListView.Items.Add(tile.Name);
             }
         }
+
+        private void buttonLoad_Click(object sender, System.EventArgs e)
+        {
+            gameControl.LoadLevel();
+        }
     }
 }

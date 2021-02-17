@@ -14,6 +14,9 @@ namespace PipelineExtensions
         public int GridLength { get; set; }
 
 
+        // parameterless constructor needed by the pipeline extensions to load the asset
+        public GameEditorLevelData() { }
+
         public GameEditorLevelData(int gridWidth, int gridLength, 
                                    string[,] groundGrid, string[,] buildingGrid, 
                                    string[,] objectGrid)
@@ -38,6 +41,23 @@ namespace PipelineExtensions
             return string.Join(",", lines);
         }
 
+        public string[,] StringToArray(string gridData)
+        {
+            var grid = new string[GridWidth, GridLength];
+            var allData = gridData.Split(',');
+
+            for (int y = 0; y < GridLength; y++)
+            {
+                for (int x = 0; x < GridWidth; x++)
+                {
+                    var i = GridWidth * y + x;
+                    grid[x, y] = allData[i];
+                }
+            }
+
+            return grid;
+        }
+
         private string[] GetRow(string[,] grid, int rowNumber)
         {
             // grid.GetLength(0) returns the 1st dimension, so 10 (10x100)
@@ -55,11 +75,6 @@ namespace PipelineExtensions
             {
                 IntermediateSerializer.Serialize(writer, this, null);
             }
-        }
-
-        public static void Load(int levelNb)
-        {
-            //TODO
         }
     }
 }
