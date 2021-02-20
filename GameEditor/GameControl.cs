@@ -30,6 +30,7 @@ namespace GameEditor
 
         public Dictionary<string, TextureAtlas> Atlas { get; private set; }
         public Dictionary<string, GameObject> GameObjects { get; private set; }
+        public Dictionary<string, GameEditorScreenEvent> ScreenEvents { get; private set; }
 
         public string CurrentTileName { get; set; }
         public string CurrentAtlasName { get; set; }
