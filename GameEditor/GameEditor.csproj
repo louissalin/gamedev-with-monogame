@@ -138,6 +138,9 @@
     <None Include="Content\Levels\Level1.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\Sprites\Tower.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="mgfxc.deps.json" />
     <None Include="mgfxc.runtimeconfig.dev.json" />
     <None Include="mgfxc.runtimeconfig.json" />

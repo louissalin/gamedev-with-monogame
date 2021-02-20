@@ -29,6 +29,7 @@ namespace GameEditor
         private List<Level> _levels = new List<Level>();
 
         public Dictionary<string, TextureAtlas> Atlas { get; private set; }
+        public Dictionary<string, Texture2D> GameObjects { get; private set; }
 
         public string CurrentTileName { get; set; }
         public string CurrentAtlasName { get; set; }
@@ -53,7 +54,7 @@ namespace GameEditor
             Atlas = new Dictionary<string, TextureAtlas>();
             var groundTiles = GetGroundTiles();
             var buildingTiles = GetBuildingTiles();
-            var objectTiles = GetObjectTiles();
+            var objectTiles = GetGameObjects();
 
             var groundAtlas = new TextureAtlas(GROUND, _groundTexture, groundTiles);
             var buildingAtlas = new TextureAtlas(BUILDINGS, _buildingTexture, buildingTiles);
@@ -61,6 +62,8 @@ namespace GameEditor
             Atlas.Add(GROUND, groundAtlas);
             Atlas.Add(BUILDINGS, buildingAtlas);
 
+            GameObjects = GetGameObjects();
+ 
             // start with empty levels
             for (var i = 0; i < 5; i++)
             {
@@ -168,9 +171,12 @@ namespace GameEditor
             };
         }
 
-        private Dictionary<string, Rectangle> GetObjectTiles()
+        private Dictionary<string, Texture2D> GetGameObjects()
         {
-            return new Dictionary<string, Rectangle>();
+            return new Dictionary<string, Texture2D> 
+            {
+                { "Tower", Editor.Content.Load<Texture2D>("Sprites/Tower") }
+            };
         }
 
         private string[,] GetGroundGrid()
@@ -275,12 +281,12 @@ namespace GameEditor
             }
             else if (CurrentAtlasName == BUILDINGS)
             {
-                var tile = GetTileFromCoords(BUILDINGS, GetBuildings());
+                var tile = GetAtlasTileFromCoords(BUILDINGS, GetBuildings());
                 GetBuildings().Remove(tile);
             }
             else if (CurrentAtlasName == OBJECTS)
             {
-                var tile = GetTileFromCoords(OBJECTS, GetObjects());
+                var tile = GetObjectTileFromCoords();
                 GetObjects().Remove(tile);
             }
         }
@@ -290,17 +296,39 @@ namespace GameEditor
             GameEditorTileData tile = null;
             if (CurrentAtlasName == BUILDINGS)
             {
-                tile = GetTileFromCoords(BUILDINGS, GetBuildings());
+                tile = GetAtlasTileFromCoords(BUILDINGS, GetBuildings());
             }
             else if (CurrentAtlasName == OBJECTS)
             {
-                tile = GetTileFromCoords(OBJECTS, GetBuildings());
+                tile = GetObjectTileFromCoords();
             }
 
             return tile;
         }
-        
-        private GameEditorTileData GetTileFromCoords(string atlasName, List<GameEditorTileData> tileList)
+
+        private GameEditorTileData GetObjectTileFromCoords()
+        {
+            var worldCoords = _camera.ScreenToWorld(_mouseX, _mouseY);
+
+            foreach (var obj in GetObjects())
+            {
+                var gameObject = GameObjects[obj.Name];
+                var bounds = new Rectangle(
+                    obj.X, obj.Y,
+                    gameObject.Width,
+                    gameObject.Height
+                );
+
+                if (bounds.Contains(worldCoords))
+                {
+                    return obj;
+                }
+            }
+
+            return null;
+        }
+
+        private GameEditorTileData GetAtlasTileFromCoords(string atlasName, List<GameEditorTileData> tileList)
         {
             var worldCoords = _camera.ScreenToWorld(_mouseX, _mouseY);
 
@@ -380,6 +408,7 @@ namespace GameEditor
 
             DrawGround();
             DrawBuildings();
+            DrawObjects();
             Editor.spriteBatch.End();
         }
 
@@ -399,6 +428,22 @@ namespace GameEditor
             foreach (var obj in GetCurrentLevel().Buildings)
             {
                 DrawAtlasTile(_buildingTexture, BUILDINGS, obj.Name, obj.X, obj.Y);
+            }
+        }
+
+        private void DrawObjects()
+        {
+            foreach (var obj in GetCurrentLevel().Objects)
+            {
+                var texture = GameObjects[obj.Name];
+                var rectangle = new Rectangle(
+                    obj.X,
+                    obj.Y,
+                    texture.Width,
+                    texture.Height
+                );
+
+                Editor.spriteBatch.Draw(texture, rectangle, texture.Bounds, Color.White);
             }
         }
 
