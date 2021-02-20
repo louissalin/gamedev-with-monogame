@@ -59,6 +59,18 @@
 /processorParam:TextureFormat=Color
 /build:../../assets/png/Barren.png;Sprites/Barren.png
 
+#begin ../../assets/png/buildings.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../assets/png/buildings.png;Sprites/Atlas/buildings.png
+
 #begin ../../assets/png/bullet.png
 /importer:TextureImporter
 /processor:TextureProcessor

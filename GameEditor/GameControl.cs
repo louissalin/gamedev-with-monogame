@@ -4,6 +4,7 @@ using MonoGame.Extended;
 using MonoGame.Extended.TextureAtlases;
 using MonoGame.Extended.ViewportAdapters;
 using MonoGame.Forms.Controls;
+using PipelineExtensions;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -29,7 +30,7 @@ namespace GameEditor
 
         public string CurrentTileName { get; set; }
         public string CurrentAtlasName { get; set; }
-        public int CurrentLevel { get; private set; }
+        public int CurrentLevel { get; set; }
 
         public event EventHandler<EventArgs> OnInitialized;
 
@@ -47,7 +48,40 @@ namespace GameEditor
 
             // load atlas
             Atlas = new Dictionary<string, TextureAtlas>();
-            var regions = new Dictionary<string, Rectangle>()
+            var groundTiles = GetGroundTiles();
+            var buildingTiles = GetBuildingTiles();
+            var objectTiles = GetObjectTiles();
+
+            var groundAtlas = new TextureAtlas(GROUND, _texture, groundTiles);
+            var buildingAtlas = new TextureAtlas(BUILDINGS, _texture, buildingTiles);
+            var objectsAtlas = new TextureAtlas(OBJECTS, _texture, objectTiles);
+            Atlas.Add(GROUND, groundAtlas);
+            Atlas.Add(BUILDINGS, buildingAtlas);
+            Atlas.Add(OBJECTS, objectsAtlas);
+
+            // start with empty levels
+            for (var i = 0; i < 5; i++)
+            {
+                var newLevel = new Level();
+                _levels.Add(newLevel);
+            }
+
+            OnInitialized(this, EventArgs.Empty);
+        }
+
+        public void LoadLevel()
+        {
+            GetCurrentLevel().Load(Editor.Content, CurrentLevel);
+        }
+
+        public void SaveCurrentLevel()
+        {
+            GetCurrentLevel().Save(CurrentLevel);
+        }
+
+        private Dictionary<string, Rectangle> GetGroundTiles()
+        {
+            return new Dictionary<string, Rectangle>
             {
                 { "sand", new Rectangle(0, 0, 128, 128) },
                 { "beach_tm_02_grass", new Rectangle(128, 0, 128, 128) },
@@ -117,48 +151,37 @@ namespace GameEditor
                 { "beach_bm_04", new Rectangle(512, 896, 128, 128) },
                 { "beach_bm_01", new Rectangle(640, 896, 128, 128) },
             };
-
-            var groundAtlas = new TextureAtlas(GROUND, _texture, regions);
-            Atlas.Add(GROUND, groundAtlas);
-
-            // start with empty levels
-            for (var i = 0; i < 5; i++)
-            {
-                var newLevel = new Level();
-                _levels.Add(newLevel);
-            }
-
-            OnInitialized(this, EventArgs.Empty);
         }
 
-        public void LoadLevel()
+        private Dictionary<string, Rectangle> GetBuildingTiles()
         {
-            GetCurrentLevel().Load(Editor.Content, CurrentLevel);
+            return new Dictionary<string, Rectangle>
+            {
+                { "bunker_round_1x2_bottom", new Rectangle(2, 2, 100, 230) },
+                { "bunker_round_1x2_top", new Rectangle(2, 440, 74, 200) },
+                { "bunker_round_2x1_bottom", new Rectangle(374, 638, 230, 100) },
+                { "bunker_round_2x1_top", new Rectangle(398, 2, 200, 74) },
+            };
         }
 
-        public void SaveCurrentLevel()
+        private Dictionary<string, Rectangle> GetObjectTiles()
         {
-            GetCurrentLevel().Save(CurrentLevel);
+            return new Dictionary<string, Rectangle>();
         }
 
-        private string[,] GetCurrentGrid()
+        private string[,] GetGroundGrid()
         {
-            if (CurrentAtlasName == GROUND)
-            {
-                return GetCurrentLevel().GroundGrid;
-            }
+            return GetCurrentLevel().GroundGrid;
+        }
 
-            if (CurrentAtlasName == BUILDINGS)
-            {
-                return GetCurrentLevel().BuildingGrid;
-            }
+        private List<GameEditorTileData> GetBuildings()
+        {
+            return GetCurrentLevel().Buildings;
+        }
 
-            if (CurrentAtlasName == OBJECTS)
-            {
-                return GetCurrentLevel().ObjectGrid;
-            }
-
-            return null;
+        private List<GameEditorTileData> GetObjects()
+        { 
+            return GetCurrentLevel().Objects;
         }
 
         private Level GetCurrentLevel()
@@ -196,20 +219,26 @@ namespace GameEditor
 
         private void RemoveTile()
         {
-            var point = GetGridCoordinates();
-            GetCurrentGrid()[point.X, point.Y] = null;
+            if (CurrentAtlasName == GROUND)
+            {
+                var point = GetGridCoordinates();
+                GetGroundGrid()[point.X, point.Y] = null;
+            }
         }
 
         private void AddTile()
         {
             if (CurrentTileName != null && CurrentTileName.Length > 0)
             {
-                var point = GetGridCoordinates();
-
-                if (point.X >= 0 && point.X < Level.LEVEL_WIDTH &&
-                    point.Y >= 0 && point.Y < Level.LEVEL_LENGTH)
+                if (CurrentAtlasName == GROUND)
                 {
-                    GetCurrentGrid()[point.X, point.Y] = CurrentTileName;
+                    var point = GetGridCoordinates();
+
+                    if (point.X >= 0 && point.X < Level.LEVEL_WIDTH &&
+                        point.Y >= 0 && point.Y < Level.LEVEL_LENGTH)
+                    {
+                        GetGroundGrid()[point.X, point.Y] = CurrentTileName;
+                    }
                 }
             }
         }
@@ -267,21 +296,52 @@ namespace GameEditor
                               TILE_SIZE * Level.LEVEL_LENGTH + 10), 
                 Color.White);
 
+            DrawGround();
+            DrawBuildingsAndObjects();
+            Editor.spriteBatch.End();
+        }
+
+        private void DrawGround()
+        {
             for (int y = 0; y < Level.LEVEL_LENGTH; y++)
             {
                 for (int x = 0; x < Level.LEVEL_WIDTH; x++)
                 {
-                    DrawGridElement(GetCurrentLevel().GroundGrid[x, y], x, y);
-                    DrawGridElement(GetCurrentLevel().BuildingGrid[x, y], x, y);
-                    DrawGridElement(GetCurrentLevel().ObjectGrid[x, y], x, y);
+                    DrawGridElement(GROUND, GetCurrentLevel().GroundGrid[x, y], x, y);
                 }
             }
-            Editor.spriteBatch.End();
         }
 
-        private void DrawGridElement(string gridName, int x, int y)
+        private void DrawBuildingsAndObjects()
         {
-            if (gridName != null && gridName != "")
+            foreach (var obj in GetCurrentLevel().Buildings)
+            {
+                DrawObject(BUILDINGS, obj.Name, obj.X, obj.Y);
+            }
+
+            foreach (var obj in GetCurrentLevel().Objects)
+            {
+                DrawObject(OBJECTS, obj.Name, obj.X, obj.Y);
+            }
+        }
+
+        private void DrawObject(string atlasName, string tileName, int x, int y)
+        {
+            if (tileName != null && tileName != "")
+            {
+                var rectangle = new Rectangle(
+                    x,
+                    y,
+                    Atlas[atlasName][tileName].Width,
+                    Atlas[atlasName][tileName].Height
+                );
+                Editor.spriteBatch.Draw(_texture, rectangle, Atlas[atlasName][tileName].Bounds, Color.White);
+            }
+        }
+
+        private void DrawGridElement(string atlasName, string tileName, int x, int y)
+        {
+            if (tileName != null && tileName != "")
             {
                 var rectangle = new Rectangle(
                     x * TILE_SIZE,
@@ -289,7 +349,7 @@ namespace GameEditor
                     TILE_SIZE,
                     TILE_SIZE
                 );
-                Editor.spriteBatch.Draw(_texture, rectangle, Atlas[GROUND][gridName].Bounds, Color.White);
+                Editor.spriteBatch.Draw(_texture, rectangle, Atlas[atlasName][tileName].Bounds, Color.White);
             }
         }
     }

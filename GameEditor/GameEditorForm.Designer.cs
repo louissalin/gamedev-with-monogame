@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace GameEditor
 {
     partial class GameEditorForm
@@ -38,8 +40,8 @@ namespace GameEditor
             this.objectsListView = new System.Windows.Forms.ListView();
             this.buttonSave = new System.Windows.Forms.Button();
             this.comboLevelNb = new System.Windows.Forms.ComboBox();
-            this.gameControl = new GameEditor.GameControl();
             this.buttonLoad = new System.Windows.Forms.Button();
+            this.gameControl = new GameEditor.GameControl();
             this.objectTabControl.SuspendLayout();
             this.groundTabPage.SuspendLayout();
             this.buildingsTabPage.SuspendLayout();
@@ -52,6 +54,7 @@ namespace GameEditor
             this.objectTabControl.Controls.Add(this.buildingsTabPage);
             this.objectTabControl.Controls.Add(this.objectsTabPage);
             this.objectTabControl.Location = new System.Drawing.Point(1744, 12);
+            this.objectTabControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.objectTabControl.Name = "objectTabControl";
             this.objectTabControl.SelectedIndex = 0;
             this.objectTabControl.Size = new System.Drawing.Size(311, 1018);
@@ -61,8 +64,9 @@ namespace GameEditor
             // 
             this.groundTabPage.Controls.Add(this.groundListView);
             this.groundTabPage.Location = new System.Drawing.Point(4, 25);
+            this.groundTabPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groundTabPage.Name = "groundTabPage";
-            this.groundTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.groundTabPage.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groundTabPage.Size = new System.Drawing.Size(303, 989);
             this.groundTabPage.TabIndex = 0;
             this.groundTabPage.Text = "ground";
@@ -71,7 +75,8 @@ namespace GameEditor
             // groundListView
             // 
             this.groundListView.HideSelection = false;
-            this.groundListView.Location = new System.Drawing.Point(6, 3);
+            this.groundListView.Location = new System.Drawing.Point(5, 2);
+            this.groundListView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groundListView.Name = "groundListView";
             this.groundListView.Size = new System.Drawing.Size(291, 980);
             this.groundListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
@@ -83,8 +88,9 @@ namespace GameEditor
             // 
             this.buildingsTabPage.Controls.Add(this.buildingsListView);
             this.buildingsTabPage.Location = new System.Drawing.Point(4, 25);
+            this.buildingsTabPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buildingsTabPage.Name = "buildingsTabPage";
-            this.buildingsTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.buildingsTabPage.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buildingsTabPage.Size = new System.Drawing.Size(303, 989);
             this.buildingsTabPage.TabIndex = 1;
             this.buildingsTabPage.Text = "buildings";
@@ -93,7 +99,8 @@ namespace GameEditor
             // buildingsListView
             // 
             this.buildingsListView.HideSelection = false;
-            this.buildingsListView.Location = new System.Drawing.Point(6, 4);
+            this.buildingsListView.Location = new System.Drawing.Point(5, 4);
+            this.buildingsListView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buildingsListView.Name = "buildingsListView";
             this.buildingsListView.Size = new System.Drawing.Size(291, 980);
             this.buildingsListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
@@ -105,6 +112,7 @@ namespace GameEditor
             // 
             this.objectsTabPage.Controls.Add(this.objectsListView);
             this.objectsTabPage.Location = new System.Drawing.Point(4, 25);
+            this.objectsTabPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.objectsTabPage.Name = "objectsTabPage";
             this.objectsTabPage.Size = new System.Drawing.Size(303, 989);
             this.objectsTabPage.TabIndex = 2;
@@ -114,7 +122,8 @@ namespace GameEditor
             // objectsListView
             // 
             this.objectsListView.HideSelection = false;
-            this.objectsListView.Location = new System.Drawing.Point(6, 4);
+            this.objectsListView.Location = new System.Drawing.Point(5, 4);
+            this.objectsListView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.objectsListView.Name = "objectsListView";
             this.objectsListView.Size = new System.Drawing.Size(291, 980);
             this.objectsListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
@@ -125,11 +134,13 @@ namespace GameEditor
             // buttonSave
             // 
             this.buttonSave.Location = new System.Drawing.Point(200, 37);
+            this.buttonSave.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 2;
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click_1);
             // 
             // comboLevelNb
             // 
@@ -141,30 +152,34 @@ namespace GameEditor
             "4",
             "5"});
             this.comboLevelNb.Location = new System.Drawing.Point(73, 36);
+            this.comboLevelNb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboLevelNb.Name = "comboLevelNb";
             this.comboLevelNb.Size = new System.Drawing.Size(121, 24);
             this.comboLevelNb.TabIndex = 3;
-            // 
-            // gameControl
-            // 
-            this.gameControl.CurrentAtlasName = null;
-            this.gameControl.CurrentTileName = null;
-            this.gameControl.Location = new System.Drawing.Point(12, 161);
-            this.gameControl.MouseHoverUpdatesOnly = false;
-            this.gameControl.Name = "gameControl";
-            this.gameControl.Size = new System.Drawing.Size(1691, 865);
-            this.gameControl.TabIndex = 0;
-            this.gameControl.Text = "gameControl";
+            this.comboLevelNb.SelectedIndexChanged += new System.EventHandler(this.comboLevelNb_SelectedIndexChanged);
             // 
             // buttonLoad
             // 
-            this.buttonLoad.Location = new System.Drawing.Point(282, 37);
+            this.buttonLoad.Location = new System.Drawing.Point(283, 37);
+            this.buttonLoad.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonLoad.Name = "buttonLoad";
             this.buttonLoad.Size = new System.Drawing.Size(75, 23);
             this.buttonLoad.TabIndex = 4;
             this.buttonLoad.Text = "Load";
             this.buttonLoad.UseVisualStyleBackColor = true;
             this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);
+            // 
+            // gameControl
+            // 
+            this.gameControl.CurrentAtlasName = null;
+            this.gameControl.CurrentTileName = null;
+            this.gameControl.Location = new System.Drawing.Point(15, 103);
+            this.gameControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gameControl.MouseHoverUpdatesOnly = false;
+            this.gameControl.Name = "gameControl";
+            this.gameControl.Size = new System.Drawing.Size(1691, 865);
+            this.gameControl.TabIndex = 0;
+            this.gameControl.Text = "gameControl";
             // 
             // GameEditorForm
             // 
@@ -176,6 +191,7 @@ namespace GameEditor
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.objectTabControl);
             this.Controls.Add(this.gameControl);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "GameEditorForm";
             this.Text = "Game Editor";
             this.objectTabControl.ResumeLayout(false);
