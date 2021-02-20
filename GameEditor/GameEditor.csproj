@@ -114,6 +114,7 @@
     <Compile Include="GameEditorForm.Designer.cs">
       <DependentUpon>GameEditorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameObject.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

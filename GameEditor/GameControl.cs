@@ -29,7 +29,7 @@ namespace GameEditor
         private List<Level> _levels = new List<Level>();
 
         public Dictionary<string, TextureAtlas> Atlas { get; private set; }
-        public Dictionary<string, Texture2D> GameObjects { get; private set; }
+        public Dictionary<string, GameObject> GameObjects { get; private set; }
 
         public string CurrentTileName { get; set; }
         public string CurrentAtlasName { get; set; }
@@ -171,11 +171,11 @@ namespace GameEditor
             };
         }
 
-        private Dictionary<string, Texture2D> GetGameObjects()
+        private Dictionary<string, GameObject> GetGameObjects()
         {
-            return new Dictionary<string, Texture2D> 
+            return new Dictionary<string, GameObject> 
             {
-                { "Tower", Editor.Content.Load<Texture2D>("Sprites/Tower") }
+                { "Tower", new GameObject(Editor.Content.Load<Texture2D>("Sprites/Tower"), 0.3f) }
             };
         }
 
@@ -435,15 +435,15 @@ namespace GameEditor
         {
             foreach (var obj in GetCurrentLevel().Objects)
             {
-                var texture = GameObjects[obj.Name];
+                var gameObject = GameObjects[obj.Name];
                 var rectangle = new Rectangle(
                     obj.X,
                     obj.Y,
-                    texture.Width,
-                    texture.Height
+                    gameObject.Width,
+                    gameObject.Height
                 );
 
-                Editor.spriteBatch.Draw(texture, rectangle, texture.Bounds, Color.White);
+                Editor.spriteBatch.Draw(gameObject.Texture, rectangle, gameObject.Texture.Bounds, Color.White);
             }
         }
 

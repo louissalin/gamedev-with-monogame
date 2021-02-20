@@ -42,6 +42,7 @@ namespace GameEditor
             this.comboLevelNb = new System.Windows.Forms.ComboBox();
             this.buttonLoad = new System.Windows.Forms.Button();
             this.gameControl = new GameEditor.GameControl();
+            this.label1 = new System.Windows.Forms.Label();
             this.objectTabControl.SuspendLayout();
             this.groundTabPage.SuspendLayout();
             this.buildingsTabPage.SuspendLayout();
@@ -133,7 +134,7 @@ namespace GameEditor
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(200, 37);
+            this.buttonSave.Location = new System.Drawing.Point(194, 9);
             this.buttonSave.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
@@ -151,7 +152,7 @@ namespace GameEditor
             "3",
             "4",
             "5"});
-            this.comboLevelNb.Location = new System.Drawing.Point(73, 36);
+            this.comboLevelNb.Location = new System.Drawing.Point(67, 9);
             this.comboLevelNb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboLevelNb.Name = "comboLevelNb";
             this.comboLevelNb.Size = new System.Drawing.Size(121, 24);
@@ -160,7 +161,7 @@ namespace GameEditor
             // 
             // buttonLoad
             // 
-            this.buttonLoad.Location = new System.Drawing.Point(283, 37);
+            this.buttonLoad.Location = new System.Drawing.Point(275, 9);
             this.buttonLoad.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonLoad.Name = "buttonLoad";
             this.buttonLoad.Size = new System.Drawing.Size(75, 23);
@@ -172,8 +173,9 @@ namespace GameEditor
             // gameControl
             // 
             this.gameControl.CurrentAtlasName = null;
+            this.gameControl.CurrentLevel = 0;
             this.gameControl.CurrentTileName = null;
-            this.gameControl.Location = new System.Drawing.Point(15, 103);
+            this.gameControl.Location = new System.Drawing.Point(12, 39);
             this.gameControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gameControl.MouseHoverUpdatesOnly = false;
             this.gameControl.Name = "gameControl";
@@ -181,11 +183,21 @@ namespace GameEditor
             this.gameControl.TabIndex = 0;
             this.gameControl.Text = "gameControl";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 12);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 17);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Levels:";
+            // 
             // GameEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2067, 1042);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.comboLevelNb);
             this.Controls.Add(this.buttonSave);
@@ -199,6 +211,7 @@ namespace GameEditor
             this.buildingsTabPage.ResumeLayout(false);
             this.objectsTabPage.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -215,6 +228,7 @@ namespace GameEditor
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.ComboBox comboLevelNb;
         private System.Windows.Forms.Button buttonLoad;
+        private System.Windows.Forms.Label label1;
     }
 }
 

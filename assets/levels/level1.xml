@@ -44,7 +44,13 @@
         <Y>12002</Y>
       </Item>
     </Buildings>
-    <Objects />
+    <Objects>
+      <Item>
+        <Name>Tower</Name>
+        <X>717</X>
+        <Y>11868</Y>
+      </Item>
+    </Objects>
     <GridWidth>10</GridWidth>
     <GridLength>100</GridLength>
   </Asset>
