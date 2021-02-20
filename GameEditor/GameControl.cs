@@ -23,6 +23,7 @@ namespace GameEditor
         private Texture2D _groundTexture;
         private Texture2D _buildingTexture;
         private bool _cameraDrag;
+        private GameEditorTileData _draggedTile;
         private int _mouseX;
         private int _mouseY;
         private List<Level> _levels = new List<Level>();
@@ -56,10 +57,9 @@ namespace GameEditor
 
             var groundAtlas = new TextureAtlas(GROUND, _groundTexture, groundTiles);
             var buildingAtlas = new TextureAtlas(BUILDINGS, _buildingTexture, buildingTiles);
-            //var objectsAtlas = new TextureAtlas(OBJECTS, _objectTexture, objectTiles);
+
             Atlas.Add(GROUND, groundAtlas);
             Atlas.Add(BUILDINGS, buildingAtlas);
-            //Atlas.Add(OBJECTS, objectsAtlas);
 
             // start with empty levels
             for (var i = 0; i < 5; i++)
@@ -67,6 +67,8 @@ namespace GameEditor
                 var newLevel = new Level();
                 _levels.Add(newLevel);
             }
+
+            _draggedTile = null;
 
             OnInitialized(this, EventArgs.Empty);
         }
@@ -196,9 +198,45 @@ namespace GameEditor
             _camera.Position = new Vector2(
                 0,
                 Level.LEVEL_LENGTH * TILE_SIZE - ClientSize.Height
-            ); ;
+            );
         }
 
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            base.OnMouseUp(e);
+
+            if (e.Button == MouseButtons.Middle)
+            {
+                _cameraDrag = false;
+            }
+            else if (e.Button == MouseButtons.Left)
+            {
+                _draggedTile = null;
+            }
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (_cameraDrag)
+            {
+                _camera.Move(new Vector2(_mouseX - e.X, _mouseY - e.Y));
+            }
+
+            if (_draggedTile != null)
+            {
+                var deltaX = e.X - _mouseX;
+                var deltaY = e.Y - _mouseY;
+
+                _draggedTile.X += deltaX;
+                _draggedTile.Y += deltaY;
+            }
+
+            _mouseX = e.X;
+            _mouseY = e.Y;
+        }
+ 
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
@@ -210,7 +248,16 @@ namespace GameEditor
 
             if (e.Button == MouseButtons.Left)
             {
-                AddTile();
+                // find if we clicked on a tile and drag it
+                var clickedTile = GetClickedTile();
+                if (clickedTile != null)
+                {
+                    _draggedTile = clickedTile;
+                }
+                else
+                {
+                    AddTile();
+                }
             }
             
             if (e.Button == MouseButtons.Right)
@@ -236,6 +283,21 @@ namespace GameEditor
                 var tile = GetTileFromCoords(OBJECTS, GetObjects());
                 GetObjects().Remove(tile);
             }
+        }
+
+        private GameEditorTileData GetClickedTile()
+        {
+            GameEditorTileData tile = null;
+            if (CurrentAtlasName == BUILDINGS)
+            {
+                tile = GetTileFromCoords(BUILDINGS, GetBuildings());
+            }
+            else if (CurrentAtlasName == OBJECTS)
+            {
+                tile = GetTileFromCoords(OBJECTS, GetBuildings());
+            }
+
+            return tile;
         }
         
         private GameEditorTileData GetTileFromCoords(string atlasName, List<GameEditorTileData> tileList)
@@ -293,29 +355,6 @@ namespace GameEditor
             var gridY = (int) worldCoords.Y / TILE_SIZE;
 
             return new Point(gridX, gridY);
-        }
-
-        protected override void OnMouseUp(MouseEventArgs e)
-        {
-            base.OnMouseUp(e);
-
-            if (e.Button == MouseButtons.Middle)
-            {
-                _cameraDrag = false;
-            }
-        }
-
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
-
-            if (_cameraDrag)
-            {
-                _camera.Move(new Vector2(_mouseX - e.X, _mouseY - e.Y));
-            }
-
-            _mouseX = e.X;
-            _mouseY = e.Y;
         }
 
         protected override void Update(GameTime gameTime)

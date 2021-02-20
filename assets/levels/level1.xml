@@ -2,7 +2,48 @@
 <XnaContent xmlns:PipelineExtensions="PipelineExtensions">
   <Asset Type="PipelineExtensions:GameEditorLevelData">
     <GroundGrid>,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,beach_l_up_diagonal,beach_tm_04,beach_tm_02_grass,beach_tr_grass,,,,,,beach_l_up_diagonal,beach_l_up_diagonal_neighbour,grass,grass,beach_r_down_diagonal_neighbour_grass,beach_r_down_diagonal_grass,,,,,beach_lm_01,sand,sand,grass,grass,beach_r_down_diagonal_neighbour_grass,beach_r_down_diagonal_grass,,,,beach_lm_04_grass,grass,sand,grass,grass,grass,beach_rm_01_grass,,,,beach_lm_02,sand,sand,sand,sand,grass,beach_rm_01-22,,,,beach_lm_01,sand,sand,sand,grass,grass,beach_rm_04,,,,beach_lm_02,sand,sand,sand,grass,sand,beach_rm_03,,,,beach_lm_01,sand,sand,sand,sand,sand,beach_rm_03,,,,beach_bl,beach_bm_03,beach_bm_04,beach_bm_04,beach_bm_02,beach_bm_05,beach_br,,,,,,,,,,,</GroundGrid>
-    <Buildings />
+    <Buildings>
+      <Item>
+        <Name>bunker_round_2x1_bottom</Name>
+        <X>718</X>
+        <Y>12353</Y>
+      </Item>
+      <Item>
+        <Name>bunker_round_2x1_top</Name>
+        <X>733</X>
+        <Y>12366</Y>
+      </Item>
+      <Item>
+        <Name>bunker_round_2x1_bottom</Name>
+        <X>718</X>
+        <Y>12107</Y>
+      </Item>
+      <Item>
+        <Name>bunker_round_2x1_bottom</Name>
+        <X>339</X>
+        <Y>11991</Y>
+      </Item>
+      <Item>
+        <Name>bunker_round_1x2_bottom</Name>
+        <X>623</X>
+        <Y>11770</Y>
+      </Item>
+      <Item>
+        <Name>bunker_round_1x2_top</Name>
+        <X>636</X>
+        <Y>11785</Y>
+      </Item>
+      <Item>
+        <Name>bunker_round_2x1_top</Name>
+        <X>735</X>
+        <Y>12117</Y>
+      </Item>
+      <Item>
+        <Name>bunker_round_2x1_top</Name>
+        <X>354</X>
+        <Y>12002</Y>
+      </Item>
+    </Buildings>
     <Objects />
     <GridWidth>10</GridWidth>
     <GridLength>100</GridLength>
