@@ -18,6 +18,7 @@ namespace GameEditor
         {
             InitializeListsOfTiles();
             groundListView.ItemSelectionChanged += GroundListView_ItemSelectionChanged;
+            buildingsListView.ItemSelectionChanged += BuildingsListView_ItemSelectionChanged;
             objectTabControl.SelectedIndexChanged += ObjectTabControl_SelectedIndexChanged;
         }
 
@@ -32,6 +33,12 @@ namespace GameEditor
             gameControl.CurrentTileName = e.Item.Text;
         }
 
+        private void BuildingsListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            gameControl.CurrentTileName = e.Item.Text;
+        }
+
+
         private void InitializeListsOfTiles()
         {
             foreach (var tile in gameControl.Atlas[GameControl.GROUND])
@@ -42,11 +49,6 @@ namespace GameEditor
             foreach (var tile in gameControl.Atlas[GameControl.BUILDINGS])
             {
                 buildingsListView.Items.Add(tile.Name);
-            }
-
-            foreach (var tile in gameControl.Atlas[GameControl.OBJECTS])
-            {
-                objectsListView.Items.Add(tile.Name);
             }
         }
 

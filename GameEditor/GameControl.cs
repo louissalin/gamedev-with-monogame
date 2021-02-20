@@ -20,7 +20,8 @@ namespace GameEditor
         public const int TILE_SIZE = 128;
 
         private OrthographicCamera _camera;
-        private Texture2D _texture;
+        private Texture2D _groundTexture;
+        private Texture2D _buildingTexture;
         private bool _cameraDrag;
         private int _mouseX;
         private int _mouseY;
@@ -44,7 +45,8 @@ namespace GameEditor
 
             CurrentAtlasName = GROUND;
             CurrentLevel = 1;
-            _texture = Editor.Content.Load<Texture2D>("Atlas/ground");
+            _groundTexture = Editor.Content.Load<Texture2D>("Atlas/ground");
+            _buildingTexture = Editor.Content.Load<Texture2D>("Atlas/buildings");
 
             // load atlas
             Atlas = new Dictionary<string, TextureAtlas>();
@@ -52,12 +54,12 @@ namespace GameEditor
             var buildingTiles = GetBuildingTiles();
             var objectTiles = GetObjectTiles();
 
-            var groundAtlas = new TextureAtlas(GROUND, _texture, groundTiles);
-            var buildingAtlas = new TextureAtlas(BUILDINGS, _texture, buildingTiles);
-            var objectsAtlas = new TextureAtlas(OBJECTS, _texture, objectTiles);
+            var groundAtlas = new TextureAtlas(GROUND, _groundTexture, groundTiles);
+            var buildingAtlas = new TextureAtlas(BUILDINGS, _buildingTexture, buildingTiles);
+            //var objectsAtlas = new TextureAtlas(OBJECTS, _objectTexture, objectTiles);
             Atlas.Add(GROUND, groundAtlas);
             Atlas.Add(BUILDINGS, buildingAtlas);
-            Atlas.Add(OBJECTS, objectsAtlas);
+            //Atlas.Add(OBJECTS, objectsAtlas);
 
             // start with empty levels
             for (var i = 0; i < 5; i++)
@@ -224,6 +226,37 @@ namespace GameEditor
                 var point = GetGridCoordinates();
                 GetGroundGrid()[point.X, point.Y] = null;
             }
+            else if (CurrentAtlasName == BUILDINGS)
+            {
+                var tile = GetTileFromCoords(BUILDINGS, GetBuildings());
+                GetBuildings().Remove(tile);
+            }
+            else if (CurrentAtlasName == OBJECTS)
+            {
+                var tile = GetTileFromCoords(OBJECTS, GetObjects());
+                GetObjects().Remove(tile);
+            }
+        }
+        
+        private GameEditorTileData GetTileFromCoords(string atlasName, List<GameEditorTileData> tileList)
+        {
+            var worldCoords = _camera.ScreenToWorld(_mouseX, _mouseY);
+
+            // find which object was clicked on
+            foreach (var tile in tileList)
+            {
+                var tileLocationInWorld = new Rectangle(
+                    tile.X, tile.Y, 
+                    Atlas[atlasName][tile.Name].Bounds.Width,
+                    Atlas[atlasName][tile.Name].Bounds.Height);
+
+                if (tileLocationInWorld.Contains(worldCoords))
+                {
+                    return tile;
+                }
+            }
+
+            return null;
         }
 
         private void AddTile()
@@ -239,6 +272,16 @@ namespace GameEditor
                     {
                         GetGroundGrid()[point.X, point.Y] = CurrentTileName;
                     }
+                }
+                else if (CurrentAtlasName == BUILDINGS)
+                {
+                    var worldCoords = _camera.ScreenToWorld(_mouseX, _mouseY);
+                    GetBuildings().Add(new GameEditorTileData(CurrentTileName, (int) worldCoords.X, (int) worldCoords.Y));
+                }
+                else if (CurrentAtlasName == OBJECTS)
+                {
+                    var worldCoords = _camera.ScreenToWorld(_mouseX, _mouseY);
+                    GetObjects().Add(new GameEditorTileData(CurrentTileName, (int) worldCoords.X, (int) worldCoords.Y));
                 }
             }
         }
@@ -297,7 +340,7 @@ namespace GameEditor
                 Color.White);
 
             DrawGround();
-            DrawBuildingsAndObjects();
+            DrawBuildings();
             Editor.spriteBatch.End();
         }
 
@@ -312,20 +355,15 @@ namespace GameEditor
             }
         }
 
-        private void DrawBuildingsAndObjects()
+        private void DrawBuildings()
         {
             foreach (var obj in GetCurrentLevel().Buildings)
             {
-                DrawObject(BUILDINGS, obj.Name, obj.X, obj.Y);
-            }
-
-            foreach (var obj in GetCurrentLevel().Objects)
-            {
-                DrawObject(OBJECTS, obj.Name, obj.X, obj.Y);
+                DrawAtlasTile(_buildingTexture, BUILDINGS, obj.Name, obj.X, obj.Y);
             }
         }
 
-        private void DrawObject(string atlasName, string tileName, int x, int y)
+        private void DrawAtlasTile(Texture2D texture, string atlasName, string tileName, int x, int y)
         {
             if (tileName != null && tileName != "")
             {
@@ -335,7 +373,7 @@ namespace GameEditor
                     Atlas[atlasName][tileName].Width,
                     Atlas[atlasName][tileName].Height
                 );
-                Editor.spriteBatch.Draw(_texture, rectangle, Atlas[atlasName][tileName].Bounds, Color.White);
+                Editor.spriteBatch.Draw(texture, rectangle, Atlas[atlasName][tileName].Bounds, Color.White);
             }
         }
 
@@ -349,7 +387,7 @@ namespace GameEditor
                     TILE_SIZE,
                     TILE_SIZE
                 );
-                Editor.spriteBatch.Draw(_texture, rectangle, Atlas[atlasName][tileName].Bounds, Color.White);
+                Editor.spriteBatch.Draw(_groundTexture, rectangle, Atlas[atlasName][tileName].Bounds, Color.White);
             }
         }
     }
