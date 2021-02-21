@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
+
 namespace GameEditor
 {
     public class GameControl : MonoGameControl
@@ -40,6 +41,8 @@ namespace GameEditor
         public int CurrentLevel { get; set; }
 
         public event EventHandler<EventArgs> OnInitialized;
+        public event EventHandler<EventSelectedArgs> OnEventSelected;
+        public event EventHandler<EventArgs> OnEventDeselected;
 
         protected override void Initialize()
         {
@@ -204,6 +207,11 @@ namespace GameEditor
             return GetCurrentLevel().Objects;
         }
 
+        private List<GameEditorEvent> GetEvents()
+        { 
+            return GetCurrentLevel().LevelEvents;
+        }
+
         private Level GetCurrentLevel()
         {
             return _levels[CurrentLevel - 1];
@@ -251,6 +259,16 @@ namespace GameEditor
 
             _mouseX = e.X;
             _mouseY = e.Y;
+
+            var evt = GetEventFromCoords();
+            if (evt != null)
+            {
+                OnEventSelected(this, new EventSelectedArgs(this, evt));
+            }
+            else
+            {
+                OnEventDeselected(this, EventArgs.Empty);
+            }
         }
  
         protected override void OnMouseDown(MouseEventArgs e)
@@ -306,6 +324,11 @@ namespace GameEditor
                 var tile = GetObjectTileFromCoords();
                 GetObjects().Remove(tile);
             }
+            else if (CurrentLayer == EVENTS)
+            {
+                var evt = GetEventFromCoords();
+                GetEvents().Remove(evt);
+            }
         }
 
         private GameEditorTileData GetClickedTile()
@@ -321,6 +344,28 @@ namespace GameEditor
             }
 
             return tile;
+        }
+
+        private GameEditorEvent GetEventFromCoords()
+        {
+            var worldCoords = _camera.ScreenToWorld(_mouseX, _mouseY);
+
+            foreach (var evt in GetEvents())
+            {
+                var bounds = new Rectangle(
+                    -50, 
+                    evt.Y,
+                    1380,
+                    20
+                );
+
+                if (bounds.Contains(worldCoords))
+                {
+                    return evt;
+                }
+            }
+
+            return null;
         }
 
         private GameEditorTileData GetObjectTileFromCoords()
@@ -374,7 +419,7 @@ namespace GameEditor
             if (evt != null)
             {
                 evt.Y = (int)worldCoords.Y;
-                LevelEvents.Add(evt);
+                GetEvents().Add(evt);
             }
         }
 
@@ -453,7 +498,7 @@ namespace GameEditor
 
         private void DrawBuildings()
         {
-            foreach (var obj in GetCurrentLevel().Buildings)
+            foreach (var obj in GetBuildings())
             {
                 DrawAtlasTile(_buildingTexture, BUILDINGS, obj.Name, obj.X, obj.Y);
             }
@@ -461,7 +506,7 @@ namespace GameEditor
 
         private void DrawObjects()
         {
-            foreach (var obj in GetCurrentLevel().Objects)
+            foreach (var obj in GetObjects())
             {
                 var gameObject = GameObjects[obj.Name];
                 var rectangle = new Rectangle(
@@ -477,7 +522,7 @@ namespace GameEditor
 
         private void DrawEvents()
         {
-            foreach (var evt in LevelEvents)
+            foreach (var evt in GetEvents())
             {
                 var rectangle = new Rectangle(
                     -50,
@@ -489,7 +534,7 @@ namespace GameEditor
                 Editor.spriteBatch.Draw(
                     _eventRectangle,
                     rectangle,
-                    Color.White);
+                    Color.White * 0.5f);
             }
         }
 

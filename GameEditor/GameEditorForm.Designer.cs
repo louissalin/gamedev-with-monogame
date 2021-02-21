@@ -45,12 +45,16 @@ namespace GameEditor
             this.comboLevelNb = new System.Windows.Forms.ComboBox();
             this.buttonLoad = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.groupBoxEventDetails = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.labelEventDetails = new System.Windows.Forms.Label();
             this.gameControl = new GameEditor.GameControl();
             this.objectTabControl.SuspendLayout();
             this.groundTabPage.SuspendLayout();
             this.buildingsTabPage.SuspendLayout();
             this.objectsTabPage.SuspendLayout();
             this.tabPageEvents.SuspendLayout();
+            this.groupBoxEventDetails.SuspendLayout();
             this.SuspendLayout();
             // 
             // objectTabControl
@@ -226,6 +230,36 @@ namespace GameEditor
             this.label1.TabIndex = 5;
             this.label1.Text = "Levels:";
             // 
+            // groupBoxEventDetails
+            // 
+            this.groupBoxEventDetails.Controls.Add(this.labelEventDetails);
+            this.groupBoxEventDetails.Controls.Add(this.label2);
+            this.groupBoxEventDetails.Location = new System.Drawing.Point(12, 930);
+            this.groupBoxEventDetails.Name = "groupBoxEventDetails";
+            this.groupBoxEventDetails.Size = new System.Drawing.Size(447, 100);
+            this.groupBoxEventDetails.TabIndex = 6;
+            this.groupBoxEventDetails.TabStop = false;
+            this.groupBoxEventDetails.Text = "event details:";
+            this.groupBoxEventDetails.Visible = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(17, 22);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(49, 17);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Name:";
+            // 
+            // labelEventDetails
+            // 
+            this.labelEventDetails.AutoSize = true;
+            this.labelEventDetails.Location = new System.Drawing.Point(72, 22);
+            this.labelEventDetails.Name = "labelEventDetails";
+            this.labelEventDetails.Size = new System.Drawing.Size(32, 17);
+            this.labelEventDetails.TabIndex = 1;
+            this.labelEventDetails.Text = "ddd";
+            // 
             // gameControl
             // 
             this.gameControl.CurrentElementName = null;
@@ -244,6 +278,7 @@ namespace GameEditor
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2067, 1042);
+            this.Controls.Add(this.groupBoxEventDetails);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.comboLevelNb);
@@ -259,6 +294,8 @@ namespace GameEditor
             this.objectsTabPage.ResumeLayout(false);
             this.tabPageEvents.ResumeLayout(false);
             this.tabPageEvents.PerformLayout();
+            this.groupBoxEventDetails.ResumeLayout(false);
+            this.groupBoxEventDetails.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -281,6 +318,9 @@ namespace GameEditor
         private System.Windows.Forms.TabPage tabPageEvents;
         private System.Windows.Forms.Label labelScreenEvents;
         private System.Windows.Forms.ListView listViewScreenEvents;
+        private System.Windows.Forms.GroupBox groupBoxEventDetails;
+        private System.Windows.Forms.Label labelEventDetails;
+        private System.Windows.Forms.Label label2;
     }
 }
 

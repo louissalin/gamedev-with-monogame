@@ -11,6 +11,8 @@ namespace GameEditor
 
             gameControl.ClientSize = new System.Drawing.Size(1280, 720);
             gameControl.OnInitialized += GameControl_OnInitialized;
+            gameControl.OnEventSelected += GameControl_OnEventSelected;
+            gameControl.OnEventDeselected += GameControl_OnEventDeselected;
 
             listViewScreenEvents.Items.Add(typeof(GameEditorGenerate2Choppers).Name);
             listViewScreenEvents.Items.Add(typeof(GameEditorGenerate4Choppers).Name);
@@ -19,6 +21,17 @@ namespace GameEditor
             listViewScreenEvents.Items.Add(typeof(GameEditorEndLevel).Name);
 
             comboLevelNb.SelectedIndex = 0;
+        }
+
+        private void GameControl_OnEventSelected(object sender, EventSelectedArgs e)
+        {
+            groupBoxEventDetails.Visible = true;
+            labelEventDetails.Text = e.GameEditorEvent.GetType().Name;
+        }
+
+        private void GameControl_OnEventDeselected(object sender, System.EventArgs e)
+        {
+            groupBoxEventDetails.Visible = false;
         }
 
         private void GameControl_OnInitialized(object sender, System.EventArgs e)
