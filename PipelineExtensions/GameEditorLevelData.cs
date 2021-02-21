@@ -10,6 +10,7 @@ namespace PipelineExtensions
         public string GroundGrid { get; set; }
         public List<GameEditorTileData> Buildings { get; set; }
         public List<GameEditorTileData> Objects { get; set; }
+        public List<GameEditorEvent> LevelEvents { get; set; }
 
         public int GridWidth { get; set; }
         public int GridLength { get; set; }
@@ -20,7 +21,7 @@ namespace PipelineExtensions
 
         public GameEditorLevelData(int gridWidth, int gridLength, 
                                    string[,] groundGrid, List<GameEditorTileData> buildings, 
-                                   List<GameEditorTileData> objects)
+                                   List<GameEditorTileData> objects, List<GameEditorEvent> levelEvents)
         {
             GridLength = gridLength;
             GridWidth = gridWidth;
@@ -28,6 +29,7 @@ namespace PipelineExtensions
             GroundGrid = ArrayToString(groundGrid);
             Buildings = buildings;
             Objects = objects;
+            LevelEvents = levelEvents;
         }
 
         public string[,] StringToArray(string gridData)

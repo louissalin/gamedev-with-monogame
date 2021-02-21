@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using PipelineExtensions;
+using System.Windows.Forms;
 
 namespace GameEditor
 {
@@ -11,6 +12,12 @@ namespace GameEditor
             gameControl.ClientSize = new System.Drawing.Size(1280, 720);
             gameControl.OnInitialized += GameControl_OnInitialized;
 
+            listViewScreenEvents.Items.Add(typeof(GameEditorGenerate2Choppers).Name);
+            listViewScreenEvents.Items.Add(typeof(GameEditorGenerate4Choppers).Name);
+            listViewScreenEvents.Items.Add(typeof(GameEditorGenerate6Choppers).Name);
+            listViewScreenEvents.Items.Add(typeof(GameEditorStartLevel).Name);
+            listViewScreenEvents.Items.Add(typeof(GameEditorEndLevel).Name);
+
             comboLevelNb.SelectedIndex = 0;
         }
 
@@ -21,29 +28,34 @@ namespace GameEditor
             groundListView.ItemSelectionChanged += GroundListView_ItemSelectionChanged;
             buildingsListView.ItemSelectionChanged += BuildingsListView_ItemSelectionChanged;
             objectsListView.ItemSelectionChanged += ObjectsListView_ItemSelectionChanged;
+            listViewScreenEvents.ItemSelectionChanged += ListViewScreenEvents_ItemSelectionChanged;
 
             objectTabControl.SelectedIndexChanged += ObjectTabControl_SelectedIndexChanged;
         }
 
         private void ObjectTabControl_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            gameControl.CurrentAtlasName = objectTabControl.SelectedTab.Text;
-            gameControl.CurrentTileName = null;
+            gameControl.CurrentLayer = objectTabControl.SelectedTab.Text;
+            gameControl.CurrentElementName = null;
         }
 
         private void GroundListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            gameControl.CurrentTileName = e.Item.Text;
+            gameControl.CurrentElementName = e.Item.Text;
         }
 
         private void BuildingsListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            gameControl.CurrentTileName = e.Item.Text;
+            gameControl.CurrentElementName = e.Item.Text;
         }
 
         private void ObjectsListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            gameControl.CurrentTileName = e.Item.Text;
+            gameControl.CurrentElementName = e.Item.Text;
+        }
+        private void ListViewScreenEvents_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            gameControl.CurrentElementName = e.Item.Text;
         }
 
         private void InitializeListsOfTiles()

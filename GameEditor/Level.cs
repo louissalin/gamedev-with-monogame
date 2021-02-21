@@ -12,6 +12,7 @@ namespace GameEditor
         public string[,] GroundGrid { get; set; }
         public List<GameEditorTileData> Buildings { get; set; }
         public List<GameEditorTileData> Objects { get; set; }
+        public List<GameEditorEvent> LevelEvents { get; set; }
 
 
         public Level()
@@ -19,11 +20,12 @@ namespace GameEditor
             GroundGrid = new string[LEVEL_WIDTH, LEVEL_LENGTH];
             Buildings = new List<GameEditorTileData>();
             Objects = new List<GameEditorTileData>();
+            LevelEvents = new List<GameEditorEvent>();
         }
 
         public void Save(int levelNb)
         {
-            var levelData = new GameEditorLevelData(LEVEL_WIDTH, LEVEL_LENGTH, GroundGrid, Buildings, Objects);
+            var levelData = new GameEditorLevelData(LEVEL_WIDTH, LEVEL_LENGTH, GroundGrid, Buildings, Objects, LevelEvents);
             levelData.Save(levelNb);
         }
 
@@ -33,6 +35,7 @@ namespace GameEditor
             GroundGrid = levelData.StringToArray(levelData.GroundGrid);
             Buildings = levelData.Buildings;
             Objects = levelData.Objects;
+            LevelEvents = levelData.LevelEvents;
         }
     }
 }

@@ -16,12 +16,15 @@ namespace GameEditor
         public const string GROUND = "ground";
         public const string BUILDINGS = "buildings";
         public const string OBJECTS = "objects";
+        public const string EVENTS = "events";
 
         public const int TILE_SIZE = 128;
 
         private OrthographicCamera _camera;
         private Texture2D _groundTexture;
         private Texture2D _buildingTexture;
+        private Texture2D _backgroundRectangle;
+        private Texture2D _eventRectangle;
         private bool _cameraDrag;
         private GameEditorTileData _draggedTile;
         private int _mouseX;
@@ -30,10 +33,10 @@ namespace GameEditor
 
         public Dictionary<string, TextureAtlas> Atlas { get; private set; }
         public Dictionary<string, GameObject> GameObjects { get; private set; }
-        public Dictionary<string, GameEditorScreenEvent> ScreenEvents { get; private set; }
+        public List<GameEditorEvent> LevelEvents { get; private set; }
 
-        public string CurrentTileName { get; set; }
-        public string CurrentAtlasName { get; set; }
+        public string CurrentElementName { get; set; }
+        public string CurrentLayer { get; set; }
         public int CurrentLevel { get; set; }
 
         public event EventHandler<EventArgs> OnInitialized;
@@ -42,11 +45,16 @@ namespace GameEditor
         {
             base.Initialize();
 
+            _backgroundRectangle = new Texture2D(GraphicsDevice, 1, 1);
+            _backgroundRectangle.SetData(new[] { Color.CadetBlue });
+            _eventRectangle = new Texture2D(GraphicsDevice, 1, 1);
+            _eventRectangle.SetData(new[] { Color.IndianRed });
+
             var viewportAdapter = new DefaultViewportAdapter(Editor.graphics);
             _camera = new OrthographicCamera(viewportAdapter);
             ResetCameraPosition();
 
-            CurrentAtlasName = GROUND;
+            CurrentLayer = GROUND;
             CurrentLevel = 1;
             _groundTexture = Editor.Content.Load<Texture2D>("Atlas/ground");
             _buildingTexture = Editor.Content.Load<Texture2D>("Atlas/buildings");
@@ -64,6 +72,7 @@ namespace GameEditor
             Atlas.Add(BUILDINGS, buildingAtlas);
 
             GameObjects = GetGameObjects();
+            LevelEvents = new List<GameEditorEvent>();
  
             // start with empty levels
             for (var i = 0; i < 5; i++)
@@ -263,7 +272,14 @@ namespace GameEditor
                 }
                 else
                 {
-                    AddTile();
+                    if (CurrentLayer == EVENTS)
+                    {
+                        AddEvent();
+                    }
+                    else
+                    {
+                        AddTile();
+                    }
                 }
             }
             
@@ -275,17 +291,17 @@ namespace GameEditor
 
         private void RemoveTile()
         {
-            if (CurrentAtlasName == GROUND)
+            if (CurrentLayer == GROUND)
             {
                 var point = GetGridCoordinates();
                 GetGroundGrid()[point.X, point.Y] = null;
             }
-            else if (CurrentAtlasName == BUILDINGS)
+            else if (CurrentLayer == BUILDINGS)
             {
                 var tile = GetAtlasTileFromCoords(BUILDINGS, GetBuildings());
                 GetBuildings().Remove(tile);
             }
-            else if (CurrentAtlasName == OBJECTS)
+            else if (CurrentLayer == OBJECTS)
             {
                 var tile = GetObjectTileFromCoords();
                 GetObjects().Remove(tile);
@@ -295,11 +311,11 @@ namespace GameEditor
         private GameEditorTileData GetClickedTile()
         {
             GameEditorTileData tile = null;
-            if (CurrentAtlasName == BUILDINGS)
+            if (CurrentLayer == BUILDINGS)
             {
                 tile = GetAtlasTileFromCoords(BUILDINGS, GetBuildings());
             }
-            else if (CurrentAtlasName == OBJECTS)
+            else if (CurrentLayer == OBJECTS)
             {
                 tile = GetObjectTileFromCoords();
             }
@@ -350,29 +366,41 @@ namespace GameEditor
             return null;
         }
 
+        private void AddEvent()
+        {
+            var worldCoords = _camera.ScreenToWorld(_mouseX, _mouseY);
+
+            var evt = GameEditorEvent.GetEvent(CurrentElementName);
+            if (evt != null)
+            {
+                evt.Y = (int)worldCoords.Y;
+                LevelEvents.Add(evt);
+            }
+        }
+
         private void AddTile()
         {
-            if (CurrentTileName != null && CurrentTileName.Length > 0)
+            if (CurrentElementName != null && CurrentElementName.Length > 0)
             {
-                if (CurrentAtlasName == GROUND)
+                if (CurrentLayer == GROUND)
                 {
                     var point = GetGridCoordinates();
 
                     if (point.X >= 0 && point.X < Level.LEVEL_WIDTH &&
                         point.Y >= 0 && point.Y < Level.LEVEL_LENGTH)
                     {
-                        GetGroundGrid()[point.X, point.Y] = CurrentTileName;
+                        GetGroundGrid()[point.X, point.Y] = CurrentElementName;
                     }
                 }
-                else if (CurrentAtlasName == BUILDINGS)
+                else if (CurrentLayer == BUILDINGS)
                 {
                     var worldCoords = _camera.ScreenToWorld(_mouseX, _mouseY);
-                    GetBuildings().Add(new GameEditorTileData(CurrentTileName, (int) worldCoords.X, (int) worldCoords.Y));
+                    GetBuildings().Add(new GameEditorTileData(CurrentElementName, (int) worldCoords.X, (int) worldCoords.Y));
                 }
-                else if (CurrentAtlasName == OBJECTS)
+                else if (CurrentLayer == OBJECTS)
                 {
                     var worldCoords = _camera.ScreenToWorld(_mouseX, _mouseY);
-                    GetObjects().Add(new GameEditorTileData(CurrentTileName, (int) worldCoords.X, (int) worldCoords.Y));
+                    GetObjects().Add(new GameEditorTileData(CurrentElementName, (int) worldCoords.X, (int) worldCoords.Y));
                 }
             }
         }
@@ -395,14 +423,12 @@ namespace GameEditor
         {
             base.Draw();
 
-            var backgroundRectangle = new Texture2D(GraphicsDevice, 1, 1);
-            backgroundRectangle.SetData(new[] { Color.CadetBlue });
 
             var transformMatrix = _camera.GetViewMatrix();
 
             Editor.spriteBatch.Begin(transformMatrix: transformMatrix);
             Editor.spriteBatch.Draw(
-                backgroundRectangle, 
+                _backgroundRectangle, 
                 new Rectangle(-5, -5, TILE_SIZE * Level.LEVEL_WIDTH + 10, 
                               TILE_SIZE * Level.LEVEL_LENGTH + 10), 
                 Color.White);
@@ -410,6 +436,7 @@ namespace GameEditor
             DrawGround();
             DrawBuildings();
             DrawObjects();
+            DrawEvents();
             Editor.spriteBatch.End();
         }
 
@@ -445,6 +472,24 @@ namespace GameEditor
                 );
 
                 Editor.spriteBatch.Draw(gameObject.Texture, rectangle, gameObject.Texture.Bounds, Color.White);
+            }
+        }
+
+        private void DrawEvents()
+        {
+            foreach (var evt in LevelEvents)
+            {
+                var rectangle = new Rectangle(
+                    -50,
+                    evt.Y,
+                    1380,
+                    20
+                );
+
+                Editor.spriteBatch.Draw(
+                    _eventRectangle,
+                    rectangle,
+                    Color.White);
             }
         }
 

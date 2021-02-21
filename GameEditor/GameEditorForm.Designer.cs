@@ -38,22 +38,29 @@ namespace GameEditor
             this.buildingsListView = new System.Windows.Forms.ListView();
             this.objectsTabPage = new System.Windows.Forms.TabPage();
             this.objectsListView = new System.Windows.Forms.ListView();
+            this.tabPageEvents = new System.Windows.Forms.TabPage();
+            this.listViewScreenEvents = new System.Windows.Forms.ListView();
+            this.labelScreenEvents = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
             this.comboLevelNb = new System.Windows.Forms.ComboBox();
             this.buttonLoad = new System.Windows.Forms.Button();
-            this.gameControl = new GameEditor.GameControl();
             this.label1 = new System.Windows.Forms.Label();
+            this.gameControl = new GameEditor.GameControl();
             this.objectTabControl.SuspendLayout();
             this.groundTabPage.SuspendLayout();
             this.buildingsTabPage.SuspendLayout();
             this.objectsTabPage.SuspendLayout();
+            this.tabPageEvents.SuspendLayout();
             this.SuspendLayout();
             // 
             // objectTabControl
             // 
+            this.objectTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.objectTabControl.Controls.Add(this.groundTabPage);
             this.objectTabControl.Controls.Add(this.buildingsTabPage);
             this.objectTabControl.Controls.Add(this.objectsTabPage);
+            this.objectTabControl.Controls.Add(this.tabPageEvents);
             this.objectTabControl.Location = new System.Drawing.Point(1744, 12);
             this.objectTabControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.objectTabControl.Name = "objectTabControl";
@@ -75,6 +82,8 @@ namespace GameEditor
             // 
             // groundListView
             // 
+            this.groundListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groundListView.HideSelection = false;
             this.groundListView.Location = new System.Drawing.Point(5, 2);
             this.groundListView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -99,6 +108,8 @@ namespace GameEditor
             // 
             // buildingsListView
             // 
+            this.buildingsListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.buildingsListView.HideSelection = false;
             this.buildingsListView.Location = new System.Drawing.Point(5, 4);
             this.buildingsListView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -122,6 +133,8 @@ namespace GameEditor
             // 
             // objectsListView
             // 
+            this.objectsListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.objectsListView.HideSelection = false;
             this.objectsListView.Location = new System.Drawing.Point(5, 4);
             this.objectsListView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -131,6 +144,40 @@ namespace GameEditor
             this.objectsListView.TabIndex = 1;
             this.objectsListView.UseCompatibleStateImageBehavior = false;
             this.objectsListView.View = System.Windows.Forms.View.List;
+            // 
+            // tabPageEvents
+            // 
+            this.tabPageEvents.Controls.Add(this.listViewScreenEvents);
+            this.tabPageEvents.Controls.Add(this.labelScreenEvents);
+            this.tabPageEvents.Location = new System.Drawing.Point(4, 25);
+            this.tabPageEvents.Name = "tabPageEvents";
+            this.tabPageEvents.Size = new System.Drawing.Size(303, 989);
+            this.tabPageEvents.TabIndex = 3;
+            this.tabPageEvents.Text = "events";
+            this.tabPageEvents.UseVisualStyleBackColor = true;
+            // 
+            // listViewScreenEvents
+            // 
+            this.listViewScreenEvents.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewScreenEvents.HideSelection = false;
+            this.listViewScreenEvents.Location = new System.Drawing.Point(6, 21);
+            this.listViewScreenEvents.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.listViewScreenEvents.Name = "listViewScreenEvents";
+            this.listViewScreenEvents.Size = new System.Drawing.Size(291, 514);
+            this.listViewScreenEvents.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.listViewScreenEvents.TabIndex = 2;
+            this.listViewScreenEvents.UseCompatibleStateImageBehavior = false;
+            this.listViewScreenEvents.View = System.Windows.Forms.View.List;
+            // 
+            // labelScreenEvents
+            // 
+            this.labelScreenEvents.AutoSize = true;
+            this.labelScreenEvents.Location = new System.Drawing.Point(3, 2);
+            this.labelScreenEvents.Name = "labelScreenEvents";
+            this.labelScreenEvents.Size = new System.Drawing.Size(104, 17);
+            this.labelScreenEvents.TabIndex = 0;
+            this.labelScreenEvents.Text = "Screen Events:";
             // 
             // buttonSave
             // 
@@ -170,19 +217,6 @@ namespace GameEditor
             this.buttonLoad.UseVisualStyleBackColor = true;
             this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);
             // 
-            // gameControl
-            // 
-            this.gameControl.CurrentAtlasName = null;
-            this.gameControl.CurrentLevel = 0;
-            this.gameControl.CurrentTileName = null;
-            this.gameControl.Location = new System.Drawing.Point(12, 39);
-            this.gameControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gameControl.MouseHoverUpdatesOnly = false;
-            this.gameControl.Name = "gameControl";
-            this.gameControl.Size = new System.Drawing.Size(1691, 865);
-            this.gameControl.TabIndex = 0;
-            this.gameControl.Text = "gameControl";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -191,6 +225,19 @@ namespace GameEditor
             this.label1.Size = new System.Drawing.Size(53, 17);
             this.label1.TabIndex = 5;
             this.label1.Text = "Levels:";
+            // 
+            // gameControl
+            // 
+            this.gameControl.CurrentElementName = null;
+            this.gameControl.CurrentLayer = null;
+            this.gameControl.CurrentLevel = 0;
+            this.gameControl.Location = new System.Drawing.Point(12, 39);
+            this.gameControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gameControl.MouseHoverUpdatesOnly = false;
+            this.gameControl.Name = "gameControl";
+            this.gameControl.Size = new System.Drawing.Size(1691, 865);
+            this.gameControl.TabIndex = 0;
+            this.gameControl.Text = "gameControl";
             // 
             // GameEditorForm
             // 
@@ -210,6 +257,8 @@ namespace GameEditor
             this.groundTabPage.ResumeLayout(false);
             this.buildingsTabPage.ResumeLayout(false);
             this.objectsTabPage.ResumeLayout(false);
+            this.tabPageEvents.ResumeLayout(false);
+            this.tabPageEvents.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -229,6 +278,9 @@ namespace GameEditor
         private System.Windows.Forms.ComboBox comboLevelNb;
         private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TabPage tabPageEvents;
+        private System.Windows.Forms.Label labelScreenEvents;
+        private System.Windows.Forms.ListView listViewScreenEvents;
     }
 }
 
