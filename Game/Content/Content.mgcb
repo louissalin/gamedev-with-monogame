@@ -25,15 +25,15 @@
 /processor:PassThroughProcessor
 /build:../../assets/animations/Player/turn_right.xml;Sprites/Animations/FighterSpriteTurnRight.xml
 
-#begin ../../assets/levels/Level1.txt
-/importer:LevelImporter
-/processor:LevelProcessor
-/build:../../assets/levels/Level1.txt;Levels/Level1.txt
-
 #begin ../../assets/levels/level1.xml
 /importer:XmlImporter
 /processor:PassThroughProcessor
 /build:../../assets/levels/level1.xml;Levels/level1.xml
+
+#begin ../../assets/levels/level2.xml
+/importer:XmlImporter
+/processor:PassThroughProcessor
+/build:../../assets/levels/level2.xml;Levels/level2.xml
 
 #begin ../../assets/music/FutureAmbient_1.wav
 /importer:WavImporter
