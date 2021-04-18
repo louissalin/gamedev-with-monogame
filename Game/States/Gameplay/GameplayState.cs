@@ -69,8 +69,8 @@ namespace Game.States
 
         private bool _isShootingBullets;
         private bool _isShootingMissile;
-        private TimeSpan _lastBulletShotAt;
-        private TimeSpan _lastMissileShotAt;
+        private TimeSpan _lastBulletShotAt = TimeSpan.MinValue;
+        private TimeSpan _lastMissileShotAt = TimeSpan.MinValue;
 
         private GameObjectPool<BulletSprite> _bulletList = new GameObjectPool<BulletSprite>();
         private GameObjectPool<MissileSprite> _missileList = new GameObjectPool<MissileSprite>();
@@ -324,13 +324,13 @@ namespace Game.States
         private void RegulateShootingRate(GameTime gameTime)
         {
             // can't shoot bullets more than every 0.2 second
-            if (_lastBulletShotAt != null && gameTime.TotalGameTime - _lastBulletShotAt > TimeSpan.FromSeconds(0.2))
+            if (_lastBulletShotAt != TimeSpan.MinValue && gameTime.TotalGameTime - _lastBulletShotAt > TimeSpan.FromSeconds(0.2))
             {
                 _isShootingBullets = false;
             }
 
             // can't shoot missiles more than every 1 second
-            if (_lastMissileShotAt != null && gameTime.TotalGameTime - _lastMissileShotAt > TimeSpan.FromSeconds(1.0))
+            if (_lastMissileShotAt != TimeSpan.MinValue && gameTime.TotalGameTime - _lastMissileShotAt > TimeSpan.FromSeconds(1.0))
             {
                 _isShootingMissile = false;
             }

@@ -28,7 +28,7 @@ namespace Game.Objects
         private float _baseTextureWidth;
         private float _baseTextureHeight;
         private bool _isShootingBullets;
-        private TimeSpan _lastBulletShotAt;
+        private TimeSpan _lastBulletShotAt = TimeSpan.MinValue;
         private int _bulletsRemaining;
         private bool _attackMode;
 
@@ -115,7 +115,7 @@ namespace Game.Objects
             }
 
             // prevent firing bullets too quickly
-            if (_lastBulletShotAt != null && gameTime.TotalGameTime - _lastBulletShotAt > TimeSpan.FromSeconds(0.3))
+            if (_lastBulletShotAt != TimeSpan.MinValue && gameTime.TotalGameTime - _lastBulletShotAt > TimeSpan.FromSeconds(0.3))
             {
                 _isShootingBullets = false;
             }

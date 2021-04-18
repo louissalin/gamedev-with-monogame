@@ -13,7 +13,7 @@ namespace Game.States
     /// <summary>
     /// Used to test out new things, like particle engines and shooting missiles
     /// </summary>
-    public class TestSceneState : BaseGameState
+    public class ScriptingState : BaseGameState
     {
         private const string PlayerAnimationTurnLeft = "Sprites/Animations/FighterSpriteTurnLeft";
         private const string PlayerAnimationTurnRight = "Sprites/Animations/FighterSpriteTurnRight";

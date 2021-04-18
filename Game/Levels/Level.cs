@@ -11,7 +11,7 @@ namespace Game.Levels
         private int _currentLevelNumber;
         private int _currentLevelRow;
 
-        private TimeSpan _startGameTime;
+        private TimeSpan _startGameTime = TimeSpan.MinValue;
         private readonly TimeSpan TickTimeSpan = new TimeSpan(0, 0, 2);
 
         public event EventHandler<LevelEvent.GenerateEnemies> OnGenerateEnemies;
@@ -43,7 +43,7 @@ namespace Game.Levels
         public void GenerateLevelEvents(GameTime gameTime)
         {
             // only generate events every 2 seconds
-            if (_startGameTime == null)
+            if (_startGameTime == TimeSpan.MinValue)
             {
                 _startGameTime = gameTime.TotalGameTime;
             }
